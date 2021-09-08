@@ -1,6 +1,0 @@
-[submodule "themes/hugo-tania"]
-	path = themes/hugo-tania
-	url = https://github.com/WingLim/hugo-tania
-[submodule "themes/mini"]
-	path = themes/mini
-	url = https://github.com/nodejh/hugo-theme-mini.git
