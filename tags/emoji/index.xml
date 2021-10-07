@@ -1,0 +1,88 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>emoji - Tag - </title>
+        <link>/tags/emoji/</link>
+        <description>emoji - Tag - </description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 01 Oct 2019 17:55:28 &#43;0800</lastBuildDate><atom:link href="/tags/emoji/" rel="self" type="application/rss+xml" /><item>
+    <title>A Vim Purist&#39;s Workflow</title>
+    <link>/vim-workflow/</link>
+    <pubDate>Tue, 01 Oct 2019 17:55:28 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>/vim-workflow/</guid>
+    <description><![CDATA[I have been using Vim for about 1.5 years now and I am constantly surprised about how many features it has.
+Despite using it for many smaller projected, I wasn&rsquo;t sold on using Vim as my main programming environment, and even then, it was only with CoC installed to essentially replicate VS Code in Vim. Until I stumbled across this video by Leeren at VimConf . This completely blew my mind (as did his other videos on Vim).]]></description>
+</item><item>
+    <title>Advent of Code 2020 Day 1-2 in Rust</title>
+    <link>/rust-advent-of-code-1-2/</link>
+    <pubDate>Tue, 01 Oct 2019 17:55:28 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>/rust-advent-of-code-1-2/</guid>
+    <description><![CDATA[Using Advent of Code to learn Rust Rust is a relatively new programming language that boast big benefits compared to its contemporaries. It combines the speed of C, expressiveness of Haskell, all while being memory and thread safe.
+I have used Rust a lot this year to implement a polynomial library for my Honours year project, and so I have only really used it for scientific computing. I have barely touched string manipulation, parsing, and so I thought it was about time that I should branch out.]]></description>
+</item><item>
+    <title>Bulk Rename Script</title>
+    <link>/interactive-bulk-rename-script/</link>
+    <pubDate>Tue, 01 Oct 2019 17:55:28 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>/interactive-bulk-rename-script/</guid>
+    <description><![CDATA[I spend pretty much all my time in the terminal. After some time, I find I can navigate just as fast, if not faster there than in a GUI file browser.
+I used to use the ultra-lightweight nnn terminal file browser, but even that I found unnecessary other than being very nice to look at.
+The one feature that I missed however, was bulk renaming files in my editor. When you press r in nnn, it brings up the files in the directory in the program specified in your $EDITOR variable, with numbers next to them.]]></description>
+</item><item>
+    <title>Emoji Support</title>
+    <link>/emoji-support/</link>
+    <pubDate>Tue, 01 Oct 2019 17:55:28 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>/emoji-support/</guid>
+    <description><![CDATA[<p>Emoji can be enabled in a Hugo project in a number of ways.</p>]]></description>
+</item><item>
+    <title>Mail Setup</title>
+    <link>/mail-setup/</link>
+    <pubDate>Tue, 01 Oct 2019 17:55:28 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>/mail-setup/</guid>
+    <description><![CDATA[Email My email setup is a little complicated because I maintain a local copy of my mail on my computer for backup reasons. It is also nice because it is faster. I use Neomutt which is a terminal based email client. This is because I like the minimalism and I just think that email is something that is so fundamental that it should be in a terminal. I have tried other lightweight clients like Sylpheed and I still prefer it.]]></description>
+</item><item>
+    <title>Markdown to HTML Using sed</title>
+    <link>/sed-markdown-compiler/</link>
+    <pubDate>Tue, 01 Oct 2019 17:55:28 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>/sed-markdown-compiler/</guid>
+    <description><![CDATA[I recently discovered the :TOhtml command in Vim. It converts the current view of the file you are editing in Vim to HTML that can be viewed in the browser. TODO I think it has some other use cases too
+However, it would be nice if it could actually render the Markdown file I was editing too. I looked at the common solutions like pandoc but I found that they were incredibly huge programs.]]></description>
+</item><item>
+    <title>Using nvim-lsp for Go</title>
+    <link>/nvim-lsp_from_coc/</link>
+    <pubDate>Tue, 01 Oct 2019 17:55:28 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>/nvim-lsp_from_coc/</guid>
+    <description><![CDATA[Now that nvim 0.5 is now stable I decided to finally try moving from CoC to the builtin LSP client nvim-lsp. This is mainly because its more minimalist and faster.
+I previously trried the nvim-lsp back in unstable a year ago but I just couldn&rsquo;t get things to work properly. There was a lot of configuration, and after a day or so I still couldn&rsquo;t get it to reliably work. Now that 0.]]></description>
+</item><item>
+    <title>Vim Features: Tags list</title>
+    <link>/vim-lesson-tags/</link>
+    <pubDate>Tue, 01 Oct 2019 17:55:28 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>/vim-lesson-tags/</guid>
+    <description><![CDATA[This is how you get that IDE like feeling where you can navigate around codebases super fast. This is built-in, no plugins, no configurations
+What are tags Tags are an outline of your codebase, they record the location of important definitions like functions, type definitions, class definitions.
+Getting Started Download ctags, also known as Exhuberant Tags, and run ctags -R . in your project root directory. Unless your codebase is quite large, this should be close to instaneous.]]></description>
+</item><item>
+    <title>Vim for Software Development</title>
+    <link>/vim-as-developer/</link>
+    <pubDate>Tue, 01 Oct 2019 17:55:28 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>/vim-as-developer/</guid>
+    <description><![CDATA[Most people think Vim is an outdated piece of software development, useful perhaps editing small files over SSH, but surely no one uses it as their main code development tool right?
+Here I am going to go through what I think are the key components to a normal software development. Of course, Vim doesn&rsquo;t give you the complex build environemtns of a proper IDE, but if you are working comfortably in another text editor like VS Code or Sublime Text, then theres a good chance that everything you are doing can be done in vanilla Vim.]]></description>
+</item><item>
+    <title>Vim Tricks: Building and Running code</title>
+    <link>/vim-lesson-make/</link>
+    <pubDate>Tue, 01 Oct 2019 17:55:28 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>/vim-lesson-make/</guid>
+    <description><![CDATA[Vim has a built in support for building files through the :make command.
+First you will want to set your compiler so that Vim knows what command it should run with make and what the error format should be when it parses it in the quickfix/location list.
+Build/Run/Test Code I would say this is one of the other big reasons people don&rsquo;t use Vim. However Vim actually has fairly good support for this as well.]]></description>
+</item></channel>
+</rss>
