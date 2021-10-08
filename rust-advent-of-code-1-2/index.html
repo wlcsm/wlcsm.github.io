@@ -1,174 +1,152 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>Advent of Code 2020 Day 1-2 in Rust - </title><meta name="Description" content="Discussion of the solutions to the Day 1 and 2 Advent of Code&#39;s solutions in Rust"><meta property="og:title" content="Advent of Code 2020 Day 1-2 in Rust" />
-<meta property="og:description" content="Discussion of the solutions to the Day 1 and 2 Advent of Code&#39;s solutions in Rust" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="/rust-advent-of-code-1-2/" /><meta property="og:image" content="/logo.png"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2019-10-01T17:55:28+08:00" />
-<meta property="article:modified_time" content="2019-10-01T17:55:28+08:00" />
-
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/logo.png"/>
-
-<meta name="twitter:title" content="Advent of Code 2020 Day 1-2 in Rust"/>
-<meta name="twitter:description" content="Discussion of the solutions to the Day 1 and 2 Advent of Code&#39;s solutions in Rust"/>
-<meta name="application-name" content="LoveIt">
-<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="/rust-advent-of-code-1-2/" /><link rel="prev" href="/interactive-bulk-rename-script/" /><link rel="next" href="/vim-workflow/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Advent of Code 2020 Day 1-2 in Rust",
-        "inLanguage": "en",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "\/rust-advent-of-code-1-2\/"
-        },"image": ["\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "emoji","wordcount":  1515 ,
-        "url": "\/rust-advent-of-code-1-2\/","datePublished": "2019-10-01T17:55:28+08:00","dateModified": "2019-10-01T17:55:28+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
-            "@type": "Organization",
-            "name": "xxxx","logo": "\/images\/avatar.png"},"author": {
-                "@type": "Person",
-                "name": "Will Cashman"
-            },"description": "Discussion of the solutions to the Day 1 and 2 Advent of Code's solutions in Rust"
-    }
-    </script></head>
-    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
-
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title=""><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>LoveIt</a>
-        </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/categories/documentation/"> Docs </a><a class="menu-item" href="/about/"> About </a><a class="menu-item" href="/https:/github.com/dillonzq/LoveIt" title="GitHub"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/rust-advent-of-code-1-2/" selected>English</option></select>
-                    </a><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
-                            <i class="fas fa-times-circle fa-fw"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin"></i>
-                        </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
-                    <i class="fas fa-adjust fa-fw"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title=""><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>LoveIt</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
-                            <i class="fas fa-times-circle fa-fw"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin"></i>
-                        </span>
-                    </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-                        Cancel
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/categories/documentation/" title="">Docs</a><a class="menu-item" href="/about/" title="">About</a><a class="menu-item" href="/https:/github.com/dillonzq/LoveIt" title="GitHub"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
-                <i class="fas fa-adjust fa-fw"></i>
-            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/rust-advent-of-code-1-2/" selected>English</option></select>
-                </a></div>
-    </div>
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
+<title>Advent of Code 2020 Day 1-2 in Rust - </title><meta name=Description content="Discussion of the solutions to the Day 1 and 2 Advent of Code's solutions in Rust"><meta property="og:title" content="Advent of Code 2020 Day 1-2 in Rust">
+<meta property="og:description" content="Discussion of the solutions to the Day 1 and 2 Advent of Code's solutions in Rust">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/rust-advent-of-code-1-2/"><meta property="og:image" content="/logo.png"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2019-10-01T17:55:28+08:00">
+<meta property="article:modified_time" content="2019-10-01T17:55:28+08:00">
+<meta name=twitter:card content="summary_large_image">
+<meta name=twitter:image content="/logo.png">
+<meta name=twitter:title content="Advent of Code 2020 Day 1-2 in Rust">
+<meta name=twitter:description content="Discussion of the solutions to the Day 1 and 2 Advent of Code's solutions in Rust">
+<meta name=application-name content="LoveIt">
+<meta name=apple-mobile-web-app-title content="LoveIt"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=/rust-advent-of-code-1-2/><link rel=prev href=/interactive-bulk-rename-script/><link rel=next href=/vim-workflow/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Advent of Code 2020 Day 1-2 in Rust","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"\/rust-advent-of-code-1-2\/"},"image":["\/images\/Apple-Devices-Preview.png"],"genre":"posts","keywords":"emoji","wordcount":1515,"url":"\/rust-advent-of-code-1-2\/","datePublished":"2019-10-01T17:55:28+08:00","dateModified":"2019-10-01T17:55:28+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"xxxx","logo":"\/images\/avatar.png"},"author":{"@type":"Person","name":"Will Cashman"},"description":"Discussion of the solutions to the Day 1 and 2 Advent of Code's solutions in Rust"}</script></head>
+<body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark')&&document.body.setAttribute('theme','dark')</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title><span class=header-title-pre><i class="far fa-kiss-wink-heart fa-fw"></i></span>LoveIt</a>
+</div>
+<div class=menu>
+<div class=menu-inner><a class=menu-item href=/posts/> Posts </a><a class=menu-item href=/tags/> Tags </a><a class=menu-item href=/categories/> Categories </a><a class=menu-item href=/categories/documentation/> Docs </a><a class=menu-item href=/about/> About </a><a class=menu-item href=/https:/github.com/dillonzq/LoveIt title=GitHub><i class="fab fa-github fa-fw"></i> </a><span class="menu-item delimiter"></span><a href=javascript:void(0); class="menu-item language" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+<select class=language-select id=language-select-desktop onchange="location=this.value"><option value=/rust-advent-of-code-1-2/ selected>English</option></select>
+</a><span class="menu-item search" id=search-desktop>
+<input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search>
+<i class="fas fa-search fa-fw"></i>
+</a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear>
+<i class="fas fa-times-circle fa-fw"></i>
+</a>
+<span class="search-button search-loading" id=search-loading-desktop>
+<i class="fas fa-spinner fa-fw fa-spin"></i>
+</span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i>
+</a>
+</div>
+</div>
+</div>
+</header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title><span class=header-title-pre><i class="far fa-kiss-wink-heart fa-fw"></i></span>LoveIt</a>
+</div>
+<div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div>
+</div>
+<div class=menu id=menu-mobile><div class=search-wrapper>
+<div class="search mobile" id=search-mobile>
+<input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search>
+<i class="fas fa-search fa-fw"></i>
+</a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear>
+<i class="fas fa-times-circle fa-fw"></i>
+</a>
+<span class="search-button search-loading" id=search-loading-mobile>
+<i class="fas fa-spinner fa-fw fa-spin"></i>
+</span>
+</div>
+<a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>
+Cancel
+</a>
+</div><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/categories/ title>Categories</a><a class=menu-item href=/categories/documentation/ title>Docs</a><a class=menu-item href=/about/ title>About</a><a class=menu-item href=/https:/github.com/dillonzq/LoveIt title=GitHub><i class="fab fa-github fa-fw"></i></a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i>
+</a><a href=javascript:void(0); class=menu-item title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+<select class=language-select onchange="location=this.value"><option value=/rust-advent-of-code-1-2/ selected>English</option></select>
+</a></div>
+</div>
 </header>
 <div class="search-dropdown desktop">
-    <div id="search-dropdown-desktop"></div>
+<div id=search-dropdown-desktop></div>
 </div>
 <div class="search-dropdown mobile">
-    <div id="search-dropdown-mobile"></div>
+<div id=search-dropdown-mobile></div>
 </div>
-<main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">Contents</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">Advent of Code 2020 Day 1-2 in Rust</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://dillonzq.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Will Cashman</a></span>&nbsp;<span class="post-category">included in <a href="/categories/markdown/"><i class="far fa-folder fa-fw"></i>Markdown</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-10-01">2019-10-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1515 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;8 minutes&nbsp;<span id="/rust-advent-of-code-1-2/" class="leancloud_visitors" data-flag-title="Advent of Code 2020 Day 1-2 in Rust">
-                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
-                    </span>&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  kept="">
-                <div class="details-summary toc-title">
-                    <span>Contents</span>
-                    <span><i class="details-icon fas fa-angle-right"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#using-advent-of-code-to-learn-rust">Using Advent of Code to learn Rust</a></li>
-    <li><a href="#day-1">Day 1</a></li>
-    <li><a href="#part-2">Part 2</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#part-2-1">Part 2</a></li>
-  </ul>
+<main class=main>
+<div class=container><div class=toc id=toc-auto>
+<h2 class=toc-title>Contents</h2>
+<div class=toc-content id=toc-content-auto></div>
+</div><article class="page single"><h1 class="single-title animated flipInX">Advent of Code 2020 Day 1-2 in Rust</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=https://dillonzq.com title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>Will Cashman</a></span>&nbsp;<span class=post-category>included in <a href=/categories/markdown/><i class="far fa-folder fa-fw"></i>Markdown</a></span></div>
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2019-10-01>2019-10-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1515 words&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;8 minutes&nbsp;<span id=/rust-advent-of-code-1-2/ class=leancloud_visitors data-flag-title="Advent of Code 2020 Day 1-2 in Rust">
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
+</span>&nbsp;</div>
+</div><div class="details toc" id=toc-static kept>
+<div class="details-summary toc-title">
+<span>Contents</span>
+<span><i class="details-icon fas fa-angle-right"></i></span>
+</div>
+<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#using-advent-of-code-to-learn-rust>Using Advent of Code to learn Rust</a></li>
+<li><a href=#day-1>Day 1</a></li>
+<li><a href=#part-2>Part 2</a></li>
+</ul>
+<ul>
+<li><a href=#part-2-1>Part 2</a></li>
+</ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="using-advent-of-code-to-learn-rust">Using Advent of Code to learn Rust</h2>
+</div><div class=content id=content><h2 id=using-advent-of-code-to-learn-rust>Using Advent of Code to learn Rust</h2>
 <p>Rust is a relatively new programming language that boast big benefits compared to its contemporaries. It combines the speed of C, expressiveness of Haskell, all while being memory and thread safe.</p>
-<p>I have used Rust a lot this year to implement a polynomial library for my Honours year project, and so I have only really used it for scientific computing. I have barely touched string manipulation, parsing, and so I thought it was about time that I should branch out. The <a href="" rel="">Advent of Code</a> is a set of programming challenges that are rel eased every day of December, leading up to Christmas functioning like an <a href="" rel="">advent calendar</a>. The problems are fairly basic and can normally be accomplished in under 50 lines (depending on your chosen programming language). Pr grammars often use this opportunity to learn new languages.</p>
+<p>I have used Rust a lot this year to implement a polynomial library for my Honours year project, and so I have only really used it for scientific computing. I have barely touched string manipulation, parsing, and so I thought it was about time that I should branch out. The <a href rel>Advent of Code</a> is a set of programming challenges that are rel eased every day of December, leading up to Christmas functioning like an <a href rel>advent calendar</a>. The problems are fairly basic and can normally be accomplished in under 50 lines (depending on your chosen programming language). Pr grammars often use this opportunity to learn new languages.</p>
 <p>Since I am a math major, I will be taking a very algorithmic approach to the problems and will often discuss their complexity classes. Though I hope this won&rsquo;t obscure the explanation for those who are not interested in it.</p>
-<h2 id="day-1">Day 1</h2>
+<h2 id=day-1>Day 1</h2>
 <p>The problem can be simplified to this:</p>
 <pre><code>Given a list of numbers, find the two entries that sum to 2020 and multiply them together.
 </code></pre>
 <p>So first lets think of a couple of ways this can be done. The naive way would be to iterate through the list and add it to to every other element to see if it sums to 2020. This is nice and simple, and since we our given list is fairly short (only 200 lines) it will execute fairly quickly.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">fn</span> <span class="nf">part1_naive</span><span class="p">(</span><span class="n">expense_list</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">usize</span> <span class="p">{</span><span class="w">
-</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">expense_list</span><span class="p">.</span><span class="n">len</span><span class="p">();</span><span class="w">
-</span><span class="w">
-</span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="p">..</span><span class="n">n</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">i</span><span class="p">..</span><span class="n">n</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2020</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w">
-</span><span class="w">            </span><span class="p">}</span><span class="w">
-</span><span class="w">        </span><span class="p">}</span><span class="w">
-</span><span class="w">    </span><span class="p">}</span><span class="w">
-</span><span class="w">    </span><span class="n">panic</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;No two entries sum to 2020&#34;</span><span class="p">);</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w">
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=k>fn</span> <span class=nf>part1_naive</span><span class=p>(</span><span class=n>expense_list</span>: <span class=nb>Vec</span><span class=o>&lt;</span><span class=kt>usize</span><span class=o>&gt;</span><span class=p>)</span><span class=w> </span>-&gt; <span class=kt>usize</span> <span class=p>{</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>n</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>expense_list</span><span class=p>.</span><span class=n>len</span><span class=p>();</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=k>for</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=k>in</span><span class=w> </span><span class=mi>0</span><span class=p>..</span><span class=n>n</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>        </span><span class=k>for</span><span class=w> </span><span class=n>j</span><span class=w> </span><span class=k>in</span><span class=w> </span><span class=n>i</span><span class=p>..</span><span class=n>n</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>            </span><span class=k>if</span><span class=w> </span><span class=n>expense_list</span><span class=p>[</span><span class=n>i</span><span class=p>]</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>expense_list</span><span class=p>[</span><span class=n>j</span><span class=p>]</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=mi>2020</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>                </span><span class=k>return</span><span class=w> </span><span class=n>expense_list</span><span class=p>[</span><span class=n>i</span><span class=p>]</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>expense_list</span><span class=p>[</span><span class=n>j</span><span class=p>]</span><span class=w>
+</span><span class=w>            </span><span class=p>}</span><span class=w>
+</span><span class=w>        </span><span class=p>}</span><span class=w>
+</span><span class=w>    </span><span class=p>}</span><span class=w>
+</span><span class=w>    </span><span class=n>panic</span><span class=o>!</span><span class=p>(</span><span class=s>&#34;No two entries sum to 2020&#34;</span><span class=p>);</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
 </span></code></pre></td></tr></table>
 </div>
 </div><p>However, this is not the most efficient approach. If we let $n$ denote the number of elements in the list, then this approach uses around $n^2$ operations in the worst case, since the outer loop must execute at most $n$ time, and the inner loop $n-i$ times on the $i^\text{th}$ iteration of the outer loop. Giving a total of approximately
@@ -176,319 +154,316 @@ $$ n + (n - 1) + (n - 2) + \cdots + 1 = (n^2 - n)/2 $$
 (ignoring constants) operations. More formally, this is $\mathcal O(n^2)$, which is not the most desirable.</p>
 <p>Lets look at another technique. Notice that in the outer loop, the thing we really care about is finding a certain element. The problem is that we are performing a linear search in the inner loop to find it which makes it slow. In order to speed up the lookup time, we could use a Hash map to obtain (approximately) constant lookup time.</p>
 <p>Therefore the outer loop will iterate $n$ times, and inside the loop will be constant, which means the overall algorithm will be $O(n)$ overall.</p>
-<p>The last option seems to have worse complexity, however it actually performs the best for reasonable inputs since although the hash map has constant lookup time, that constant may be very large. To test, I made two tests, one using the default hash function in the standard library, and another using <a href="https://crates.io/crates/rustc-hash" target="_blank" rel="noopener noreffer">rustc_hash</a>; a fast hash function that is highly suitable for integer keys.</p>
+<p>The last option seems to have worse complexity, however it actually performs the best for reasonable inputs since although the hash map has constant lookup time, that constant may be very large. To test, I made two tests, one using the default hash function in the standard library, and another using <a href=https://crates.io/crates/rustc-hash target=_blank rel="noopener noreffer">rustc_hash</a>; a fast hash function that is highly suitable for integer keys.</p>
 <p>Here we sort the list and initialise two variable <code>low</code> and <code>high</code> to be either ends of the array. If the sum of the elements at <code>low</code> and <code>high</code> is less than 2020, then we increase <code>low</code> (since the list is sorted, this will increase our sum) if it is less, then we decrease high.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">cmp</span>::<span class="n">Ordering</span><span class="p">;</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="k">fn</span> <span class="nf">part1_fast</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">expense_list</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">usize</span> <span class="p">{</span><span class="w">
-</span><span class="w">
-</span><span class="w">    </span><span class="n">expense_list</span><span class="p">.</span><span class="n">sort</span><span class="p">();</span><span class="w">
-</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">low</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">high</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">expense_list</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
-</span><span class="w">
-</span><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="n">low</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">high</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="p">(</span><span class="n">expense_list</span><span class="p">[</span><span class="n">low</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">high</span><span class="p">]).</span><span class="n">cmp</span><span class="p">(</span><span class="o">&amp;</span><span class="mi">2020</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">            </span><span class="n">Ordering</span>::<span class="n">Equal</span><span class="w">   </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">low</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">high</span><span class="p">],</span><span class="w">
-</span><span class="w">            </span><span class="n">Ordering</span>::<span class="n">Less</span><span class="w">    </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">low</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-</span><span class="w">            </span><span class="n">Ordering</span>::<span class="n">Greater</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">high</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-</span><span class="w">        </span><span class="p">}</span><span class="w">
-</span><span class="w">    </span><span class="p">}</span><span class="w">
-</span><span class="w">    </span><span class="n">panic</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;No two entries sum to 2020&#34;</span><span class="p">);</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w">
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=k>use</span><span class=w> </span><span class=n>std</span>::<span class=n>cmp</span>::<span class=n>Ordering</span><span class=p>;</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>fn</span> <span class=nf>part1_fast</span><span class=p>(</span><span class=k>mut</span><span class=w> </span><span class=n>expense_list</span>: <span class=nb>Vec</span><span class=o>&lt;</span><span class=kt>usize</span><span class=o>&gt;</span><span class=p>)</span><span class=w> </span>-&gt; <span class=kt>usize</span> <span class=p>{</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=n>expense_list</span><span class=p>.</span><span class=n>sort</span><span class=p>();</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=k>mut</span><span class=w> </span><span class=n>low</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mi>0</span><span class=p>;</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=k>mut</span><span class=w> </span><span class=n>high</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>expense_list</span><span class=p>.</span><span class=n>len</span><span class=p>()</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mi>1</span><span class=p>;</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=k>while</span><span class=w> </span><span class=n>low</span><span class=w> </span><span class=o>&lt;=</span><span class=w> </span><span class=n>high</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>        </span><span class=k>match</span><span class=w> </span><span class=p>(</span><span class=n>expense_list</span><span class=p>[</span><span class=n>low</span><span class=p>]</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>expense_list</span><span class=p>[</span><span class=n>high</span><span class=p>]).</span><span class=n>cmp</span><span class=p>(</span><span class=o>&amp;</span><span class=mi>2020</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>            </span><span class=n>Ordering</span>::<span class=n>Equal</span><span class=w>   </span><span class=o>=&gt;</span><span class=w> </span><span class=k>return</span><span class=w> </span><span class=n>expense_list</span><span class=p>[</span><span class=n>low</span><span class=p>]</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>expense_list</span><span class=p>[</span><span class=n>high</span><span class=p>],</span><span class=w>
+</span><span class=w>            </span><span class=n>Ordering</span>::<span class=n>Less</span><span class=w>    </span><span class=o>=&gt;</span><span class=w> </span><span class=n>low</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=mi>1</span><span class=p>,</span><span class=w>
+</span><span class=w>            </span><span class=n>Ordering</span>::<span class=n>Greater</span><span class=w> </span><span class=o>=&gt;</span><span class=w> </span><span class=n>high</span><span class=w> </span><span class=o>-=</span><span class=w> </span><span class=mi>1</span><span class=p>,</span><span class=w>
+</span><span class=w>        </span><span class=p>}</span><span class=w>
+</span><span class=w>    </span><span class=p>}</span><span class=w>
+</span><span class=w>    </span><span class=n>panic</span><span class=o>!</span><span class=p>(</span><span class=s>&#34;No two entries sum to 2020&#34;</span><span class=p>);</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
 </span></code></pre></td></tr></table>
 </div>
 </div><p>Here I have used the <code>Ordering</code> construct in the standard library to simplify the thing. Otherwise I could have written the (not as nice)</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">if</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">low</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">high</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2020</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">low</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">high</span><span class="p">],</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">low</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">high</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2020</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="n">low</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="n">h</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mi">1</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w">
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=k>if</span><span class=w> </span><span class=n>expense_list</span><span class=p>[</span><span class=n>low</span><span class=p>]</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>expense_list</span><span class=p>[</span><span class=n>high</span><span class=p>]</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=mi>2020</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>expense_list</span><span class=p>[</span><span class=n>low</span><span class=p>]</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>expense_list</span><span class=p>[</span><span class=n>high</span><span class=p>],</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=k>if</span><span class=w> </span><span class=n>expense_list</span><span class=p>[</span><span class=n>low</span><span class=p>]</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>expense_list</span><span class=p>[</span><span class=n>high</span><span class=p>]</span><span class=w> </span><span class=o>&lt;</span><span class=w> </span><span class=mi>2020</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=n>low</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=mi>1</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=n>h</span><span class=w> </span><span class=o>-=</span><span class=w> </span><span class=mi>1</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
 </span></code></pre></td></tr></table>
 </div>
 </div><p>Now lets look at the benchmarks to see how they perform on the puzzle input (200 lines)</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">test test::bench_fast       ... bench:       3,275 ns/iter (+/- 74)
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>test test::bench_fast       ... bench:       3,275 ns/iter (+/- 74)
 test test::bench_hashmap    ... bench:      10,530 ns/iter (+/- 183)
 test test::bench_rustc_hash ... bench:       2,875 ns/iter (+/- 156)
 test test::bench_naive      ... bench:       5,760 ns/iter (+/- 587)
 </code></pre></td></tr></table>
 </div>
 </div><p>It seems that choosing the right hash function can make a great impact on the performance. Though the naive algorithm didn&rsquo;t perform too poorly for this test, since it is $\mathcal O(n^2)$ we would expect it to perform much poorer on large test cases.</p>
-<h2 id="part-2">Part 2</h2>
+<h2 id=part-2>Part 2</h2>
 <p>Here in part 2, we iterate through the list and then call our Part 1 solution on the remainder. If we use the sorting algorithm from Part 1 we don&rsquo;t need to sort the list every time, so this would naturally be the best choice of the three.</p>
-<h1 id="day-2">Day 2</h1>
+<h1 id=day-2>Day 2</h1>
 <p>Day 2&rsquo;s problem is somewhat simpler algorithmically. Here we are given a list of passwords as well as a small schema which specifies a rule the password must satisfy in order for it to be valid. So our problem is to iterate through the lines of the line and count the number of valid passwords.</p>
 <p>Now this is the kind of work I am unfamiliar with. Though I did know enough to know that <em>regular expressions</em> would be very useful for extracting the data.</p>
 <p>An example of a line in the input is</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">15-16 p: ppppppppppplppppp
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>15-16 p: ppppppppppplppppp
 </code></pre></td></tr></table>
 </div>
 </div><p>Which says that there needs to be 15 to 16 of the characters &lsquo;p&rsquo; in the password <code>ppppppppppplppppp</code> in order for it to be valid. So we much extract <code>15</code>, <code>16</code>, <code>p</code>, <code>ppppppppppplppppp</code> from the text.</p>
-<p>After fiddling around a bit on <a href="https://regex101.com/" target="_blank" rel="noopener noreffer">Online Regex</a> I arrived at the regular expression</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<p>After fiddling around a bit on <a href=https://regex101.com/ target=_blank rel="noopener noreffer">Online Regex</a> I arrived at the regular expression</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">(\d+)-(\d+) (\w): (\w+)
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>(\d+)-(\d+) (\w): (\w+)
 </code></pre></td></tr></table>
 </div>
-</div><p>Let break this down a bit: <code>\d</code> matches a single digit and <code>\w</code> matches a non-digit character. Appending <code>+</code> to the end of a pattern indicates that one of more of the pattern must be present, <code>\d+</code> matches one or more digits e.g. $4$, $16$, and <code>\w+</code> matches one or more word characters e.g. <code>foo</code>, <code>bar</code>.  Parentheses <code>( )</code>specify a <em>capture group</em> which allows us to refer to each of the matches in the capture group so that we may extract the data out of the pattern after it has been matched</p>
+</div><p>Let break this down a bit: <code>\d</code> matches a single digit and <code>\w</code> matches a non-digit character. Appending <code>+</code> to the end of a pattern indicates that one of more of the pattern must be present, <code>\d+</code> matches one or more digits e.g. $4$, $16$, and <code>\w+</code> matches one or more word characters e.g. <code>foo</code>, <code>bar</code>. Parentheses <code>( )</code>specify a <em>capture group</em> which allows us to refer to each of the matches in the capture group so that we may extract the data out of the pattern after it has been matched</p>
 <p>Lets see how to do this in Rust:</p>
 <p>Add the <code>regex</code> crate to write by adding the line</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="p">[</span><span class="nx">dependencies</span><span class="p">]</span>
-<span class="nx">regex</span> <span class="p">=</span> <span class="s2">&#34;1.0&#34;</span>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=p>[</span><span class=nx>dependencies</span><span class=p>]</span>
+<span class=nx>regex</span> <span class=p>=</span> <span class=s2>&#34;1.0&#34;</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>To your project&rsquo;s <code>Cargo.toml</code> file.</p>
 <p>To create a regex we write</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="n">pass_regex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">regex</span>::<span class="n">Regex</span>::<span class="n">new</span><span class="p">(</span><span class="s">r&#34;(\d+)-(\d+) (\w): (\w+)&#34;</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=kd>let</span><span class=w> </span><span class=n>pass_regex</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>regex</span>::<span class=n>Regex</span>::<span class=n>new</span><span class=p>(</span><span class=s>r&#34;(\d+)-(\d+) (\w): (\w+)&#34;</span><span class=p>).</span><span class=n>unwrap</span><span class=p>();</span><span class=w>
 </span></code></pre></td></tr></table>
 </div>
 </div><p>Then if we can iterate over the capture groups using</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="n">cap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pass_regex</span><span class="p">.</span><span class="n">captures_iter</span><span class="p">(</span><span class="o">&amp;</span><span class="n">line</span><span class="p">).</span><span class="n">next</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
-</span><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">pass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PassData</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="n">begin</span>: <span class="nc">cap</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
-</span><span class="w">    </span><span class="n">end</span>:   <span class="nc">cap</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
-</span><span class="w">    </span><span class="n">chr</span>:   <span class="nc">cap</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="n">char</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
-</span><span class="w">    </span><span class="n">pass</span>:  <span class="kp">&amp;</span><span class="nc">cap</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w">
-</span><span class="w"></span><span class="p">};</span><span class="w">
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=kd>let</span><span class=w> </span><span class=n>cap</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>pass_regex</span><span class=p>.</span><span class=n>captures_iter</span><span class=p>(</span><span class=o>&amp;</span><span class=n>line</span><span class=p>).</span><span class=n>next</span><span class=p>().</span><span class=n>unwrap</span><span class=p>();</span><span class=w>
+</span><span class=w></span><span class=kd>let</span><span class=w> </span><span class=n>pass</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>PassData</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=n>begin</span>: <span class=nc>cap</span><span class=p>[</span><span class=mi>1</span><span class=p>].</span><span class=n>parse</span>::<span class=o>&lt;</span><span class=kt>usize</span><span class=o>&gt;</span><span class=p>().</span><span class=n>unwrap</span><span class=p>(),</span><span class=w>
+</span><span class=w>    </span><span class=n>end</span>:   <span class=nc>cap</span><span class=p>[</span><span class=mi>2</span><span class=p>].</span><span class=n>parse</span>::<span class=o>&lt;</span><span class=kt>usize</span><span class=o>&gt;</span><span class=p>().</span><span class=n>unwrap</span><span class=p>(),</span><span class=w>
+</span><span class=w>    </span><span class=n>chr</span>:   <span class=nc>cap</span><span class=p>[</span><span class=mi>3</span><span class=p>].</span><span class=n>parse</span>::<span class=o>&lt;</span><span class=n>char</span><span class=o>&gt;</span><span class=p>().</span><span class=n>unwrap</span><span class=p>(),</span><span class=w>
+</span><span class=w>    </span><span class=n>pass</span>:  <span class=kp>&amp;</span><span class=nc>cap</span><span class=p>[</span><span class=mi>4</span><span class=p>]</span><span class=w>
+</span><span class=w></span><span class=p>};</span><span class=w>
 </span></code></pre></td></tr></table>
 </div>
 </div><p>Lets break this down:</p>
 <ul>
-<li><code>pass_regex.captures_iter(&amp;line)</code> applies our regex to <code>line</code> and return an iterator over all matches (not <em>captures</em>!)</li>
+<li><code>pass_regex.captures_iter(&line)</code> applies our regex to <code>line</code> and return an iterator over all matches (not <em>captures</em>!)</li>
 <li><code>.next().unwrap()</code> Gets the first match of our regex. In our case we know that there is a guaranteed match and that there is only doing to be one.</li>
 <li><code>cap</code> is an array which contains the captures inside the match as well as the entire match itself as the first element. For instance, if we had applied the regex to <code>15-16 p: ppppppppppplppppp</code> then <code>cap</code> would be</li>
 </ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">cap = [&#34;15-16 p: ppppppppppplppppp:, &#34;15&#34;, &#34;16&#34;, &#34;p&#34;, &#34;ppppppppppplppppp&#34;]
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>cap = [&#34;15-16 p: ppppppppppplppppp:, &#34;15&#34;, &#34;16&#34;, &#34;p&#34;, &#34;ppppppppppplppppp&#34;]
 </code></pre></td></tr></table>
 </div>
 </div><p>Thus all we need to do is parse our data and store it in the <code>PassData</code> struct.</p>
 <p>Overall this gives</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">struct</span> <span class="nc">PassData</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="n">begin</span>: <span class="kt">usize</span><span class="p">,</span><span class="w">
-</span><span class="w">    </span><span class="n">end</span>:   <span class="kt">usize</span><span class="p">,</span><span class="w">
-</span><span class="w">    </span><span class="n">chr</span>:   <span class="nc">char</span><span class="p">,</span><span class="w">
-</span><span class="w">    </span><span class="n">pass</span>:  <span class="kp">&amp;</span><span class="na">&#39;a</span><span class="w"> </span><span class="kt">str</span><span class="p">,</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">fs</span>::<span class="n">File</span><span class="p">;</span><span class="w">
-</span><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">io</span>::<span class="p">{</span><span class="n">BufRead</span><span class="p">,</span><span class="w"> </span><span class="n">BufReader</span><span class="p">};</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="c1">// Counts the number of passwords in &#34;filepath&#34; that are validated by the &#34;policy&#34; function
-</span><span class="c1"></span><span class="k">fn</span> <span class="nf">count_valid_pass</span><span class="p">(</span><span class="n">filepath</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">policy</span>: <span class="nc">fn</span><span class="p">(</span><span class="n">PassData</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">usize</span> <span class="p">{</span><span class="w">
-</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">pass_regex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">regex</span>::<span class="n">Regex</span>::<span class="n">new</span><span class="p">(</span><span class="s">r&#34;(\d+)-(\d+) (\w): (\w+)&#34;</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">File</span>::<span class="n">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
-</span><span class="w">
-</span><span class="w">    </span><span class="n">BufReader</span>::<span class="n">new</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="w">
-</span><span class="w">        </span><span class="p">.</span><span class="n">lines</span><span class="p">()</span><span class="w">
-</span><span class="w">        </span><span class="p">.</span><span class="n">filter</span><span class="p">(</span><span class="o">|</span><span class="n">line</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">line</span><span class="p">.</span><span class="n">as_ref</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
-</span><span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">cap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pass_regex</span><span class="p">.</span><span class="n">captures_iter</span><span class="p">(</span><span class="o">&amp;</span><span class="n">line</span><span class="p">).</span><span class="n">next</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
-</span><span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">pass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PassData</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">                </span><span class="n">begin</span>: <span class="nc">cap</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
-</span><span class="w">                </span><span class="n">end</span>:   <span class="nc">cap</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
-</span><span class="w">                </span><span class="n">chr</span>:   <span class="nc">cap</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="n">char</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
-</span><span class="w">                </span><span class="n">pass</span>:  <span class="kp">&amp;</span><span class="nc">cap</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w">
-</span><span class="w">            </span><span class="p">};</span><span class="w">
-</span><span class="w">            </span><span class="n">policy</span><span class="p">(</span><span class="n">pass</span><span class="p">)</span><span class="w">
-</span><span class="w">        </span><span class="p">})</span><span class="w">
-</span><span class="w">        </span><span class="p">.</span><span class="n">count</span><span class="p">()</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="k">fn</span> <span class="nf">valid_password_p1</span><span class="p">(</span><span class="n">data</span>: <span class="nc">PassData</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span> <span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">occurences</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">pass</span><span class="p">.</span><span class="n">chars</span><span class="p">().</span><span class="n">filter</span><span class="p">(</span><span class="o">|</span><span class="n">c</span><span class="o">|</span><span class="w"> </span><span class="o">*</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">chr</span><span class="p">).</span><span class="n">count</span><span class="p">();</span><span class="w">
-</span><span class="w">    </span><span class="n">data</span><span class="p">.</span><span class="n">begin</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">occurences</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">occurences</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">end</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w">
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=k>struct</span> <span class=nc>PassData</span><span class=o>&lt;</span><span class=na>&#39;a</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=n>begin</span>: <span class=kt>usize</span><span class=p>,</span><span class=w>
+</span><span class=w>    </span><span class=n>end</span>:   <span class=kt>usize</span><span class=p>,</span><span class=w>
+</span><span class=w>    </span><span class=n>chr</span>:   <span class=nc>char</span><span class=p>,</span><span class=w>
+</span><span class=w>    </span><span class=n>pass</span>:  <span class=kp>&amp;</span><span class=na>&#39;a</span><span class=w> </span><span class=kt>str</span><span class=p>,</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>use</span><span class=w> </span><span class=n>std</span>::<span class=n>fs</span>::<span class=n>File</span><span class=p>;</span><span class=w>
+</span><span class=w></span><span class=k>use</span><span class=w> </span><span class=n>std</span>::<span class=n>io</span>::<span class=p>{</span><span class=n>BufRead</span><span class=p>,</span><span class=w> </span><span class=n>BufReader</span><span class=p>};</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=c1>// Counts the number of passwords in &#34;filepath&#34; that are validated by the &#34;policy&#34; function
+</span><span class=c1></span><span class=k>fn</span> <span class=nf>count_valid_pass</span><span class=p>(</span><span class=n>filepath</span>: <span class=kp>&amp;</span><span class=kt>str</span><span class=p>,</span><span class=w> </span><span class=n>policy</span>: <span class=nc>fn</span><span class=p>(</span><span class=n>PassData</span><span class=p>)</span><span class=w> </span>-&gt; <span class=kt>bool</span><span class=p>)</span><span class=w> </span>-&gt; <span class=kt>usize</span> <span class=p>{</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>pass_regex</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>regex</span>::<span class=n>Regex</span>::<span class=n>new</span><span class=p>(</span><span class=s>r&#34;(\d+)-(\d+) (\w): (\w+)&#34;</span><span class=p>).</span><span class=n>unwrap</span><span class=p>();</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>file</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>File</span>::<span class=n>open</span><span class=p>(</span><span class=n>filepath</span><span class=p>).</span><span class=n>unwrap</span><span class=p>();</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=n>BufReader</span>::<span class=n>new</span><span class=p>(</span><span class=n>file</span><span class=p>)</span><span class=w>
+</span><span class=w>        </span><span class=p>.</span><span class=n>lines</span><span class=p>()</span><span class=w>
+</span><span class=w>        </span><span class=p>.</span><span class=n>filter</span><span class=p>(</span><span class=o>|</span><span class=n>line</span><span class=o>|</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>            </span><span class=kd>let</span><span class=w> </span><span class=n>line</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>line</span><span class=p>.</span><span class=n>as_ref</span><span class=p>().</span><span class=n>unwrap</span><span class=p>();</span><span class=w>
+</span><span class=w>            </span><span class=kd>let</span><span class=w> </span><span class=n>cap</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>pass_regex</span><span class=p>.</span><span class=n>captures_iter</span><span class=p>(</span><span class=o>&amp;</span><span class=n>line</span><span class=p>).</span><span class=n>next</span><span class=p>().</span><span class=n>unwrap</span><span class=p>();</span><span class=w>
+</span><span class=w>            </span><span class=kd>let</span><span class=w> </span><span class=n>pass</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>PassData</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>                </span><span class=n>begin</span>: <span class=nc>cap</span><span class=p>[</span><span class=mi>1</span><span class=p>].</span><span class=n>parse</span>::<span class=o>&lt;</span><span class=kt>usize</span><span class=o>&gt;</span><span class=p>().</span><span class=n>unwrap</span><span class=p>(),</span><span class=w>
+</span><span class=w>                </span><span class=n>end</span>:   <span class=nc>cap</span><span class=p>[</span><span class=mi>2</span><span class=p>].</span><span class=n>parse</span>::<span class=o>&lt;</span><span class=kt>usize</span><span class=o>&gt;</span><span class=p>().</span><span class=n>unwrap</span><span class=p>(),</span><span class=w>
+</span><span class=w>                </span><span class=n>chr</span>:   <span class=nc>cap</span><span class=p>[</span><span class=mi>3</span><span class=p>].</span><span class=n>parse</span>::<span class=o>&lt;</span><span class=n>char</span><span class=o>&gt;</span><span class=p>().</span><span class=n>unwrap</span><span class=p>(),</span><span class=w>
+</span><span class=w>                </span><span class=n>pass</span>:  <span class=kp>&amp;</span><span class=nc>cap</span><span class=p>[</span><span class=mi>4</span><span class=p>]</span><span class=w>
+</span><span class=w>            </span><span class=p>};</span><span class=w>
+</span><span class=w>            </span><span class=n>policy</span><span class=p>(</span><span class=n>pass</span><span class=p>)</span><span class=w>
+</span><span class=w>        </span><span class=p>})</span><span class=w>
+</span><span class=w>        </span><span class=p>.</span><span class=n>count</span><span class=p>()</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>fn</span> <span class=nf>valid_password_p1</span><span class=p>(</span><span class=n>data</span>: <span class=nc>PassData</span><span class=p>)</span><span class=w> </span>-&gt; <span class=kt>bool</span> <span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>occurences</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>data</span><span class=p>.</span><span class=n>pass</span><span class=p>.</span><span class=n>chars</span><span class=p>().</span><span class=n>filter</span><span class=p>(</span><span class=o>|</span><span class=n>c</span><span class=o>|</span><span class=w> </span><span class=o>*</span><span class=n>c</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=n>data</span><span class=p>.</span><span class=n>chr</span><span class=p>).</span><span class=n>count</span><span class=p>();</span><span class=w>
+</span><span class=w>    </span><span class=n>data</span><span class=p>.</span><span class=n>begin</span><span class=w> </span><span class=o>&lt;=</span><span class=w> </span><span class=n>occurences</span><span class=w> </span><span class=o>&amp;&amp;</span><span class=w> </span><span class=n>occurences</span><span class=w> </span><span class=o>&lt;=</span><span class=w> </span><span class=n>data</span><span class=p>.</span><span class=n>end</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
 </span></code></pre></td></tr></table>
 </div>
 </div><p>Note here that we do not need to load the whole file into memory, but rather we can process it one a time which we do here.</p>
-<p>This isn&rsquo;t the best solution however as what we care about is actually <em>parsing</em> the data rather than <em>validating</em> it, which is what regular expressions are more suited towards. For this we can actually use a parser library achieve this. Chris Biscardi has a <a href="https://www.christopherbiscardi.com/advent-of-code-2020-in-rust-day-2-regex-vs-parser-combinators-with-nom" target="_blank" rel="noopener noreffer">great article</a> of how one can use the <code>nom</code> crate to create a <em>parser</em> rather than a regular expression for better performance for this exact problem, and <a href="https://blog.logrocket.com/parsing-in-rust-with-nom/" target="_blank" rel="noopener noreffer">Log Rocket</a> gives a great introduction to using the <code>nom</code> parser library</p>
+<p>This isn&rsquo;t the best solution however as what we care about is actually <em>parsing</em> the data rather than <em>validating</em> it, which is what regular expressions are more suited towards. For this we can actually use a parser library achieve this. Chris Biscardi has a <a href=https://www.christopherbiscardi.com/advent-of-code-2020-in-rust-day-2-regex-vs-parser-combinators-with-nom target=_blank rel="noopener noreffer">great article</a> of how one can use the <code>nom</code> crate to create a <em>parser</em> rather than a regular expression for better performance for this exact problem, and <a href=https://blog.logrocket.com/parsing-in-rust-with-nom/ target=_blank rel="noopener noreffer">Log Rocket</a> gives a great introduction to using the <code>nom</code> parser library</p>
 <p>I haven&rsquo;t encountered parsers yet and so I am thinking of learning about it and writing my experience as it looks like a much more elegant way to solve these kinds of problems.</p>
-<h2 id="part-2-1">Part 2</h2>
+<h2 id=part-2-1>Part 2</h2>
 <p>Part 2 asks us to change the validation function. Fortunately, since we wrote our code in a very modular way, this is very simple fix to make. In this one, passwords are valid if either $15$ (exclusively) or $16$ is the character &lsquo;p&rsquo;. This gives us the fairly simple code below, which we may pass into the <code>count_valid_pass</code> function as before</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
 </span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">fn</span> <span class="nf">valid_password_p2</span><span class="p">(</span><span class="n">data</span>: <span class="nc">PassData</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span> <span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">chars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">pass</span><span class="p">.</span><span class="n">chars</span><span class="p">();</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chars</span><span class="p">.</span><span class="n">nth</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">begin</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">second</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chars</span><span class="p">.</span><span class="n">nth</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">begin</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
-</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">xor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">|</span><span class="n">a</span>: <span class="kt">bool</span><span class="p">,</span><span class="w"> </span><span class="n">b</span>: <span class="kt">bool</span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">a</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">b</span><span class="p">);</span><span class="w">
-</span><span class="w">
-</span><span class="w">    </span><span class="n">xor</span><span class="p">(</span><span class="n">first</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">chr</span><span class="p">,</span><span class="w"> </span><span class="n">second</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">chr</span><span class="p">)</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w">
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=k>fn</span> <span class=nf>valid_password_p2</span><span class=p>(</span><span class=n>data</span>: <span class=nc>PassData</span><span class=p>)</span><span class=w> </span>-&gt; <span class=kt>bool</span> <span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=k>mut</span><span class=w> </span><span class=n>chars</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>data</span><span class=p>.</span><span class=n>pass</span><span class=p>.</span><span class=n>chars</span><span class=p>();</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>first</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>chars</span><span class=p>.</span><span class=n>nth</span><span class=p>(</span><span class=n>data</span><span class=p>.</span><span class=n>begin</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mi>1</span><span class=p>).</span><span class=n>unwrap</span><span class=p>();</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>second</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>chars</span><span class=p>.</span><span class=n>nth</span><span class=p>(</span><span class=n>data</span><span class=p>.</span><span class=n>end</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>data</span><span class=p>.</span><span class=n>begin</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mi>1</span><span class=p>).</span><span class=n>unwrap</span><span class=p>();</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>xor</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=o>|</span><span class=n>a</span>: <span class=kt>bool</span><span class=p>,</span><span class=w> </span><span class=n>b</span>: <span class=kt>bool</span><span class=o>|</span><span class=w> </span><span class=p>(</span><span class=n>a</span><span class=w> </span><span class=o>&amp;&amp;</span><span class=w> </span><span class=o>!</span><span class=n>b</span><span class=p>)</span><span class=w> </span><span class=o>||</span><span class=w> </span><span class=p>(</span><span class=o>!</span><span class=n>a</span><span class=w> </span><span class=o>&amp;&amp;</span><span class=w> </span><span class=n>b</span><span class=p>);</span><span class=w>
+</span><span class=w>
+</span><span class=w>    </span><span class=n>xor</span><span class=p>(</span><span class=n>first</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=n>data</span><span class=p>.</span><span class=n>chr</span><span class=p>,</span><span class=w> </span><span class=n>second</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=n>data</span><span class=p>.</span><span class=n>chr</span><span class=p>)</span><span class=w>
+</span><span class=w></span><span class=p>}</span><span class=w>
 </span></code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>Updated on 2019-10-01</span>
-            </div>
-            <div class="post-info-license"></div>
-        </div>
-        <div class="post-info-line">
-            <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/rust-advent-of-code-1-2/index.md" target="_blank">Read Markdown</a>
-                        </span></div>
-            <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="/rust-advent-of-code-1-2/" data-title="Advent of Code 2020 Day 1-2 in Rust" data-via="xxxx" data-hashtags="emoji"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="/rust-advent-of-code-1-2/" data-hashtag="emoji"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="/rust-advent-of-code-1-2/" data-title="Advent of Code 2020 Day 1-2 in Rust"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="/rust-advent-of-code-1-2/" data-title="Advent of Code 2020 Day 1-2 in Rust"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="/rust-advent-of-code-1-2/" data-title="Advent of Code 2020 Day 1-2 in Rust"><i class="fab fa-weibo fa-fw"></i></a></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/emoji/">emoji</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
-        </section>
-    </div>
-
-    <div class="post-nav"><a href="/interactive-bulk-rename-script/" class="prev" rel="prev" title="Bulk Rename Script"><i class="fas fa-angle-left fa-fw"></i>Bulk Rename Script</a>
-            <a href="/vim-workflow/" class="next" rel="next" title="A Vim Purist&#39;s Workflow">A Vim Purist&#39;s Workflow<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div></div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>Updated on 2019-10-01</span>
 </div>
-<div id="comments"><div id="valine" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
-            </noscript></div></article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.88.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">xxxx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
-
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
-                <i class="fas fa-arrow-up fa-fw"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
-                <i class="fas fa-comment fa-fw"></i>
-            </a>
-        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"en","pageSize":10,"placeholder":"Your comment ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+<div class=post-info-license></div>
+</div>
+<div class=post-info-line>
+<div class=post-info-md><span>
+<a class=link-to-markdown href=/rust-advent-of-code-1-2/index.md target=_blank>Read Markdown</a>
+</span></div>
+<div class=post-info-share>
+<span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=/rust-advent-of-code-1-2/ data-title="Advent of Code 2020 Day 1-2 in Rust" data-via=xxxx data-hashtags=emoji><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=/rust-advent-of-code-1-2/ data-hashtag=emoji><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=/rust-advent-of-code-1-2/ data-title="Advent of Code 2020 Day 1-2 in Rust"><i class="fab fa-hacker-news fa-fw"></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=/rust-advent-of-code-1-2/ data-title="Advent of Code 2020 Day 1-2 in Rust"><i data-svg-src=https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg></i></a><a href=javascript:void(0); title="Share on 微博" data-sharer=weibo data-url=/rust-advent-of-code-1-2/ data-title="Advent of Code 2020 Day 1-2 in Rust"><i class="fab fa-weibo fa-fw"></i></a></span>
+</div>
+</div>
+</div>
+<div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/emoji/>emoji</a></section>
+<section>
+<span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span>
+</section>
+</div>
+<div class=post-nav><a href=/interactive-bulk-rename-script/ class=prev rel=prev title="Bulk Rename Script"><i class="fas fa-angle-left fa-fw"></i>Bulk Rename Script</a>
+<a href=/vim-workflow/ class=next rel=next title="A Vim Purist's Workflow">A Vim Purist's Workflow<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id=comments><div id=valine class=comment></div><noscript>
+Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.
+</noscript></div></article></div>
+</main><footer class=footer>
+<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.88.1">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+</div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2019 - 2021</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>xxxx</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div>
+</div>
+</footer></div>
+<div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top">
+<i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments">
+<i class="fas fa-comment fa-fw"></i>
+</a>
+</div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:10},comment:{valine:{appId:"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI",appKey:"WBmoGyJtbqUswvfLh6L8iEBr",avatar:"mp",el:"#valine",emojiCDN:"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/",emojiMaps:{100:"1f4af.png",alien:"1f47d.png",anger:"1f4a2.png",angry:"1f620.png",anguished:"1f627.png",astonished:"1f632.png",black_heart:"1f5a4.png",blue_heart:"1f499.png",blush:"1f60a.png",bomb:"1f4a3.png",boom:"1f4a5.png",broken_heart:"1f494.png",brown_heart:"1f90e.png",clown_face:"1f921.png",cold_face:"1f976.png",cold_sweat:"1f630.png",confounded:"1f616.png",confused:"1f615.png",cry:"1f622.png",crying_cat_face:"1f63f.png",cupid:"1f498.png",dash:"1f4a8.png",disappointed:"1f61e.png",disappointed_relieved:"1f625.png",dizzy:"1f4ab.png",dizzy_face:"1f635.png",drooling_face:"1f924.png",exploding_head:"1f92f.png",expressionless:"1f611.png",face_vomiting:"1f92e.png",face_with_cowboy_hat:"1f920.png",face_with_hand_over_mouth:"1f92d.png",face_with_head_bandage:"1f915.png",face_with_monocle:"1f9d0.png",face_with_raised_eyebrow:"1f928.png",face_with_rolling_eyes:"1f644.png",face_with_symbols_on_mouth:"1f92c.png",face_with_thermometer:"1f912.png",fearful:"1f628.png",flushed:"1f633.png",frowning:"1f626.png",ghost:"1f47b.png",gift_heart:"1f49d.png",green_heart:"1f49a.png",grimacing:"1f62c.png",grin:"1f601.png",grinning:"1f600.png",hankey:"1f4a9.png",hear_no_evil:"1f649.png",heart:"2764-fe0f.png",heart_decoration:"1f49f.png",heart_eyes:"1f60d.png",heart_eyes_cat:"1f63b.png",heartbeat:"1f493.png",heartpulse:"1f497.png",heavy_heart_exclamation_mark_ornament:"2763-fe0f.png",hole:"1f573-fe0f.png",hot_face:"1f975.png",hugging_face:"1f917.png",hushed:"1f62f.png",imp:"1f47f.png",innocent:"1f607.png",japanese_goblin:"1f47a.png",japanese_ogre:"1f479.png",joy:"1f602.png",joy_cat:"1f639.png",kiss:"1f48b.png",kissing:"1f617.png",kissing_cat:"1f63d.png",kissing_closed_eyes:"1f61a.png",kissing_heart:"1f618.png",kissing_smiling_eyes:"1f619.png",laughing:"1f606.png",left_speech_bubble:"1f5e8-fe0f.png",love_letter:"1f48c.png",lying_face:"1f925.png",mask:"1f637.png",money_mouth_face:"1f911.png",nauseated_face:"1f922.png",nerd_face:"1f913.png",neutral_face:"1f610.png",no_mouth:"1f636.png",open_mouth:"1f62e.png",orange_heart:"1f9e1.png",partying_face:"1f973.png",pensive:"1f614.png",persevere:"1f623.png",pleading_face:"1f97a.png",pouting_cat:"1f63e.png",purple_heart:"1f49c.png",rage:"1f621.png",relaxed:"263a-fe0f.png",relieved:"1f60c.png",revolving_hearts:"1f49e.png",right_anger_bubble:"1f5ef-fe0f.png",robot_face:"1f916.png",rolling_on_the_floor_laughing:"1f923.png",scream:"1f631.png",scream_cat:"1f640.png",see_no_evil:"1f648.png",shushing_face:"1f92b.png",skull:"1f480.png",skull_and_crossbones:"2620-fe0f.png",sleeping:"1f634.png",sleepy:"1f62a.png",slightly_frowning_face:"1f641.png",slightly_smiling_face:"1f642.png",smile:"1f604.png",smile_cat:"1f638.png",smiley:"1f603.png",smiley_cat:"1f63a.png",smiling_face_with_3_hearts:"1f970.png",smiling_imp:"1f608.png",smirk:"1f60f.png",smirk_cat:"1f63c.png",sneezing_face:"1f927.png",sob:"1f62d.png",space_invader:"1f47e.png",sparkling_heart:"1f496.png",speak_no_evil:"1f64a.png",speech_balloon:"1f4ac.png","star-struck":"1f929.png",stuck_out_tongue:"1f61b.png",stuck_out_tongue_closed_eyes:"1f61d.png",stuck_out_tongue_winking_eye:"1f61c.png",sunglasses:"1f60e.png",sweat:"1f613.png",sweat_drops:"1f4a6.png",sweat_smile:"1f605.png",thinking_face:"1f914.png",thought_balloon:"1f4ad.png",tired_face:"1f62b.png",triumph:"1f624.png",two_hearts:"1f495.png",unamused:"1f612.png",upside_down_face:"1f643.png",weary:"1f629.png",white_frowning_face:"2639-fe0f.png",white_heart:"1f90d.png",wink:"1f609.png",woozy_face:"1f974.png",worried:"1f61f.png",yawning_face:"1f971.png",yellow_heart:"1f49b.png",yum:"1f60b.png",zany_face:"1f92a.png",zipper_mouth_face:"1f910.png",zzz:"1f4a4.png"},enableQQ:!1,highlight:!0,lang:"en",pageSize:10,placeholder:"Your comment ...",recordIP:!0,serverURLs:"https://leancloud.hugoloveit.com",visitor:!0}},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},search:{algoliaAppID:"PASDMWALPK",algoliaIndex:"index.en",algoliaSearchKey:"b42948e51daaa93df92381c8e2ac0f93",highlightTag:"em",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"algolia"}}</script><script type=text/javascript src=/js/theme.min.js></script></body>
 </html>

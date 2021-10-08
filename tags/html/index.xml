@@ -1,22 +1,2 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>HTML - Tag - </title>
-        <link>/tags/html/</link>
-        <description>HTML - Tag - </description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 01 Dec 2019 21:57:40 &#43;0800</lastBuildDate><atom:link href="/tags/html/" rel="self" type="application/rss+xml" /><item>
-    <title>Basic Markdown Syntax</title>
-    <link>/basic-markdown-syntax/</link>
-    <pubDate>Sun, 01 Dec 2019 21:57:40 &#43;0800</pubDate>
-    <author>Author</author>
-    <guid>/basic-markdown-syntax/</guid>
-    <description><![CDATA[<p>This article offers a sample of basic Markdown syntax that can be used in Hugo content files.</p>]]></description>
-</item><item>
-    <title>Monitoring Cryptocurrencies with Bash</title>
-    <link>/crypto-bash-script/</link>
-    <pubDate>Sun, 01 Dec 2019 21:57:40 &#43;0800</pubDate>
-    <author>Author</author>
-    <guid>/crypto-bash-script/</guid>
-    <description><![CDATA[I bought into the crypto scene but was concerned about the price of crypto dropping dramatically as it does, so I made an incredibly basic bash script to monitor the prices of crypto using the CoinGecko API. This could be used for instance to show the current price on Bitcoin in PolyBar or DWM
-1 2 3 4 5 6 7  #!/bin/sh  COINS=$1 CURRENCIES=$2 curl -X GET &#34;https://api.coingecko.com/api/v3/simple/price?ids=${COINS}&amp;vs_currencies=${CURRENCIES}&#34; -H &#34;accept: application/json&#34; echo &#34;&#34;   Save this to a file fetch-crypto.]]></description>
-</item></channel>
-</rss>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>HTML - Tag -</title><link>/tags/html/</link><description>HTML - Tag -</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 01 Dec 2019 21:57:40 +0800</lastBuildDate><atom:link href="/tags/html/" rel="self" type="application/rss+xml"/><item><title>Basic Markdown Syntax</title><link>/basic-markdown-syntax/</link><pubDate>Sun, 01 Dec 2019 21:57:40 +0800</pubDate><author>Author</author><guid>/basic-markdown-syntax/</guid><description>&lt;p>This article offers a sample of basic Markdown syntax that can be used in Hugo content files.&lt;/p></description></item><item><title>Monitoring Cryptocurrencies with Bash</title><link>/crypto-bash-script/</link><pubDate>Sun, 01 Dec 2019 21:57:40 +0800</pubDate><author>Author</author><guid>/crypto-bash-script/</guid><description><![CDATA[I bought into the crypto scene but was concerned about the price of crypto dropping dramatically as it does, so I made an incredibly basic bash script to monitor the prices of crypto using the CoinGecko API. This could be used for instance to show the current price on Bitcoin in PolyBar or DWM
+1 2 3 4 5 6 7  #!/bin/sh  COINS=$1 CURRENCIES=$2 curl -X GET &#34;https://api.coingecko.com/api/v3/simple/price?ids=${COINS}&amp;vs_currencies=${CURRENCIES}&#34; -H &#34;accept: application/json&#34; echo &#34;&#34;   Save this to a file fetch-crypto.]]></description></item></channel></rss>
