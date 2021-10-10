@@ -69,7 +69,7 @@ Let make a little script that: synchronises our mailboxes, indexes the mail, and
 
 get-mail.sh
 
-```zsh
+```bash
 #!/usr/bin/env bash
 
 # Sync with remote mailbox

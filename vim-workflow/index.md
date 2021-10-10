@@ -19,7 +19,7 @@ Probably one of the biggest things you should do is use the Vim manual, type `:h
 
 Here are the non-programming related 
 
-```
+```vim
 set hidden
 inoremap jk <ESC>
 autocmd Filetype markdown,tex,mail setlocal spell spelllang=en_au
