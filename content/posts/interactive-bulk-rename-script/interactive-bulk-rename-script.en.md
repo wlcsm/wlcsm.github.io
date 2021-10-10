@@ -1,15 +1,13 @@
 ---
 weight: 5
 title: "Bulk Rename Script"
-date: 2019-10-01T17:55:28+08:00
-lastmod: 2019-10-01T17:55:28+08:00
+date: 2021-01-01
 draft: false
 author: "Will Cashman"
-authorLink: "https://dillonzq.com"
-description: "Guide to emoji usage in Hugo and LoveIt."
+authorLink: "https://wlcsm.github.io"
+description: "Bulk Rename files with a small bash script"
 
-tags: ["emoji"]
-categories: ["Markdown"]
+catagories: ["shell"]
 
 lightgallery: true
 ---

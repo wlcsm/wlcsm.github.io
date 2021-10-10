@@ -1,11 +1,10 @@
 ---
 weight: 4
 title: "Thème Documentation - Extended Shortcodes"
-date: 2020-03-03T16:29:59+08:00
-lastmod: 2020-03-03T16:29:59+08:00
+date: 2020-03-03
 draft: false
-author: "Dillon"
-authorLink: "https://dillonzq.com"
+author: "Will Cashman"
+authorLink: "https://wlcsm.github.io"
 description: "Le thème LoveIt fournit plusieurs shortcodes en plus de ceux intégrés dans Hugo."
 resources:
 - name: "featured-image"
@@ -13,7 +12,7 @@ resources:
 - name: "featured-image-preview"
   src: "featured-image-preview.jpg"
 
-tags: ["shortcodes"]
+catagories: ["shortcodes"]
 categories: ["documentation"]
 
 lightgallery: true

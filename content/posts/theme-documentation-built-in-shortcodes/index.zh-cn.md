@@ -1,17 +1,16 @@
 ---
 weight: 3
 title: "主题文档 - 内置 Shortcodes"
-date: 2020-03-04T16:29:59+08:00
-lastmod: 2020-03-04T16:29:59+08:00
+date: 2020-03-04
 draft: false
-author: "Dillon"
-authorLink: "https://dillonzq.com"
+author: "Will Cashman"
+authorLink: "https://wlcsm.github.io"
 description: "Hugo 提供了多个内置的 Shortcodes, 以方便作者保持 Markdown 内容的整洁."
 resources:
 - name: "featured-image"
   src: "featured-image.png"
 
-tags: ["shortcodes"]
+catagories: ["shortcodes"]
 categories: ["documentation"]
 
 lightgallery: true

@@ -1,18 +1,13 @@
 ---
 weight: 5
 title: "Markdown to HTML Using sed"
-date: 2019-10-01T17:55:28+08:00
-lastmod: 2019-10-01T17:55:28+08:00
-draft: false
+date: 2021-10-01
 author: "Will Cashman"
-authorLink: "https://dillonzq.com"
+authorLink: "https://wlcsm.github.io"
 description: "Markdown to HTML Using sed"
 resources:
-- name: "featured-image"
-  src: "featured-image.jpg"
 
-tags: ["emoji"]
-categories: ["Markdown"]
+catagories: ["shell", "markdown"]
 
 lightgallery: true
 ---
@@ -23,7 +18,7 @@ However, it would be nice if it could actually render the Markdown file I was ed
 
 It isn't perfect, but most of what I need it to do can be done with the following sed script:
 
-```sed
+```bash
 # Markdown to HTML render
 
 1r header.html
@@ -61,13 +56,13 @@ You will also need the header and footer for the HTML file. This is up to you bu
 ```
 
 `footer.html`
-```sh
+```html
 </body>
 </html>
 ```
 
 To run it. Save the file as `markdown-to-html.sed` and execute it on a markdown file `file.md` as
 
-```sh
+```bash
 sed -f markdown-to-html.sed file.md
 ```

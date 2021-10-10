@@ -1,17 +1,16 @@
 ---
 weight: 4
 title: "Markdown 基本语法"
-date: 2019-12-01T21:57:40+08:00
-lastmod: 2020-01-01T16:45:40+08:00
+date: 2019-12-01
 draft: false
-author: "Dillon"
-authorLink: "https://dillonzq.com"
+author: "Will Cashman"
+authorLink: "https://wlcsm.github.io"
 description: "这篇文章展示了基本的 Markdown 语法和格式."
 resources:
 - name: "featured-image"
   src: "featured-image.png"
 
-tags: ["Markdown", "HTML"]
+catagories: ["Markdown", "HTML"]
 categories: ["Markdown"]
 
 lightgallery: true

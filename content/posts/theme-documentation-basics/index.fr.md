@@ -1,18 +1,16 @@
 ---
 weight: 1
 title: "Thème Documentation - Concepts de Base"
-date: 2020-03-06T21:40:32+08:00
-lastmod: 2020-03-06T21:40:32+08:00
+date: 2020-03-06
 draft: false
-author: "Dillon"
-authorLink: "https://dillonzq.com"
+author: "Will Cashman"
+authorLink: "https://wlcsm.github.io"
 description: "Découvrez en quoi consiste le thème Hugo - LoveIt et les concepts fondamentaux qui le sous-tendent."
 resources:
 - name: "featured-image"
   src: "featured-image.jpg"
 
-tags: ["installation", "configuration"]
-categories: ["documentation"]
+catagories: ["installation", "configuration"]
 
 lightgallery: true
 

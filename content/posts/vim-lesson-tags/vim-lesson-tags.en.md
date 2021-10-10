@@ -1,18 +1,14 @@
 ---
 weight: 5
 title: "Vim Features: Tags list"
-date: 2019-10-01T17:55:28+08:00
-lastmod: 2019-10-01T17:55:28+08:00
+date: 2019-10-01
 draft: false
 author: "Will Cashman"
-authorLink: "https://dillonzq.com"
+authorLink: "https://wlcsm.github.io"
 description: "Vim's Tags support"
 resources:
-- name: "featured-image"
-  src: "featured-image.jpg"
 
-tags: ["emoji"]
-categories: ["Markdown"]
+catagories: ["vim"]
 
 lightgallery: true
 ---

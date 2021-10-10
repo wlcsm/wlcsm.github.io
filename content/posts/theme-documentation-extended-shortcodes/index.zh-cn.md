@@ -1,11 +1,10 @@
 ---
 weight: 4
 title: "主题文档 - 扩展 Shortcodes"
-date: 2020-03-03T16:29:59+08:00
-lastmod: 2020-03-03T16:29:59+08:00
+date: 2020-03-03
 draft: false
-author: "Dillon"
-authorLink: "https://dillonzq.com"
+author: "Will Cashman"
+authorLink: "https://wlcsm.github.io"
 description: "LoveIt 主题在 Hugo 内置的 shortcode 的基础上提供多个扩展的 shortcode."
 resources:
 - name: "featured-image"
@@ -13,7 +12,7 @@ resources:
 - name: "featured-image-preview"
   src: "featured-image-preview.jpg"
 
-tags: ["shortcodes"]
+catagories: ["shortcodes"]
 categories: ["documentation"]
 
 lightgallery: true

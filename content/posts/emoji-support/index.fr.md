@@ -1,17 +1,16 @@
 ---
 weight: 5
 title: "Emoji Support"
-date: 2019-10-01T17:55:28+08:00
-lastmod: 2019-10-01T17:55:28+08:00
+date: 2019-10-01
 draft: false
-author: "Dillon"
-authorLink: "https://dillonzq.com"
+author: "Will Cashman"
+authorLink: "https://wlcsm.github.io"
 description: "Guide d'utilisation des emoji dans Hugo et LoveIt."
 resources:
 - name: "featured-image"
   src: "featured-image.jpg"
 
-tags: ["emoji"]
+catagories: ["emoji"]
 categories: ["Markdown"]
 
 lightgallery: true

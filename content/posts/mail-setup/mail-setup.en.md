@@ -1,18 +1,13 @@
 ---
 weight: 5
 title: "Mail Setup"
-date: 2019-10-01T17:55:28+08:00
-lastmod: 2019-10-01T17:55:28+08:00
-draft: false
+date: 2021-01-01
 author: "Will Cashman"
-authorLink: "https://dillonzq.com"
+authorLink: "https://wlcsm.github.io"
 description: "Documentation of my Email setup"
 resources:
-- name: "featured-image"
-  src: "featured-image.jpg"
 
-tags: ["emoji"]
-categories: ["Markdown"]
+catagories: ["email"]
 
 lightgallery: true
 ---
@@ -85,7 +80,7 @@ Let make a little script that: synchronises our mailboxes, indexes the mail, and
 
 get-mail.sh
 
-```zsh
+```bash
 #!/usr/bin/env bash
 
 # Sync with remote mailbox

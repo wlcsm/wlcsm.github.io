@@ -1,17 +1,16 @@
 ---
 weight: 3
 title: "Thème Documentation - Built-in Shortcodes"
-date: 2020-03-04T16:29:59+08:00
-lastmod: 2020-03-04T16:29:59+08:00
+date: 2020-03-04
 draft: false
-author: "Dillon"
-authorLink: "https://dillonzq.com"
+author: "Will Cashman"
+authorLink: "https://wlcsm.github.io"
 description: "Hugo fournit plusieurs shortcodes intégrés pour la commodité de l'auteur et pour garder votre contenu de démarque propre."
 resources:
 - name: "featured"
   src: "featured-image.png"
 
-tags: ["shortcodes"]
+catagories: ["shortcodes"]
 categories: ["documentation"]
 
 lightgallery: true

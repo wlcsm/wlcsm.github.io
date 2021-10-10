@@ -1,18 +1,13 @@
 ---
 weight: 5
 title: "Using nvim-lsp for Go"
-date: 2019-10-01T17:55:28+08:00
-lastmod: 2019-10-01T17:55:28+08:00
-draft: false
+date: 2021-01-01
 author: "Will Cashman"
-authorLink: "https://dillonzq.com"
+authorLink: "https://wlcsm.github.io"
 description: "Using nvim-lsp for Go"
 resources:
-- name: "featured-image"
-  src: "featured-image.jpg"
 
-tags: ["emoji"]
-categories: ["Markdown"]
+catagories: ["go", "vim"]
 
 lightgallery: true
 ---

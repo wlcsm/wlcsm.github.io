@@ -1,17 +1,16 @@
 ---
 weight: 2
 title: "Thème Documentation - Contenu"
-date: 2020-03-05T16:30:05+08:00
-lastmod: 2020-03-05T16:30:05+08:00
+date: 2020-03-05
 draft: false
-author: "Dillon"
-authorLink: "https://dillonzq.com"
+author: "Will Cashman"
+authorLink: "https://wlcsm.github.io"
 description: "Découvrez comment créer et organiser votre contenu rapidement et intuitivement dans le thème LoveIt."
 resources:
 - name: "featured-image"
   src: "featured-image.jpg"
 
-tags: ["content", "Markdown"]
+catagories: ["content", "Markdown"]
 categories: ["documentation"]
 
 lightgallery: true
@@ -76,8 +75,7 @@ Here is a front matter example:
 ---
 title: "My First Post"
 subtitle: ""
-date: 2020-03-04T15:58:26+08:00
-lastmod: 2020-03-04T15:58:26+08:00
+date: 2020-03-04
 draft: true
 author: ""
 authorLink: ""
@@ -85,7 +83,7 @@ description: ""
 license: ""
 images: []
 
-tags: []
+catagories: []
 categories: []
 featuredImage: ""
 featuredImagePreview: ""
@@ -138,7 +136,6 @@ seo:
 * **title**: the title for the content.
 * **subtitle**: {{< version 0.2.0 >}} the subtitle for the content.
 * **date**: the datetime assigned to this page, which is usually fetched from the `date` field in front matter, but this behaviour is configurabl in the [site configuration](../theme-documentation-basics#site-configuration).
-* **lastmod**: the datetime at which the content was last modified.
 * **draft**: if `true`, the content will not be rendered unless the `--buildDrafts`/`-D` flag is passed to the `hugo` command.
 * **author**: the author for the content.
 * **authorLink**: the link of the author.

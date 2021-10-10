@@ -4,15 +4,14 @@ title: "Theme Documentation - Content"
 date: 2020-03-05T15:58:26+08:00
 lastmod: 2020-03-05T15:58:26+08:00
 draft: false
-author: "Dillon"
-authorLink: "https://dillonzq.com"
+author: "Will Cashman"
+authorLink: "https://wlcsm.github.io"
 description: "Find out how to create and organize your content quickly and intuitively in LoveIt theme."
 resources:
 - name: "featured-image"
   src: "featured-image.jpg"
 
 tags: ["content", "Markdown"]
-categories: ["documentation"]
 
 lightgallery: true
 

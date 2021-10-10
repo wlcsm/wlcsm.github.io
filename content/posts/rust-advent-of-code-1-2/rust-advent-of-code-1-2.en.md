@@ -1,18 +1,13 @@
 ---
 weight: 5
 title: "Advent of Code 2020 Day 1-2 in Rust"
-date: 2019-10-01T17:55:28+08:00
-lastmod: 2019-10-01T17:55:28+08:00
-draft: false
+date: 2021-10-01
 author: "Will Cashman"
-authorLink: "https://dillonzq.com"
+authorLink: "https://wlcsm.github.io"
 description: "Discussion of the solutions to the Day 1 and 2 Advent of Code's solutions in Rust"
 resources:
-- name: "featured-image"
-  src: "featured-image.jpg"
 
-tags: ["emoji"]
-categories: ["Markdown"]
+catagories: ["rust"]
 
 lightgallery: true
 ---
