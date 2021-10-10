@@ -2,7 +2,7 @@
 weight: 3
 title: "Theme Documentation - Built-in Shortcodes"
 date: 2020-03-04
-draft: false
+draft: true
 author: "Will Cashman"
 authorLink: "https://wlcsm.github.io"
 description: "Hugo provides multiple built-in shortcodes for author convenience and to keep your markdown content clean."

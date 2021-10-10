@@ -2,7 +2,7 @@
 weight: 5
 title: "Emoji Support"
 date: 2019-10-01
-draft: false
+draft: true
 author: "Will Cashman"
 authorLink: "https://wlcsm.github.io"
 description: "Guide to emoji usage in Hugo and LoveIt."

@@ -2,7 +2,7 @@
 weight: 4
 title: "主题文档 - 扩展 Shortcodes"
 date: 2020-03-03
-draft: false
+draft: true
 author: "Will Cashman"
 authorLink: "https://wlcsm.github.io"
 description: "LoveIt 主题在 Hugo 内置的 shortcode 的基础上提供多个扩展的 shortcode."

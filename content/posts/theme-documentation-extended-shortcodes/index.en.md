@@ -2,7 +2,7 @@
 weight: 4
 title: "Theme Documentation - Extended Shortcodes"
 date: 2020-03-03
-draft: false
+draft: true
 author: "Will Cashman"
 authorLink: "https://wlcsm.github.io"
 description: "LoveIt theme provides multiple shortcodes on top of built-in ones in Hugo."

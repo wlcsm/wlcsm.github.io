@@ -2,7 +2,7 @@
 weight: 4
 title: "Basic Markdown Syntax"
 date: 2019-12-01
-draft: false
+draft: true
 author: "Will Cashman"
 authorLink: "https://wlcsm.github.io"
 description: "This article shows the basic Markdown syntax and format."

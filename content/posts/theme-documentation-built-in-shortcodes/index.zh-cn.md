@@ -2,7 +2,7 @@
 weight: 3
 title: "主题文档 - 内置 Shortcodes"
 date: 2020-03-04
-draft: false
+draft: true
 author: "Will Cashman"
 authorLink: "https://wlcsm.github.io"
 description: "Hugo 提供了多个内置的 Shortcodes, 以方便作者保持 Markdown 内容的整洁."

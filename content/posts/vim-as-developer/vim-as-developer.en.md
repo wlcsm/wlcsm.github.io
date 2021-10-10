@@ -1,16 +1,13 @@
 ---
 title: "Vim for Software Development"
-date: 2019-10-01
+date: 2021-01-01
 draft: false
 author: "Will Cashman"
 authorLink: "https://wlcsm.github.io"
 description: "Vim for Software Development"
 resources:
-- name: "featured-image"
-  src: "featured-image.jpg"
 
 catagories: ["emoji"]
-categories: ["Markdown"]
 
 lightgallery: true
 ---

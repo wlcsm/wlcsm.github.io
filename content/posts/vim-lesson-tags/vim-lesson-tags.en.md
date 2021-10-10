@@ -1,7 +1,7 @@
 ---
 weight: 5
 title: "Vim Features: Tags list"
-date: 2019-10-01
+date: 2021-01-01
 draft: false
 author: "Will Cashman"
 authorLink: "https://wlcsm.github.io"

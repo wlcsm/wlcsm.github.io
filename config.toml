@@ -52,19 +52,27 @@ enableEmoji = true
         title = ""
         weight = 1
       [[languages.en.menu.main]]
-        identifier = "categories"
-        pre = ""
-        post = ""
-        name = "Categories"
-        url = "/categories/"
-        title = ""
-        weight = 3
-      [[languages.en.menu.main]]
         identifier = "vim"
         pre = ""
         post = ""
         name = "Vim"
         url = "/categories/vim/"
+        title = ""
+        weight = 2
+      [[languages.en.menu.main]]
+        identifier = "travel"
+        pre = ""
+        post = ""
+        name = "Travel"
+        url = "/categories/travel/"
+        title = ""
+        weight = 3
+      [[languages.en.menu.main]]
+        identifier = "categories"
+        pre = ""
+        post = ""
+        name = "Categories"
+        url = "/categories/"
         title = ""
         weight = 4
       [[languages.en.menu.main]]
@@ -91,7 +99,7 @@ enableEmoji = true
       # App icon config
       [languages.en.params.app]
         # optional site title override for the app when added to an iOS home screen or Android launcher
-        title = "LoveIt"
+        title = "Will Cashman"
         # whether to omit favicon resource links
         noFavicon = false
         # modern SVG favicon to use in place of older style .png and .ico files
@@ -126,7 +134,7 @@ enableEmoji = true
       # Home page config
       [languages.en.params.home]
         # amount of RSS pages
-        rss = 10
+        rss = 10000
         # Home page profile
         [languages.en.params.home.profile]
           enable = true
@@ -196,19 +204,28 @@ enableEmoji = true
         url = "/posts/"
         title = ""
         weight = 1
+      [[languages.zh-en.menu.main]]
+        identifier = "vim"
+        pre = ""
+        post = ""
+        name = "Vim"
+        url = "/categories/vim/"
+        title = ""
+        weight = 2
+      [[languages.zh-en.menu.main]]
+        identifier = "travel"
+        pre = ""
+        post = ""
+        name = "旅行"
+        url = "/categories/travel/"
+        title = ""
+        weight = 3
       [[languages.zh-cn.menu.main]]
         identifier = "categories"
         pre = ""
         post = ""
         name = "分类"
         url = "/categories/"
-        title = ""
-        weight = 3
-      [[languages.zh-cn.menu.main]]
-        identifier = "documentation"
-        pre = ""
-        name = "文档"
-        url = "/categories/documentation/"
         title = ""
         weight = 4
       [[languages.zh-cn.menu.main]]
@@ -224,7 +241,7 @@ enableEmoji = true
         pre = "<i class='fab fa-github fa-fw'></i>"
         post = ""
         name = ""
-        url = "https://github.com/dillonzq/LoveIt"
+        url = "https://github.com/wlcsm"
         title = "GitHub"
         weight = 6
     [languages.zh-cn.params]
@@ -235,7 +252,7 @@ enableEmoji = true
       # 应用图标配置
       [languages.zh-cn.params.app]
         # 当添加到 iOS 主屏幕或者 Android 启动器时的标题, 覆盖默认标题
-        title = "LoveIt"
+        title = "Will Cashman"
         # 是否隐藏网站图标资源链接
         noFavicon = false
         # 更现代的 SVG 网站图标, 可替代旧的 .png 和 .ico 文件
@@ -270,7 +287,7 @@ enableEmoji = true
       # 主页信息设置
       [languages.zh-cn.params.home]
         # RSS 文章数目
-        rss = 10
+        rss = 10000
         # 主页个人信息
         [languages.zh-cn.params.home.profile]
           enable = true
@@ -337,9 +354,9 @@ enableEmoji = true
       # URL of the LOGO
       logo = ""
       # title name
-      name = "LoveIt"
+      name = "Will Cashman"
       # you can add extra information before the name (HTML format is supported), such as icons
-      pre = "<i class='far fa-kiss-wink-heart fa-fw'></i>"
+      pre = ""
       # you can add extra information after the name (HTML format is supported), such as icons
       post = ""
       # whether to use typeit animation for title name
@@ -357,7 +374,7 @@ enableEmoji = true
     # whether to show the author
     author = true
     # site creation time
-    since = 2019
+    since = 2021
     # ICP info only in China (HTML format is supported)
     icp = ""
     # license info (HTML format is supported)
@@ -370,7 +387,7 @@ enableEmoji = true
     # date format (month and day)
     dateFormat = "01-02"
     # amount of RSS pages
-    rss = 10
+    rss = 10000
 
   # List (category or tag) page config
   [params.list]
@@ -379,7 +396,7 @@ enableEmoji = true
     # date format (month and day)
     dateFormat = "01-02"
     # amount of RSS pages
-    rss = 10
+    rss = 10000
 
   # Page config
   [params.page]
@@ -400,7 +417,7 @@ enableEmoji = true
     # whether to show link to Raw Markdown content of the content
     linkToMarkdown = true
     # whether to show the full text content in RSS
-    rssFullText = false
+    rssFullText = true
     # Table of the contents config
     [params.page.toc]
       # whether to enable the table of the contents
@@ -567,8 +584,8 @@ enableEmoji = true
       images = []
       # Publisher info
       [params.page.seo.publisher]
-        name = "xxxx"
-        logoUrl = "/images/avatar.png"
+        name = "Will Cashman"
+        logoUrl = "/images/china-silver-dragon.jpg"
 
   # TypeIt config
   [params.typeit]
@@ -675,8 +692,8 @@ enableEmoji = true
 
 # Author config
 [author]
-  name = "xxxx"
-  email = ""
+  name = "Will Cashman"
+  email = "w.cashman1351@gmail.com"
   link = ""
 
 # Sitemap config

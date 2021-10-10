@@ -1,7 +1,7 @@
 ---
 weight: 5
 title: "A Vim Purist's Workflow"
-date: 2019-10-01
+date: 2021-01-01
 draft: false
 author: "Will Cashman"
 authorLink: "https://wlcsm.github.io"
@@ -9,7 +9,6 @@ description: "A Vim Purist's Workflow"
 resources:
 
 catagories: ["emoji"]
-categories: ["Markdown"]
 
 lightgallery: true
 ---
