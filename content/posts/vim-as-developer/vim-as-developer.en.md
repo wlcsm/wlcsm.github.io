@@ -7,14 +7,17 @@ authorLink: "https://wlcsm.github.io"
 description: "Vim for Software Development"
 resources:
 
-catagories: ["emoji"]
+categories: ["vim"]
 
 lightgallery: true
 ---
 
-Most people think Vim is an outdated piece of software development, useful perhaps editing small files over SSH, but surely no one uses it as their main code development tool right?
+It is no secret that Vim has fallen behind the times when it comes to software develpment. Not to say that it has strayed from its original design and purpose i.e. editing text. But that the times have changed such that this is no longer satisfies the needs of many developers 
 
-Here I am going to go through what I think are the key components to a normal software development. Of course, Vim doesn't give you the complex build environemtns of a proper IDE, but if you are working comfortably in another text editor like VS Code or Sublime Text, then theres a good chance that everything you are doing can be done in vanilla Vim. Thats right, I'm going to show all these things with a minimal vimrc with *no plugins*. 
+When I see people talk about using Vim for software development, it is a general concensus that you *must* load it full of plugins to get that VSCode feeling back. Vim by it::I see two main schools of thought:
+1. Vim is great because you can customise it so much and overload it to the point that it is actually slower than VSCode 
+2. Vim is fine the way it is and you - the user - just need to get better
+Here I am going to go through what I think are the key components to a normal software development. Of course, Vim doesn't give you the complex build environments of a proper IDE, but if you are working comfortably in another text editor like VS Code or Sublime Text, then there's a good chance that everything you are doing can be done in vanilla Vim. That's right, I'm going to show all these things with a minimal vimrc with *no plugins*. 
 
 Small note: I am actually talking about Neovim rather than Vim. Its the same thing but a better code base and friendlier community, and also sets many sane defaults (which means our vimrc can be even smaller!)
 
@@ -73,7 +76,7 @@ This executes the shell command `grep -n <args>` and feeds the output into the q
 
 If you would prefer to use a different searching program, set the `grepprg` which is the shell command Vim will use to find the matches. It is set to `grep -n` by defualt. Just make sure the output includes the filename and the line number so that Vim can help you easily navigate to them, this is why Vim uses the `-n` option in `grep` to add the line numbers
 
-For example, I prefer to use [ripgrep](TODO) because it's faster. I also do a fair amount of Rust programmings at the moment and so I don't want Vim to search in the `targets` directory (the build directory in rust), so I have this in my rust filetype plugin file
+For example, I prefer to use [ripgrep](TODO) because it's faster. I also do a fair amount of Rust programming at the moment and so I don't want Vim to search in the `targets` directory (the build directory in rust), so I have this in my rust filetype plugin file
 
 ```vim
 set grepprg=rg\ -rn\ -g\ '!target/**'
@@ -91,7 +94,7 @@ There are several main mechanisms:
 * `gd`: Goes to the first occurrence on the object in the current method. Note that this only really works with some language that have the concept of a 'method' defined, namely bracket delimited languages
 * Include search: This actually searches through the current file and all files that this file imports (provided that the `includepath` variable has been correctly configure). Pressing `[I` will list all the occurrences of the word under the cursor in these files. If you want to go to the Nth line in the list it shows, press `N[\t`, that it, the number, then a `[`, then a tab. (at can't even find this is in the manual lol). There are actually many more navigation commands with include search, to see the all, use `:h include-search`
 * Tags: This is probably the greatest thing. There is also a preview window which you could use kind of like the hover functionality given by LSPs. TODO
-* `vim-lsp`: Technically in Neovim 5.0, this is no longer a plug-in. It is definitely very useful, however I haven't really needed to use it as I've found that using tags for definitions of: functions, type, etc. and include search for variables has been more than I need for all of my development. Note: If you use `cscope` then you can also use tags for local variable names too.
+* `nvim-lsp`: Technically in Neovim 5.0, this is no longer a plug-in. It is definitely very useful, however I haven't really needed to use it as I've found that using tags for definitions of: functions, type, etc. and include search for variables has been more than I need for all of my development. Note: If you use `cscope` then you can also use tags for local variable names too.
 
 
 Also note the use of marks when you want to return to older positions TODO expand

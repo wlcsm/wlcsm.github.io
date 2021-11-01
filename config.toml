@@ -141,7 +141,8 @@ enableEmoji = true
           # Gravatar Email for preferred avatar in home page
           gravatarEmail = ""
           # URL of avatar shown in home page
-          avatarURL = "/images/china-silver-dragon.jpg"
+          avatarURL = "images/china-silver-dragon.jpg"
+
           # title shown in home page (HTML format is supported)
           title = ""
           # subtitle shown in home page
@@ -161,17 +162,17 @@ enableEmoji = true
       [languages.en.params.social]
         GitHub = "wlcsm"
         Linkedin = "cashman-will"
-        Twitter = "xxxx"
-        Facebook = "xxxx"
-        FreeCodeCamp = ""
+#        Twitter = ""
+#        Facebook = ""
+#        FreeCodeCamp = ""
         Stackoverflow = ""
-        Paypal = ""
-        Hackernews = ""
-        Zhihu = ""
-        Gitea = ""
-        XMPP = ""
-        Matrix = ""
-        Bilibili = ""
+#        Paypal = ""
+#        Hackernews = ""
+#        Zhihu = ""
+#        Gitea = ""
+#        XMPP = ""
+#        Matrix = ""
+#        Bilibili = ""
         Email = "w.cashman1351@gmail.com"
         RSS = true
 #        [languages.en.params.social.Mastodon]
@@ -183,8 +184,7 @@ enableEmoji = true
     # 网站语言, 仅在这里 CN 大写
     languageCode = "zh-CN"
     # 语言名称
-    languageName = "简体中文"
-    # 是否包括中日韩文字
+    languageName = "简体中文" # 是否包括中日韩文字
     hasCJKLanguage = true
     # 默认每页列表显示的文章数目
     paginate = 12
@@ -204,7 +204,7 @@ enableEmoji = true
         url = "/posts/"
         title = ""
         weight = 1
-      [[languages.zh-en.menu.main]]
+      [[languages.zh-cn.menu.main]]
         identifier = "vim"
         pre = ""
         post = ""
@@ -212,7 +212,7 @@ enableEmoji = true
         url = "/categories/vim/"
         title = ""
         weight = 2
-      [[languages.zh-en.menu.main]]
+      [[languages.zh-cn.menu.main]]
         identifier = "travel"
         pre = ""
         post = ""
@@ -294,7 +294,7 @@ enableEmoji = true
           # Gravatar 邮箱，用于优先在主页显示的头像
           gravatarEmail = ""
           # 主页显示头像的 URL
-          avatarURL = "/images/avatar.png"
+          avatarURL = "images/china-silver-dragon.jpg"
           # 主页显示的网站标题 (支持 HTML 格式)
           title = ""
           # 主页显示的网站副标题
@@ -314,18 +314,18 @@ enableEmoji = true
       [languages.zh-cn.params.social]
         GitHub = "wlcsm"
         Linkedin = "cashman-will"
-        Twitter = "xxxx"
-        Facebook = "xxxx"
-        FreeCodeCamp = ""
+#        Twitter = "xxxx"
+#        Facebook = "xxxx"
+#        FreeCodeCamp = ""
         Stackoverflow = ""
-        Paypal = ""
-        Hackernews = ""
-        Zhihu = ""
-        Gitea = ""
-        XMPP = ""
-        Matrix = ""
+#        Paypal = ""
+#        Hackernews = ""
+#        Zhihu = ""
+#        Gitea = ""
+#        XMPP = ""
+#        Matrix = ""
+#        Bilibili = ""
         Bilibili = ""
-        Email = "w.cashman1351@gmail.com"
         RSS = true
 
 
