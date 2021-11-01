@@ -1,0 +1,163 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>vim - Category - Will Vim Bog</title><link>https://wlcsm.github.io/categories/vim/</link><description>vim - Category - Will Vim Bog</description><generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>w.cashman1351@gmail.com (Will Cashman)</managingEditor><webMaster>w.cashman1351@gmail.com (Will Cashman)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 24 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://wlcsm.github.io/categories/vim/" rel="self" type="application/rss+xml"/><item><title>Trick for Managing Neovim Terminals</title><link>https://wlcsm.github.io/managing-vim-terminals/</link><pubDate>Sun, 24 Oct 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://wlcsm.github.io/managing-vim-terminals/</guid><description><![CDATA[<p>I&rsquo;ve recently been use Neovim&rsquo;s terminals a lot more recently and I&rsquo;ve found that I spend a lot of time doing</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">:term &lt;TAB&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>to find the terminal with my tests. Then &lt;C-&gt;<C-N>&lt;C-^&gt; to get back to the file that I was editing, and if I have more than one terminal open it isn&rsquo;t easy to remember which terminal has my tests it in, which terminals had another thing, and so on.</p>
+<p>So I made a nice little Vim function to handle this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="k">let</span> <span class="nx">s</span>:<span class="nx">terminals</span> <span class="p">=</span> {}<span class="err">
+</span><span class="err"></span><span class="k">function</span> <span class="nx">GoToTerminal</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span><span class="err">
+</span><span class="err"></span>	<span class="nx">execute</span> <span class="s1">&#39;drop &#39;</span> . <span class="nx">get</span><span class="p">(</span><span class="nx">s</span>:<span class="nx">terminals</span><span class="p">,</span> <span class="nx">a</span>:<span class="nx">num</span><span class="p">,</span> <span class="s1">&#39;term://bash&#39;</span><span class="p">)</span><span class="err">
+</span><span class="err"></span>	<span class="k">let</span> <span class="nx">s</span>:<span class="nx">terminals</span>[<span class="nx">a</span>:<span class="nx">num</span>] <span class="p">=</span> <span class="nx">expand</span><span class="p">(</span><span class="s1">&#39;%s&#39;</span><span class="p">)</span><span class="err">
+</span><span class="err"></span>	<span class="nx">normal</span> <span class="nx">i</span><span class="err">
+</span><span class="err"></span><span class="k">endfunction</span><span class="err">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>Which I like to pair with these mappings</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="nx">tnoremap</span> <span class="p">&lt;</span><span class="nx">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">c</span><span class="p">-</span><span class="nx">b</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">cmd</span><span class="p">&gt;</span><span class="nx">execute</span> <span class="s1">&#39;drop &#39;</span> . <span class="nx">expand</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
+</span><span class="err"></span><span class="nx">nnoremap</span> <span class="p">&lt;</span><span class="nx">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">c</span><span class="p">-</span><span class="nx">b</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">cmd</span><span class="p">&gt;</span><span class="nx">call</span> <span class="nx">GoToTerminal</span><span class="p">(</span><span class="nx">v</span>:<span class="nx">count</span><span class="p">)&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>If you really want, you can even avoid writing a function and do the entire thing in three lines</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="nx">g</span>:<span class="nx">terms</span> <span class="p">=</span> {}<span class="err">
+</span><span class="err"></span><span class="nx">tnoremap</span> <span class="p">&lt;</span><span class="nx">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">c</span><span class="p">-</span><span class="nx">b</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">cmd</span><span class="p">&gt;</span><span class="nx">execute</span> <span class="s1">&#39;drop &#39;</span> . <span class="nx">expand</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
+</span><span class="err"></span><span class="nx">nnoremap</span> <span class="p">&lt;</span><span class="nx">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">c</span><span class="p">-</span><span class="nx">b</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">cmd</span><span class="p">&gt;</span><span class="nx">exe</span> <span class="s1">&#39;drop &#39;</span> . <span class="nx">get</span><span class="p">(</span><span class="nx">g</span>:<span class="nx">terms</span><span class="p">,</span> <span class="nx">v</span>:<span class="nx">count</span><span class="p">,</span> <span class="s1">&#39;term://bash&#39;</span><span class="p">)</span> <span class="p">|</span> <span class="k">let</span> <span class="nx">g</span>:<span class="nx">terms</span>[<span class="nx">v</span>:<span class="nx">count</span>] <span class="p">=</span> <span class="nx">expand</span><span class="p">(</span><span class="s1">&#39;%s&#39;</span><span class="p">)</span> <span class="p">|</span> <span class="nx">norm</span> <span class="nx">i</span><span class="p">&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>So now if I want a terminal I just press [count]<C-B> where &ldquo;count&rdquo; is a number, or defaults to zero if not given. Then when I&rsquo;m done with that terminal and want to go back to the main file, I just press <C-B>.</p>
+<p>Since I use the &lsquo;drop&rsquo; command, if the terminal, or the original file are already present in another window, it will just move the cursor there.</p>
+<p>If there is no terminal open for that [count], it will create a new one.</p>
+]]></description></item><item><title>Vim for Software Development</title><link>https://wlcsm.github.io/vim-as-developer/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://wlcsm.github.io/vim-as-developer/</guid><description><![CDATA[<p>It is no secret that Vim has fallen behind the times when it comes to software develpment. Not to say that it has strayed from its original design and purpose i.e. editing text. But that the times have changed such that this is no longer satisfies the needs of many developers</p>
+<p>When I see people talk about using Vim for software development, it is a general concensus that you <em>must</em> load it full of plugins to get that VSCode feeling back. Vim by it::I see two main schools of thought:</p>
+<ol>
+<li>Vim is great because you can customise it so much and overload it to the point that it is actually slower than VSCode</li>
+<li>Vim is fine the way it is and you - the user - just need to get better
+Here I am going to go through what I think are the key components to a normal software development. Of course, Vim doesn&rsquo;t give you the complex build environments of a proper IDE, but if you are working comfortably in another text editor like VS Code or Sublime Text, then there&rsquo;s a good chance that everything you are doing can be done in vanilla Vim. That&rsquo;s right, I&rsquo;m going to show all these things with a minimal vimrc with <em>no plugins</em>.</li>
+</ol>
+<p>Small note: I am actually talking about Neovim rather than Vim. Its the same thing but a better code base and friendlier community, and also sets many sane defaults (which means our vimrc can be even smaller!)</p>
+<p>First, what do we want out of a text editor for software development:</p>
+<ol>
+<li>Browse Files</li>
+<li>Goto definition</li>
+<li>Autocompletion</li>
+<li>Build/Run/Test code</li>
+</ol>
+<h2 id="browse-files">Browse files</h2>
+<p>If you are used to VS Code&rsquo;s project drawer set-up where you have a line on the side to view your files, you can install the NerdTree plugin which is used by many, or the preinstalled <code>netrw</code> file viewer. Just type <code>:30vs .</code> to spawn a side window 30 columns wide, in a vertical split, in the current working directory.</p>
+<p>My default it doesn&rsquo;t behave quite like VSCode&rsquo;s (but NerdTree does), but we can change that by using the tips in <a href="https://shapeshed.com/vim-netrw/" target="_blank" rel="noopener noreffer">this blog</a> putting the following lines in your vimrc</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="k">let</span> <span class="nx">g</span>:<span class="nx">netrw_banner</span> <span class="p">=</span> <span class="m">0</span><span class="err">
+</span><span class="err"></span><span class="k">let</span> <span class="nx">g</span>:<span class="nx">netrw_liststyle</span> <span class="p">=</span> <span class="m">3</span><span class="err">
+</span><span class="err"></span><span class="k">let</span> <span class="nx">g</span>:<span class="nx">netrw_browse_split</span> <span class="p">=</span> <span class="m">4</span><span class="err">
+</span><span class="err"></span><span class="k">let</span> <span class="nx">g</span>:<span class="nx">netrw_altv</span> <span class="p">=</span> <span class="m">1</span><span class="err">
+</span><span class="err"></span><span class="k">let</span> <span class="nx">g</span>:<span class="nx">netrw_winsize</span> <span class="p">=</span> <span class="m">25</span><span class="err">
+</span><span class="err"></span><span class="nx">augroup</span> <span class="nx">ProjectDrawer</span><span class="err">
+</span><span class="err"></span>  <span class="nx">autocmd</span><span class="p">!</span><span class="err">
+</span><span class="err"></span>  <span class="nx">autocmd</span> <span class="nx">VimEnter</span> * :<span class="nx">Vexplore</span><span class="err">
+</span><span class="err"></span><span class="nx">augroup</span> <span class="nx">END</span><span class="err">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>Now <code>netrw</code> will open in the split whenever you enter Vim and behave how the same as in VS Code.</p>
+<p>Searching for files:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">:find &lt;file name&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>Note that this will search in the current working directory <em>for Vim</em>, this is the current working directory in your terminal when you start Vim. If you want to see what it is currently set to, <code>:pwd</code>, if you want to change it <code>:cd &lt;new directory&gt;</code></p>
+<p>You can use wildcards to fuzzy match</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">:find *.txt
+</code></pre></td></tr></table>
+</div>
+</div><p>Will find all <code>txt</code> files etc.</p>
+<p>If you want recursive searching for files just use</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">:set path+=**
+</code></pre></td></tr></table>
+</div>
+</div><p>To search inside files we can all use <code>grep</code>, which is a wrapper around the <code>grep</code> shell utility.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">:grep &lt;args&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>This executes the shell command <code>grep -n &lt;args&gt;</code> and feeds the output into the quickfix list for you to easily navigate. You can use <code>lgrep</code> to put them into the location list. More here on how to use the Quickfix list</p>
+<p>If you would prefer to use a different searching program, set the <code>grepprg</code> which is the shell command Vim will use to find the matches. It is set to <code>grep -n</code> by defualt. Just make sure the output includes the filename and the line number so that Vim can help you easily navigate to them, this is why Vim uses the <code>-n</code> option in <code>grep</code> to add the line numbers</p>
+<p>For example, I prefer to use <a href="TODO" rel="">ripgrep</a> because it&rsquo;s faster. I also do a fair amount of Rust programming at the moment and so I don&rsquo;t want Vim to search in the <code>targets</code> directory (the build directory in rust), so I have this in my rust filetype plugin file</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="nx">set</span> <span class="nx">grepprg</span><span class="p">=</span><span class="nx">rg</span>\ <span class="p">-</span><span class="nx">rn</span>\ <span class="p">-</span><span class="nx">g</span>\ <span class="s1">&#39;!target/**&#39;</span><span class="err">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>So that it uses ripgrep <code>rg</code> with line numbers, and ignores the <code>target</code> directory</p>
+<h2 id="goto-definitionhover">Goto Definition/Hover</h2>
+<p>There are actually many actions for this in Vim because Vim doesn&rsquo;t perform lexical analysis TODO is it lexical?</p>
+<p>There are several main mechanisms:</p>
+<ul>
+<li><code>gd</code>: Goes to the first occurrence on the object in the current method. Note that this only really works with some language that have the concept of a &lsquo;method&rsquo; defined, namely bracket delimited languages</li>
+<li>Include search: This actually searches through the current file and all files that this file imports (provided that the <code>includepath</code> variable has been correctly configure). Pressing <code>[I</code> will list all the occurrences of the word under the cursor in these files. If you want to go to the Nth line in the list it shows, press <code>N[\t</code>, that it, the number, then a <code>[</code>, then a tab. (at can&rsquo;t even find this is in the manual lol). There are actually many more navigation commands with include search, to see the all, use <code>:h include-search</code></li>
+<li>Tags: This is probably the greatest thing. There is also a preview window which you could use kind of like the hover functionality given by LSPs. TODO</li>
+<li><code>nvim-lsp</code>: Technically in Neovim 5.0, this is no longer a plug-in. It is definitely very useful, however I haven&rsquo;t really needed to use it as I&rsquo;ve found that using tags for definitions of: functions, type, etc. and include search for variables has been more than I need for all of my development. Note: If you use <code>cscope</code> then you can also use tags for local variable names too.</li>
+</ul>
+<p>Also note the use of marks when you want to return to older positions TODO expand</p>
+<h2 id="autocompletion">Autocompletion</h2>
+<p>Vim has some really great autocompletion. You can press <code>Ctrl-n</code> in insert mode to get the generic completion, which will actually match on things in the dictionary as well as words in any open buffer. You can also press, <code>Ctrl-I</code> to get completion from include search (even if the included files are not in a buffer), <code>Ctrl-f</code> to autocomplete file name, I use this so much&hellip;, there&rsquo;s a tag completions I thing as well.</p>
+<p>The only thing that is missing is method completion, (TODO is it though?)</p>
+]]></description></item></channel></rss>

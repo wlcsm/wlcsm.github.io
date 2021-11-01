@@ -4,20 +4,20 @@
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=robots content="noodp">
 <meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
-<title>Monitoring Cryptocurrencies with Bash - Will Vim Bog</title><meta name=Description content="Monitoring Cryptocurrencies with a Bash script with hooks"><meta property="og:title" content="Monitoring Cryptocurrencies with Bash">
-<meta property="og:description" content="Monitoring Cryptocurrencies with a Bash script with hooks">
+<title>Trick for Managing Neovim Terminals - Will Vim Bog</title><meta name=Description content="Trick for Managing Neovim Terminals"><meta property="og:title" content="Trick for Managing Neovim Terminals">
+<meta property="og:description" content="Trick for Managing Neovim Terminals">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://wlcsm.github.io/crypto-bash-script/"><meta property="og:image" content="https://wlcsm.github.io/logo.png"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2021-01-01T00:00:00+00:00">
-<meta property="article:modified_time" content="2021-01-01T00:00:00+00:00">
+<meta property="og:url" content="https://wlcsm.github.io/managing-vim-terminals/"><meta property="og:image" content="https://wlcsm.github.io/logo.png"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-10-24T00:00:00+00:00">
+<meta property="article:modified_time" content="2021-10-24T00:00:00+00:00">
 <meta name=twitter:card content="summary_large_image">
 <meta name=twitter:image content="https://wlcsm.github.io/logo.png">
-<meta name=twitter:title content="Monitoring Cryptocurrencies with Bash">
-<meta name=twitter:description content="Monitoring Cryptocurrencies with a Bash script with hooks">
+<meta name=twitter:title content="Trick for Managing Neovim Terminals">
+<meta name=twitter:description content="Trick for Managing Neovim Terminals">
 <meta name=application-name content="Will Cashman">
 <meta name=apple-mobile-web-app-title content="Will Cashman"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://wlcsm.github.io/crypto-bash-script/><link rel=prev href=https://wlcsm.github.io/vim-as-developer/><link rel=next href=https://wlcsm.github.io/managing-vim-terminals/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Monitoring Cryptocurrencies with Bash","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/wlcsm.github.io\/crypto-bash-script\/"},"image":["https:\/\/wlcsm.github.io\/images\/Apple-Devices-Preview.png"],"genre":"posts","wordcount":202,"url":"https:\/\/wlcsm.github.io\/crypto-bash-script\/","datePublished":"2021-01-01T00:00:00+00:00","dateModified":"2021-01-01T00:00:00+00:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"Will Cashman","logo":{"@type":"ImageObject","url":"https:\/\/wlcsm.github.io\/images\/china-silver-dragon.jpg","width":1536,"height":1536}},"author":{"@type":"Person","name":"Will Cashman"},"description":"Monitoring Cryptocurrencies with a Bash script with hooks"}</script></head>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://wlcsm.github.io/managing-vim-terminals/><link rel=prev href=https://wlcsm.github.io/crypto-bash-script/><link rel=next href=https://wlcsm.github.io/vim-lesson-quickfix-list/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Trick for Managing Neovim Terminals","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/wlcsm.github.io\/managing-vim-terminals\/"},"image":["https:\/\/wlcsm.github.io\/images\/Apple-Devices-Preview.png"],"genre":"posts","wordcount":262,"url":"https:\/\/wlcsm.github.io\/managing-vim-terminals\/","datePublished":"2021-10-24T00:00:00+00:00","dateModified":"2021-10-24T00:00:00+00:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"Will Cashman","logo":{"@type":"ImageObject","url":"https:\/\/wlcsm.github.io\/images\/china-silver-dragon.jpg","width":1536,"height":1536}},"author":{"@type":"Person","name":"Will Cashman"},"description":"Trick for Managing Neovim Terminals"}</script></head>
 <body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark')&&document.body.setAttribute('theme','dark')</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
@@ -26,7 +26,7 @@
 </div>
 <div class=menu>
 <div class=menu-inner><a class=menu-item href=/posts/> Posts </a><a class=menu-item href=/categories/vim/> Vim </a><a class=menu-item href=/categories/travel/> Travel </a><a class=menu-item href=/categories/> Categories </a><a class=menu-item href=/about/> About </a><a class=menu-item href=https://github.com/wlcsm title=GitHub rel="noopener noreffer" target=_blank><i class="fab fa-github fa-fw"></i> </a><span class="menu-item delimiter"></span><a href=javascript:void(0); class="menu-item language" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
-<select class=language-select id=language-select-desktop onchange="location=this.value"><option value=/crypto-bash-script/ selected>English</option></select>
+<select class=language-select id=language-select-desktop onchange="location=this.value"><option value=/managing-vim-terminals/ selected>English</option></select>
 </a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
 <i class="fas fa-adjust fa-fw"></i>
 </a>
@@ -46,7 +46,7 @@
 <div class=menu id=menu-mobile><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/categories/vim/ title>Vim</a><a class=menu-item href=/categories/travel/ title>Travel</a><a class=menu-item href=/categories/ title>Categories</a><a class=menu-item href=/about/ title>About</a><a class=menu-item href=https://github.com/wlcsm title=GitHub rel="noopener noreffer" target=_blank><i class="fab fa-github fa-fw"></i></a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
 <i class="fas fa-adjust fa-fw"></i>
 </a><a href=javascript:void(0); class=menu-item title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
-<select class=language-select onchange="location=this.value"><option value=/crypto-bash-script/ selected>English</option></select>
+<select class=language-select onchange="location=this.value"><option value=/managing-vim-terminals/ selected>English</option></select>
 </a></div>
 </div>
 </header>
@@ -60,10 +60,10 @@
 <div class=container><div class=toc id=toc-auto>
 <h2 class=toc-title>Contents</h2>
 <div class=toc-content id=toc-content-auto></div>
-</div><article class="page single"><h1 class="single-title animated flipInX">Monitoring Cryptocurrencies with Bash</h1><div class=post-meta>
-<div class=post-meta-line><span class=post-author><a href=https://wlcsm.github.io title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>Will Cashman</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-01-01>2021-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;202 words&nbsp;
-<i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;<span id=/crypto-bash-script/ class=leancloud_visitors data-flag-title="Monitoring Cryptocurrencies with Bash">
+</div><article class="page single"><h1 class="single-title animated flipInX">Trick for Managing Neovim Terminals</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=https://wlcsm.github.io title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>Will Cashman</a></span>&nbsp;<span class=post-category>included in <a href=/categories/vim/><i class="far fa-folder fa-fw"></i>vim</a></span></div>
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-10-24>2021-10-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;262 words&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;<span id=/managing-vim-terminals/ class=leancloud_visitors data-flag-title="Trick for Managing Neovim Terminals">
 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
 </span>&nbsp;</div>
 </div><div class="details toc" id=toc-static kept>
@@ -72,7 +72,17 @@
 <span><i class="details-icon fas fa-angle-right"></i></span>
 </div>
 <div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents></nav></div>
-</div><div class=content id=content><p>I bought into the crypto scene but was concerned about the price of crypto dropping dramatically as it does, so I made an incredibly basic bash script to monitor the prices of crypto using the CoinGecko API. This could be used for instance to show the current price on Bitcoin in PolyBar or DWM</p>
+</div><div class=content id=content><p>I&rsquo;ve recently been use Neovim&rsquo;s terminals a lot more recently and I&rsquo;ve found that I spend a lot of time doing</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>:term &lt;TAB&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>to find the terminal with my tests. Then &lt;C-><c-n>&lt;C-^> to get back to the file that I was editing, and if I have more than one terminal open it isn&rsquo;t easy to remember which terminal has my tests it in, which terminals had another thing, and so on.</p>
+<p>So I made a nice little Vim function to handle this:</p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
@@ -81,81 +91,57 @@
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
-</span><span class=lnt>7
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=cp>#!/bin/sh
-</span><span class=cp></span>
-<span class=nv>COINS</span><span class=o>=</span><span class=nv>$1</span>
-<span class=nv>CURRENCIES</span><span class=o>=</span><span class=nv>$2</span>
-
-curl -X GET <span class=s2>&#34;https://api.coingecko.com/api/v3/simple/price?ids=</span><span class=si>${</span><span class=nv>COINS</span><span class=si>}</span><span class=s2>&amp;vs_currencies=</span><span class=si>${</span><span class=nv>CURRENCIES</span><span class=si>}</span><span class=s2>&#34;</span> -H  <span class=s2>&#34;accept: application/json&#34;</span>
-<span class=nb>echo</span> <span class=s2>&#34;&#34;</span>
-</code></pre></td></tr></table>
+<pre tabindex=0 class=chroma><code class=language-vim data-lang=vim><span class=k>let</span> <span class=nx>s</span>:<span class=nx>terminals</span> <span class=p>=</span> {}<span class=err>
+</span><span class=err></span><span class=k>function</span> <span class=nx>GoToTerminal</span><span class=p>(</span><span class=nx>num</span><span class=p>)</span><span class=err>
+</span><span class=err></span>	<span class=nx>execute</span> <span class=s1>&#39;drop &#39;</span> . <span class=nx>get</span><span class=p>(</span><span class=nx>s</span>:<span class=nx>terminals</span><span class=p>,</span> <span class=nx>a</span>:<span class=nx>num</span><span class=p>,</span> <span class=s1>&#39;term://bash&#39;</span><span class=p>)</span><span class=err>
+</span><span class=err></span>	<span class=k>let</span> <span class=nx>s</span>:<span class=nx>terminals</span>[<span class=nx>a</span>:<span class=nx>num</span>] <span class=p>=</span> <span class=nx>expand</span><span class=p>(</span><span class=s1>&#39;%s&#39;</span><span class=p>)</span><span class=err>
+</span><span class=err></span>	<span class=nx>normal</span> <span class=nx>i</span><span class=err>
+</span><span class=err></span><span class=k>endfunction</span><span class=err>
+</span></code></pre></td></tr></table>
 </div>
-</div><p>Save this to a file <code>fetch-crypto.sh</code> and make it executable with <code>chmod +x fetch-crypto.sh</code>. Then we can call it as</p>
+</div><p>Which I like to pair with these mappings</p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>$ ./fetch-crypto.sh bitcoin aud
-<span class=o>{</span><span class=s2>&#34;bitcoin&#34;</span>:<span class=o>{</span><span class=s2>&#34;aud&#34;</span>:72630<span class=o>}}</span>
-</code></pre></td></tr></table>
+<pre tabindex=0 class=chroma><code class=language-vim data-lang=vim><span class=nx>tnoremap</span> <span class=p>&lt;</span><span class=nx>silent</span><span class=p>&gt;</span> <span class=p>&lt;</span><span class=nx>c</span><span class=p>-</span><span class=nx>b</span><span class=p>&gt;</span> <span class=p>&lt;</span><span class=nx>cmd</span><span class=p>&gt;</span><span class=nx>execute</span> <span class=s1>&#39;drop &#39;</span> . <span class=nx>expand</span><span class=p>(</span><span class=s1>&#39;#&#39;</span><span class=p>)&lt;</span><span class=nx>CR</span><span class=p>&gt;</span><span class=err>
+</span><span class=err></span><span class=nx>nnoremap</span> <span class=p>&lt;</span><span class=nx>silent</span><span class=p>&gt;</span> <span class=p>&lt;</span><span class=nx>c</span><span class=p>-</span><span class=nx>b</span><span class=p>&gt;</span> <span class=p>&lt;</span><span class=nx>cmd</span><span class=p>&gt;</span><span class=nx>call</span> <span class=nx>GoToTerminal</span><span class=p>(</span><span class=nx>v</span>:<span class=nx>count</span><span class=p>)&lt;</span><span class=nx>CR</span><span class=p>&gt;</span><span class=err>
+</span></code></pre></td></tr></table>
 </div>
-</div><p>If you want more currencies or coins, you can use a comma separated list</p>
+</div><p>If you really want, you can even avoid writing a function and do the entire thing in three lines</p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
-</span><span class=lnt>4
-</span><span class=lnt>5
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>$ ./fetch-crypto.sh bitcoin,ethereum aud
-<span class=o>{</span><span class=s2>&#34;bitcoin&#34;</span>:<span class=o>{</span><span class=s2>&#34;aud&#34;</span>:72773<span class=o>}</span>,<span class=s2>&#34;ethereum&#34;</span>:<span class=o>{</span><span class=s2>&#34;aud&#34;</span>:2246.25<span class=o>}}</span>
-
-$ ./fetch-crypto.sh bitcoin,ethereum aud,usd
-<span class=o>{</span><span class=s2>&#34;ethereum&#34;</span>:<span class=o>{</span><span class=s2>&#34;aud&#34;</span>:2246.25,<span class=s2>&#34;usd&#34;</span>:1742.93<span class=o>}</span>,<span class=s2>&#34;bitcoin&#34;</span>:<span class=o>{</span><span class=s2>&#34;aud&#34;</span>:72773,<span class=s2>&#34;usd&#34;</span>:56467<span class=o>}}</span>
-</code></pre></td></tr></table>
+<pre tabindex=0 class=chroma><code class=language-vim data-lang=vim><span class=nx>g</span>:<span class=nx>terms</span> <span class=p>=</span> {}<span class=err>
+</span><span class=err></span><span class=nx>tnoremap</span> <span class=p>&lt;</span><span class=nx>silent</span><span class=p>&gt;</span> <span class=p>&lt;</span><span class=nx>c</span><span class=p>-</span><span class=nx>b</span><span class=p>&gt;</span> <span class=p>&lt;</span><span class=nx>cmd</span><span class=p>&gt;</span><span class=nx>execute</span> <span class=s1>&#39;drop &#39;</span> . <span class=nx>expand</span><span class=p>(</span><span class=s1>&#39;#&#39;</span><span class=p>)&lt;</span><span class=nx>CR</span><span class=p>&gt;</span><span class=err>
+</span><span class=err></span><span class=nx>nnoremap</span> <span class=p>&lt;</span><span class=nx>silent</span><span class=p>&gt;</span> <span class=p>&lt;</span><span class=nx>c</span><span class=p>-</span><span class=nx>b</span><span class=p>&gt;</span> <span class=p>&lt;</span><span class=nx>cmd</span><span class=p>&gt;</span><span class=nx>exe</span> <span class=s1>&#39;drop &#39;</span> . <span class=nx>get</span><span class=p>(</span><span class=nx>g</span>:<span class=nx>terms</span><span class=p>,</span> <span class=nx>v</span>:<span class=nx>count</span><span class=p>,</span> <span class=s1>&#39;term://bash&#39;</span><span class=p>)</span> <span class=p>|</span> <span class=k>let</span> <span class=nx>g</span>:<span class=nx>terms</span>[<span class=nx>v</span>:<span class=nx>count</span>] <span class=p>=</span> <span class=nx>expand</span><span class=p>(</span><span class=s1>&#39;%s&#39;</span><span class=p>)</span> <span class=p>|</span> <span class=nx>norm</span> <span class=nx>i</span><span class=p>&lt;</span><span class=nx>CR</span><span class=p>&gt;</span><span class=err>
+</span></code></pre></td></tr></table>
 </div>
-</div><p>Then if you want to actually extract data from the JSON, you could use the <a href=https://stedolan.github.io/jq/ target=_blank rel="noopener noreffer">jq</a> tool.
-For instance, if I wanted to make a script that printed out the price of Bitcoin in AUD, I would write</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>$ fetch_crypto bitcoin aud <span class=p>|</span> jq <span class=s1>&#39;.bitcoin.aud&#39;</span>
-<span class=m>72773</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>I&rsquo;ve also turned this into a rebinding and made it output the price in a notification</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>$ notify-send <span class=s2>&#34;</span><span class=k>$(</span>./fetch-crypto.sh bitcoin aud <span class=p>|</span> jq <span class=s1>&#39;.bitcoin.aud&#39;</span><span class=k>)</span><span class=s2>&#34;</span>
-</code></pre></td></tr></table>
-</div>
-</div></div><div class=post-footer id=post-footer>
+</div><p>So now if I want a terminal I just press [count]<c-b> where &ldquo;count&rdquo; is a number, or defaults to zero if not given. Then when I&rsquo;m done with that terminal and want to go back to the main file, I just press <c-b>.</p>
+<p>Since I use the &lsquo;drop&rsquo; command, if the terminal, or the original file are already present in another window, it will just move the cursor there.</p>
+<p>If there is no terminal open for that [count], it will create a new one.</p>
+</div><div class=post-footer id=post-footer>
 <div class=post-info>
 <div class=post-info-line>
 <div class=post-info-mod>
-<span>Updated on 2021-01-01</span>
+<span>Updated on 2021-10-24</span>
 </div>
 <div class=post-info-license></div>
 </div>
 <div class=post-info-line>
 <div class=post-info-md><span>
-<a class=link-to-markdown href=/crypto-bash-script/index.md target=_blank>Read Markdown</a>
+<a class=link-to-markdown href=/managing-vim-terminals/index.md target=_blank>Read Markdown</a>
 </span></div>
 <div class=post-info-share>
-<span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://wlcsm.github.io/crypto-bash-script/ data-title="Monitoring Cryptocurrencies with Bash"><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://wlcsm.github.io/crypto-bash-script/><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=https://wlcsm.github.io/crypto-bash-script/ data-title="Monitoring Cryptocurrencies with Bash"><i class="fab fa-hacker-news fa-fw"></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=https://wlcsm.github.io/crypto-bash-script/ data-title="Monitoring Cryptocurrencies with Bash"><i data-svg-src=https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg></i></a><a href=javascript:void(0); title="Share on 微博" data-sharer=weibo data-url=https://wlcsm.github.io/crypto-bash-script/ data-title="Monitoring Cryptocurrencies with Bash"><i class="fab fa-weibo fa-fw"></i></a></span>
+<span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://wlcsm.github.io/managing-vim-terminals/ data-title="Trick for Managing Neovim Terminals"><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://wlcsm.github.io/managing-vim-terminals/><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=https://wlcsm.github.io/managing-vim-terminals/ data-title="Trick for Managing Neovim Terminals"><i class="fab fa-hacker-news fa-fw"></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=https://wlcsm.github.io/managing-vim-terminals/ data-title="Trick for Managing Neovim Terminals"><i data-svg-src=https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg></i></a><a href=javascript:void(0); title="Share on 微博" data-sharer=weibo data-url=https://wlcsm.github.io/managing-vim-terminals/ data-title="Trick for Managing Neovim Terminals"><i class="fab fa-weibo fa-fw"></i></a></span>
 </div>
 </div>
 </div>
@@ -165,8 +151,8 @@ For instance, if I wanted to make a script that printed out the price of Bitcoin
 <span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span>
 </section>
 </div>
-<div class=post-nav><a href=/vim-as-developer/ class=prev rel=prev title="Vim for Software Development"><i class="fas fa-angle-left fa-fw"></i>Vim for Software Development</a>
-<a href=/managing-vim-terminals/ class=next rel=next title="Trick for Managing Neovim Terminals">Trick for Managing Neovim Terminals<i class="fas fa-angle-right fa-fw"></i></a></div>
+<div class=post-nav><a href=/crypto-bash-script/ class=prev rel=prev title="Monitoring Cryptocurrencies with Bash"><i class="fas fa-angle-left fa-fw"></i>Monitoring Cryptocurrencies with Bash</a>
+<a href=/vim-lesson-quickfix-list/ class=next rel=next title="Vim's Quickfix/Location list">Vim's Quickfix/Location list<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id=comments><div id=valine class=comment></div><noscript>
 Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.
