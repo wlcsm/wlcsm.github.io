@@ -28,14 +28,14 @@
 </span><span class="w">
 </span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">expense_list</span><span class="p">.</span><span class="n">len</span><span class="p">();</span><span class="w">
 </span><span class="w">
-</span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="p">..</span><span class="n">n</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">i</span><span class="p">..</span><span class="n">n</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="o">..</span><span class="n">n</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">i</span><span class="o">..</span><span class="n">n</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2020</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w">
 </span><span class="w">            </span><span class="p">}</span><span class="w">
 </span><span class="w">        </span><span class="p">}</span><span class="w">
 </span><span class="w">    </span><span class="p">}</span><span class="w">
-</span><span class="w">    </span><span class="n">panic</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;No two entries sum to 2020&#34;</span><span class="p">);</span><span class="w">
+</span><span class="w">    </span><span class="fm">panic!</span><span class="p">(</span><span class="s">&#34;No two entries sum to 2020&#34;</span><span class="p">);</span><span class="w">
 </span><span class="w"></span><span class="p">}</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
@@ -84,7 +84,7 @@ $$ n + (n - 1) + (n - 2) + \cdots + 1 = (n^2 - n)/2 $$
 </span><span class="w">            </span><span class="n">Ordering</span>::<span class="n">Greater</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">high</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
 </span><span class="w">        </span><span class="p">}</span><span class="w">
 </span><span class="w">    </span><span class="p">}</span><span class="w">
-</span><span class="w">    </span><span class="n">panic</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;No two entries sum to 2020&#34;</span><span class="p">);</span><span class="w">
+</span><span class="w">    </span><span class="fm">panic!</span><span class="p">(</span><span class="s">&#34;No two entries sum to 2020&#34;</span><span class="p">);</span><span class="w">
 </span><span class="w"></span><span class="p">}</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
@@ -188,7 +188,7 @@ test test::bench_naive      ... bench:       5,760 ns/iter (+/- 587)
 </span><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">pass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PassData</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">    </span><span class="n">begin</span>: <span class="nc">cap</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
 </span><span class="w">    </span><span class="n">end</span>:   <span class="nc">cap</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
-</span><span class="w">    </span><span class="n">chr</span>:   <span class="nc">cap</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="n">char</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
+</span><span class="w">    </span><span class="n">chr</span>:   <span class="nc">cap</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
 </span><span class="w">    </span><span class="n">pass</span>:  <span class="kp">&amp;</span><span class="nc">cap</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w">
 </span><span class="w"></span><span class="p">};</span><span class="w">
 </span></code></pre></td></tr></table>
@@ -249,11 +249,11 @@ test test::bench_naive      ... bench:       5,760 ns/iter (+/- 587)
 </span><span class="lnt">36
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">struct</span> <span class="nc">PassData</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">struct</span> <span class="nc">PassData</span><span class="o">&lt;&#39;</span><span class="na">a</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">    </span><span class="n">begin</span>: <span class="kt">usize</span><span class="p">,</span><span class="w">
 </span><span class="w">    </span><span class="n">end</span>:   <span class="kt">usize</span><span class="p">,</span><span class="w">
-</span><span class="w">    </span><span class="n">chr</span>:   <span class="nc">char</span><span class="p">,</span><span class="w">
-</span><span class="w">    </span><span class="n">pass</span>:  <span class="kp">&amp;</span><span class="na">&#39;a</span><span class="w"> </span><span class="kt">str</span><span class="p">,</span><span class="w">
+</span><span class="w">    </span><span class="n">chr</span>:   <span class="kt">char</span><span class="p">,</span><span class="w">
+</span><span class="w">    </span><span class="n">pass</span>:  <span class="kp">&amp;</span><span class="o">&#39;</span><span class="na">a</span> <span class="kt">str</span><span class="p">,</span><span class="w">
 </span><span class="w"></span><span class="p">}</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">fs</span>::<span class="n">File</span><span class="p">;</span><span class="w">
@@ -273,7 +273,7 @@ test test::bench_naive      ... bench:       5,760 ns/iter (+/- 587)
 </span><span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">pass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PassData</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">                </span><span class="n">begin</span>: <span class="nc">cap</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
 </span><span class="w">                </span><span class="n">end</span>:   <span class="nc">cap</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
-</span><span class="w">                </span><span class="n">chr</span>:   <span class="nc">cap</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="n">char</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
+</span><span class="w">                </span><span class="n">chr</span>:   <span class="nc">cap</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
 </span><span class="w">                </span><span class="n">pass</span>:  <span class="kp">&amp;</span><span class="nc">cap</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w">
 </span><span class="w">            </span><span class="p">};</span><span class="w">
 </span><span class="w">            </span><span class="n">policy</span><span class="p">(</span><span class="n">pass</span><span class="p">)</span><span class="w">
@@ -979,6 +979,27 @@ This is built-in, no plugins, no configurations</p>
 </div><p>Just run <code>:BgMake &lt;args&gt;</code> instead of <code>make &lt;args&gt;</code> and you are good to go.</p>
 <h2 id="custom-error-formats">Custom error formats</h2>
 ]]></description></item><item><title>Vim's Quickfix/Location list</title><link>https://wlcsm.github.io/vim-lesson-quickfix-list/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://wlcsm.github.io/vim-lesson-quickfix-list/</guid><description><![CDATA[<p>People often complain that Vim doesn&rsquo;t have good support for project-wide searches or error navigation without the use of plugins or even LSPs. These people have clearly never learned about Vim&rsquo;s inbuilt quickfix and location list.</p>
+<h2 id="quickfix-list">Quickfix list</h2>
+<p>The quickfix list is a buffer in Vim which provides fast navigation to locations in files.</p>
+<h2 id="differences-between-the-quickfix-and-location-list">Differences between the Quickfix and Location list</h2>
+<p>The two are exactly the same, however there is only one quickfix list per Vim session, but there is one location list for every window. For this reason, the quickfix list is normally used for the errors of your program or build results, whereas the location list is normally used for things like <code>grep</code>. However you can use either for anything.</p>
+<p>Every command for the quickfix list has an equivalent for the location list.</p>
+<p>Command | Quickfix | Location
+Open | <code>copen</code> | <code>lopen</code>
+Next entry | <code>cnext</code> | <code>lnext</code>
+Make | <code>make</code> | <code>lmake</code>
+Grep | <code>grep</code> | <code>lgrep</code>
+Older list | <code>colder</code> | <code>lolder</code></p>
+<p>There are heaps more, but for the rest of this post I will just be presenting the quickfix variant with the understanding that everything has a location list equivalent</p>
+<h2 id="using">Using</h2>
+<p>So here&rsquo;s an example problem. I need to build my program and find the errors.</p>
+<p>I&rsquo;ve set <code>make</code> to run <code>go build</code> which presents me with a list of errors.</p>
+<p>Side note: to make that initial pop-up display of the errors disappear, just run <code>:silent make</code> (I&rsquo;d recommend mapping this to a key).</p>
+<p>Use the output of <code>make</code> to build a file. More on that <a href="" rel="">here</a>. Depending on the code you are running you may have to set a <code>compiler</code> so that Vim knows how it should parse the output.</p>
+<p>Notice that if there were errors, Vim will automatically jump to the location of the first error (you can stop that by running <code>:make!</code>). To go to the next error press <code>:cnext</code>. Now type <code>:clist</code> to get a pop-up of which error you are located at in the list. To get an interactive list, type <code>:copen</code> to open an interactive buffer for the quickfix list. Pressing <code>Enter</code> on any entry in this buffer will make you jump to the error.</p>
+<p>Tim Pope has a plug-in which makes some good default mappings for this, or you could just do <code>:cn</code> and then press <code>@:</code> which repeats the last ex command</p>
+<p>Press <code>:clist</code> to get a little pop-up of the quickfix lists and a</p>
+]]></description></item><item><title>Vim's Quickfix/Location list</title><link>https://wlcsm.github.io/vim-lesson-quickfix-list.zh/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://wlcsm.github.io/vim-lesson-quickfix-list.zh/</guid><description><![CDATA[<p>People often complain that Vim doesn&rsquo;t have good support for project-wide searches or error navigation without the use of plugins or even LSPs. These people have clearly never learned about Vim&rsquo;s inbuilt quickfix and location list.</p>
 <h2 id="quickfix-list">Quickfix list</h2>
 <p>The quickfix list is a buffer in Vim which provides fast navigation to locations in files.</p>
 <h2 id="differences-between-the-quickfix-and-location-list">Differences between the Quickfix and Location list</h2>

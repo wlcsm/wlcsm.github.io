@@ -17,7 +17,7 @@
 <meta name=application-name content="Will Cashman">
 <meta name=apple-mobile-web-app-title content="Will Cashman"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://wlcsm.github.io/rust-advent-of-code-1-2/><link rel=prev href=https://wlcsm.github.io/sed-markdown-compiler/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Advent of Code 2020 Day 1-2 in Rust","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/wlcsm.github.io\/rust-advent-of-code-1-2\/"},"image":["https:\/\/wlcsm.github.io\/images\/Apple-Devices-Preview.png"],"genre":"posts","wordcount":1515,"url":"https:\/\/wlcsm.github.io\/rust-advent-of-code-1-2\/","datePublished":"2021-10-01T00:00:00+00:00","dateModified":"2021-10-01T00:00:00+00:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"Will Cashman","logo":{"@type":"ImageObject","url":"https:\/\/wlcsm.github.io\/images\/china-silver-dragon.jpg","width":1536,"height":1536}},"author":{"@type":"Person","name":"Will Cashman"},"description":"Discussion of the solutions to the Day 1 and 2 Advent of Code's solutions in Rust"}</script></head>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://wlcsm.github.io/rust-advent-of-code-1-2/><link rel=prev href=https://wlcsm.github.io/sed-markdown-compiler/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Advent of Code 2020 Day 1-2 in Rust","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/wlcsm.github.io\/rust-advent-of-code-1-2\/"},"image":["https:\/\/wlcsm.github.io\/images\/Apple-Devices-Preview.png"],"genre":"posts","wordcount":1516,"url":"https:\/\/wlcsm.github.io\/rust-advent-of-code-1-2\/","datePublished":"2021-10-01T00:00:00+00:00","dateModified":"2021-10-01T00:00:00+00:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"Will Cashman","logo":{"@type":"ImageObject","url":"https:\/\/wlcsm.github.io\/images\/china-silver-dragon.jpg","width":1536,"height":1536}},"author":{"@type":"Person","name":"Will Cashman"},"description":"Discussion of the solutions to the Day 1 and 2 Advent of Code's solutions in Rust"}</script></head>
 <body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark')&&document.body.setAttribute('theme','dark')</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
@@ -62,7 +62,7 @@
 <div class=toc-content id=toc-content-auto></div>
 </div><article class="page single"><h1 class="single-title animated flipInX">Advent of Code 2020 Day 1-2 in Rust</h1><div class=post-meta>
 <div class=post-meta-line><span class=post-author><a href=https://wlcsm.github.io title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>Will Cashman</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-10-01>2021-10-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1515 words&nbsp;
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-10-01>2021-10-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1516 words&nbsp;
 <i class="far fa-clock fa-fw"></i>&nbsp;8 minutes&nbsp;<span id=/rust-advent-of-code-1-2/ class=leancloud_visitors data-flag-title="Advent of Code 2020 Day 1-2 in Rust">
 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
 </span>&nbsp;</div>
@@ -111,14 +111,14 @@
 </span><span class=w>
 </span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>n</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>expense_list</span><span class=p>.</span><span class=n>len</span><span class=p>();</span><span class=w>
 </span><span class=w>
-</span><span class=w>    </span><span class=k>for</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=k>in</span><span class=w> </span><span class=mi>0</span><span class=p>..</span><span class=n>n</span><span class=w> </span><span class=p>{</span><span class=w>
-</span><span class=w>        </span><span class=k>for</span><span class=w> </span><span class=n>j</span><span class=w> </span><span class=k>in</span><span class=w> </span><span class=n>i</span><span class=p>..</span><span class=n>n</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=k>for</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=k>in</span><span class=w> </span><span class=mi>0</span><span class=o>..</span><span class=n>n</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>        </span><span class=k>for</span><span class=w> </span><span class=n>j</span><span class=w> </span><span class=k>in</span><span class=w> </span><span class=n>i</span><span class=o>..</span><span class=n>n</span><span class=w> </span><span class=p>{</span><span class=w>
 </span><span class=w>            </span><span class=k>if</span><span class=w> </span><span class=n>expense_list</span><span class=p>[</span><span class=n>i</span><span class=p>]</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>expense_list</span><span class=p>[</span><span class=n>j</span><span class=p>]</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=mi>2020</span><span class=w> </span><span class=p>{</span><span class=w>
 </span><span class=w>                </span><span class=k>return</span><span class=w> </span><span class=n>expense_list</span><span class=p>[</span><span class=n>i</span><span class=p>]</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>expense_list</span><span class=p>[</span><span class=n>j</span><span class=p>]</span><span class=w>
 </span><span class=w>            </span><span class=p>}</span><span class=w>
 </span><span class=w>        </span><span class=p>}</span><span class=w>
 </span><span class=w>    </span><span class=p>}</span><span class=w>
-</span><span class=w>    </span><span class=n>panic</span><span class=o>!</span><span class=p>(</span><span class=s>&#34;No two entries sum to 2020&#34;</span><span class=p>);</span><span class=w>
+</span><span class=w>    </span><span class=fm>panic!</span><span class=p>(</span><span class=s>&#34;No two entries sum to 2020&#34;</span><span class=p>);</span><span class=w>
 </span><span class=w></span><span class=p>}</span><span class=w>
 </span></code></pre></td></tr></table>
 </div>
@@ -167,7 +167,7 @@ $$ n + (n - 1) + (n - 2) + \cdots + 1 = (n^2 - n)/2 $$
 </span><span class=w>            </span><span class=n>Ordering</span>::<span class=n>Greater</span><span class=w> </span><span class=o>=&gt;</span><span class=w> </span><span class=n>high</span><span class=w> </span><span class=o>-=</span><span class=w> </span><span class=mi>1</span><span class=p>,</span><span class=w>
 </span><span class=w>        </span><span class=p>}</span><span class=w>
 </span><span class=w>    </span><span class=p>}</span><span class=w>
-</span><span class=w>    </span><span class=n>panic</span><span class=o>!</span><span class=p>(</span><span class=s>&#34;No two entries sum to 2020&#34;</span><span class=p>);</span><span class=w>
+</span><span class=w>    </span><span class=fm>panic!</span><span class=p>(</span><span class=s>&#34;No two entries sum to 2020&#34;</span><span class=p>);</span><span class=w>
 </span><span class=w></span><span class=p>}</span><span class=w>
 </span></code></pre></td></tr></table>
 </div>
@@ -271,7 +271,7 @@ test test::bench_naive      ... bench:       5,760 ns/iter (+/- 587)
 </span><span class=w></span><span class=kd>let</span><span class=w> </span><span class=n>pass</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>PassData</span><span class=w> </span><span class=p>{</span><span class=w>
 </span><span class=w>    </span><span class=n>begin</span>: <span class=nc>cap</span><span class=p>[</span><span class=mi>1</span><span class=p>].</span><span class=n>parse</span>::<span class=o>&lt;</span><span class=kt>usize</span><span class=o>&gt;</span><span class=p>().</span><span class=n>unwrap</span><span class=p>(),</span><span class=w>
 </span><span class=w>    </span><span class=n>end</span>:   <span class=nc>cap</span><span class=p>[</span><span class=mi>2</span><span class=p>].</span><span class=n>parse</span>::<span class=o>&lt;</span><span class=kt>usize</span><span class=o>&gt;</span><span class=p>().</span><span class=n>unwrap</span><span class=p>(),</span><span class=w>
-</span><span class=w>    </span><span class=n>chr</span>:   <span class=nc>cap</span><span class=p>[</span><span class=mi>3</span><span class=p>].</span><span class=n>parse</span>::<span class=o>&lt;</span><span class=n>char</span><span class=o>&gt;</span><span class=p>().</span><span class=n>unwrap</span><span class=p>(),</span><span class=w>
+</span><span class=w>    </span><span class=n>chr</span>:   <span class=nc>cap</span><span class=p>[</span><span class=mi>3</span><span class=p>].</span><span class=n>parse</span>::<span class=o>&lt;</span><span class=kt>char</span><span class=o>&gt;</span><span class=p>().</span><span class=n>unwrap</span><span class=p>(),</span><span class=w>
 </span><span class=w>    </span><span class=n>pass</span>:  <span class=kp>&amp;</span><span class=nc>cap</span><span class=p>[</span><span class=mi>4</span><span class=p>]</span><span class=w>
 </span><span class=w></span><span class=p>};</span><span class=w>
 </span></code></pre></td></tr></table>
@@ -332,11 +332,11 @@ test test::bench_naive      ... bench:       5,760 ns/iter (+/- 587)
 </span><span class=lnt>36
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=k>struct</span> <span class=nc>PassData</span><span class=o>&lt;</span><span class=na>&#39;a</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+<pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=k>struct</span> <span class=nc>PassData</span><span class=o>&lt;&#39;</span><span class=na>a</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
 </span><span class=w>    </span><span class=n>begin</span>: <span class=kt>usize</span><span class=p>,</span><span class=w>
 </span><span class=w>    </span><span class=n>end</span>:   <span class=kt>usize</span><span class=p>,</span><span class=w>
-</span><span class=w>    </span><span class=n>chr</span>:   <span class=nc>char</span><span class=p>,</span><span class=w>
-</span><span class=w>    </span><span class=n>pass</span>:  <span class=kp>&amp;</span><span class=na>&#39;a</span><span class=w> </span><span class=kt>str</span><span class=p>,</span><span class=w>
+</span><span class=w>    </span><span class=n>chr</span>:   <span class=kt>char</span><span class=p>,</span><span class=w>
+</span><span class=w>    </span><span class=n>pass</span>:  <span class=kp>&amp;</span><span class=o>&#39;</span><span class=na>a</span> <span class=kt>str</span><span class=p>,</span><span class=w>
 </span><span class=w></span><span class=p>}</span><span class=w>
 </span><span class=w>
 </span><span class=w></span><span class=k>use</span><span class=w> </span><span class=n>std</span>::<span class=n>fs</span>::<span class=n>File</span><span class=p>;</span><span class=w>
@@ -356,7 +356,7 @@ test test::bench_naive      ... bench:       5,760 ns/iter (+/- 587)
 </span><span class=w>            </span><span class=kd>let</span><span class=w> </span><span class=n>pass</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>PassData</span><span class=w> </span><span class=p>{</span><span class=w>
 </span><span class=w>                </span><span class=n>begin</span>: <span class=nc>cap</span><span class=p>[</span><span class=mi>1</span><span class=p>].</span><span class=n>parse</span>::<span class=o>&lt;</span><span class=kt>usize</span><span class=o>&gt;</span><span class=p>().</span><span class=n>unwrap</span><span class=p>(),</span><span class=w>
 </span><span class=w>                </span><span class=n>end</span>:   <span class=nc>cap</span><span class=p>[</span><span class=mi>2</span><span class=p>].</span><span class=n>parse</span>::<span class=o>&lt;</span><span class=kt>usize</span><span class=o>&gt;</span><span class=p>().</span><span class=n>unwrap</span><span class=p>(),</span><span class=w>
-</span><span class=w>                </span><span class=n>chr</span>:   <span class=nc>cap</span><span class=p>[</span><span class=mi>3</span><span class=p>].</span><span class=n>parse</span>::<span class=o>&lt;</span><span class=n>char</span><span class=o>&gt;</span><span class=p>().</span><span class=n>unwrap</span><span class=p>(),</span><span class=w>
+</span><span class=w>                </span><span class=n>chr</span>:   <span class=nc>cap</span><span class=p>[</span><span class=mi>3</span><span class=p>].</span><span class=n>parse</span>::<span class=o>&lt;</span><span class=kt>char</span><span class=o>&gt;</span><span class=p>().</span><span class=n>unwrap</span><span class=p>(),</span><span class=w>
 </span><span class=w>                </span><span class=n>pass</span>:  <span class=kp>&amp;</span><span class=nc>cap</span><span class=p>[</span><span class=mi>4</span><span class=p>]</span><span class=w>
 </span><span class=w>            </span><span class=p>};</span><span class=w>
 </span><span class=w>            </span><span class=n>policy</span><span class=p>(</span><span class=n>pass</span><span class=p>)</span><span class=w>
@@ -428,7 +428,7 @@ test test::bench_naive      ... bench:       5,760 ns/iter (+/- 587)
 Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.
 </noscript></div></article></div>
 </main><footer class=footer>
-<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.88.1">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.89.1">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
 </div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2021</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Will Cashman</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div>
 </div>
 </footer></div>
