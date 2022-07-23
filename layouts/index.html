@@ -1,0 +1,13 @@
+{{ define "main" }}
+    <main aria-role="main">
+      <header class="homepage-header text-center">
+        <h1>{{.Site.Title}}</h1>
+      </header>
+      <body>
+        <div class="homepage-content">
+          <!-- Will pull from content/_index.md -->
+          {{.Content}}
+        </div>
+      </body>
+    </main>
+{{ end }}

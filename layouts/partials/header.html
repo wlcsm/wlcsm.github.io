@@ -1,0 +1,10 @@
+<nav>
+    {{ range .Site.Menus.main }}
+    	<a class="menu-item" href="{{ .URL | relLangURL }}">{{ .Name }}</a>
+
+    {{ end }}
+
+    {{ range .Translations }}
+    	<a class="menu-item" href="{{ .Permalink }}">{{ .Language.LanguageName }}</a>
+    {{ end }}
+</nav>
