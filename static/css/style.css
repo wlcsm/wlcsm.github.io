@@ -1,5 +1,5 @@
 body {
-	width: 50%;
+	max-width: 920px;
 	margin: auto;
 }
 
@@ -18,10 +18,6 @@ a {
 }
 
 .menu-item {
-	/* Chinese characters have a different size to English characters.
-	 * This will ensure the bottom of all characters/letters are level */
-	line-height: 35px;
-
 	/* Make an evenly spaced grid with five elements */
 	float: left;
 	width: 20%;
@@ -33,8 +29,8 @@ a {
 }
 
 .footer {
-	margin-top: 2cm;
-	margin-bottom: 1cm;
+	font-size: 15px;
+	text-align: center;
 }
 
 /**

@@ -1,9 +1,5 @@
-baseURL: "http://example.org/"
-languageCode: "en-us"
-
-defaultContentLanguageInSubdir: true
-defaultContentLanguage: 'en'
-
+baseURL: http://example.org/
+languageCode: en-us
 
 markup:
   highlight:
@@ -12,39 +8,21 @@ markup:
     lineNumbersInTable: true
     noClasses: false
 
-languages:
-  en:
-    languageName: 'English'
-    copyright: 'Copyright Will Cashman 2022. Any and all opinions listed here are my own and not representative of my employers; future, past and present.'
+copyright: Copyright Will Cashman 2022.
+params:
+  disclaimer: Any and all opinions listed here are my own and not representative of my employers; future, past and present.
 
-    menu:
-      main:
-        - name: "About"
-          url: "/"
-          weight: 1
-        - name: "Posts"
-          url: "/posts/"
-          weight: 2
-        - name: "Tags"
-          url: "/tags/"
-          weight: 3
-        - name: "Resume"
-          url: "/resume/"
-          weight: 4
-  zh:
-    languageName: '中文'
-    copyright: 'Copyright Will Cashman 2022'
-    menu:
-      main:
-        - name: "关于"
-          url: "/"
-          weight: 1
-        - name: "Posts"
-          url: "/posts/"
-          weight: 2
-        - name: "标签"
-          url: "/tags/"
-          weight: 3
-        - name: "简历"
-          url: "/resume/"
-          weight: 4
+menu:
+  main:
+    - name: About
+      url: /
+      weight: 1
+    - name: Posts
+      url: /posts/
+      weight: 2
+    - name: Tags
+      url: /tags/
+      weight: 3
+    - name: Resume
+      url: /resume/
+      weight: 4
