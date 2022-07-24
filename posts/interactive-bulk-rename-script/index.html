@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body><nav>
+    
+    	<a class="menu-item" href="/">About</a>
+
+    
+    	<a class="menu-item" href="/posts/">Posts</a>
+
+    
+    	<a class="menu-item" href="/tags/">Tags</a>
+
+    
+    	<a class="menu-item" href="/resume/">Resume</a>
+
+    
+
+    
+</nav>
+<div id="content">
+<h1>Bulk Rename Script</h1>
+
+
+<time datetime="2021-01-01">Jan 1, 2021</time>
+
+
+	
+	<a href="http://example.org/tags/shell">shell</a>
+
+
+
+<br><br>
+<p>I spend pretty much all my time in the terminal. After some time, I find I can navigate just as fast, if not faster there than in a GUI file browser.</p>
+<p>I used to use the ultra-lightweight <a href="https://github.com/jarun/nnn">nnn</a> terminal file browser, but even that I found unnecessary other than being very nice to look at.</p>
+<p>The one feature that I missed however, was bulk renaming files in my editor. When you press <code>r</code> in <code>nnn</code>, it brings up the files in the directory in the program specified in your <code>$EDITOR</code> variable, with numbers next to them. Here you can delete files an rename them, which if like me, you are using Vim, can be very fast.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="m">1</span> a.txt
+</span></span><span class="line"><span class="cl"><span class="m">2</span> b.txt
+</span></span><span class="line"><span class="cl"><span class="m">3</span> c.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Rather than download the 10,000 lines of C code, I decided to write a small (POSIX compliant) shell script to automate this procedure.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/sh
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Output a list of files in the current directory</span>
+</span></span><span class="line"><span class="cl">get_files <span class="o">()</span> <span class="o">{</span> ls -A<span class="p">;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">get_files <span class="p">|</span> awk <span class="s1">&#39;{print NR &#34; &#34; $0}&#39;</span> &gt; /tmp/stuff.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$EDITOR</span> /tmp/stuff.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;-d&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;Running in dry mode&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">i</span><span class="o">=</span><span class="m">0</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span><span class="nb">read</span> -r num new_line
+</span></span><span class="line"><span class="cl"><span class="k">for</span> line in <span class="k">$(</span>get_files<span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">	 <span class="nv">i</span><span class="o">=</span><span class="k">$((</span>i <span class="o">+</span> <span class="m">1</span><span class="k">))</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$new_line</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$num</span><span class="s2">&#34;</span> -gt <span class="s2">&#34;</span><span class="nv">$i</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		<span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s1">&#39;-d&#39;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span>  <span class="nb">echo</span> <span class="s2">&#34;Removing </span><span class="nv">$line</span><span class="s2">&#34;</span> <span class="o">||</span> rm -rf <span class="s2">&#34;</span><span class="nv">$line</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">else</span> 
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$new_line</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;</span><span class="nv">$line</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">			<span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s1">&#39;-d&#39;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span>  <span class="nb">echo</span> <span class="s2">&#34;Moving </span><span class="nv">$new_line</span><span class="s2"> to </span><span class="nv">$line</span><span class="s2">&#34;</span> <span class="o">||</span> mv <span class="s2">&#34;</span><span class="nv">$new_line</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$line</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">read</span> -r num new_line
+</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span><span class="o">)</span> &lt; /tmp/stuff.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>It can take one argument &ldquo;-d&rdquo; which runs it in &ldquo;dry mode&rdquo;, showing the changes it would make without actually doing it</p>
+<p>You might be wondering why I did simply use <code>ls</code> rather than create the <code>get_files</code> function. This is because apparently, the <code>ls</code> function is not guaranteed to output the correct files all the <a href="https://github.com/koalaman/shellcheck/wiki/SC2045">time</a> (literally why tho?) and should instead iterate over globs, however unless the <code>nullglob</code> option is set, POSIX shell will not expand the glob if there are no files in the directory which would lead to an error.</p>
+<p>The first line gets the files and uses the <code>awk</code> utility to attach numbers to the lines, this is so that we can detect deletions of files.</p>
+<p>If you wish to debug the program, you could simply replace the <code>rm -rf &quot;$line&quot;</code> with <code>echo &quot;Removing $line&quot;</code> and similarly with <code>mv &quot;$new_line&quot; &quot;$line&quot;</code>. If you want you could even make this is into a debug command by passing in a command line flag and</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;-d&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;Removing </span><span class="nv">$line</span><span class="s2">&#34;</span> 
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">	rm -rf <span class="s2">&#34;</span><span class="nv">$line</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Or more succinctly as</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;-d&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&#34;Removing </span><span class="nv">$line</span><span class="s2">&#34;</span> <span class="o">||</span> rm -rf <span class="s2">&#34;</span><span class="nv">$line</span><span class="s2">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Then when you call the program as <code>rename.sh -d</code> it will only echo the changes rather than make them</p>
+
+
+        </div>
+	<hr><p class="footer">
+Copyright Will Cashman 2022.
+<br>
+Any and all opinions listed here are my own and not representative of my employers; future, past and present.
+</p>
+
+</body>
+</html>

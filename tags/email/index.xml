@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>email on </title>
+    <link>http://example.org/tags/email/</link>
+    <description>Recent content in email on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright Will Cashman 2022.</copyright>
+    <lastBuildDate>Fri, 01 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/tags/email/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mail Setup</title>
+      <link>http://example.org/posts/mail-setup/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/mail-setup/</guid>
+      <description>Email My email setup is a little complicated because I maintain a local copy of my mail on my computer for backup reasons. It is also nice because it is faster. I use Neomutt which is a terminal based email client. This is because I like the minimalism and I just think that email is something that is so fundamental that it should be in a terminal. I have tried other lightweight clients like Sylpheed and I still prefer it.</description>
+    </item>
+    
+  </channel>
+</rss>

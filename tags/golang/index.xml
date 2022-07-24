@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>golang on </title>
+    <link>http://example.org/tags/golang/</link>
+    <description>Recent content in golang on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright Will Cashman 2022.</copyright>
+    <lastBuildDate>Fri, 01 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Using Errgroup</title>
+      <link>http://example.org/posts/errgroup/</link>
+      <pubDate>Fri, 01 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/errgroup/</guid>
+      <description>Here I&amp;rsquo;m going to illustrate a couple of common use case for the errgroup, and in particular some in which you may think the errgroup is too fundamental but is in fact not.
+Run many things in parallel and return if there is an error or a certain response For instance, multiple validation functions, and immediately return if an error is returned or a function failed. Or to poll multiple data centers for a result and immediately return the first one.</description>
+    </item>
+    
+  </channel>
+</rss>

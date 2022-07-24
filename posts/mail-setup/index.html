@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body><nav>
+    
+    	<a class="menu-item" href="/">About</a>
+
+    
+    	<a class="menu-item" href="/posts/">Posts</a>
+
+    
+    	<a class="menu-item" href="/tags/">Tags</a>
+
+    
+    	<a class="menu-item" href="/resume/">Resume</a>
+
+    
+
+    
+</nav>
+<div id="content">
+<h1>Mail Setup</h1>
+
+
+<time datetime="2021-01-01">Jan 1, 2021</time>
+
+
+	
+	<a href="http://example.org/tags/email">email</a>
+
+
+
+<br><br>
+<h1 id="email">Email</h1>
+<p>My email setup is a little complicated because I maintain a local copy of my mail on my computer for backup reasons. It is also nice because it is faster.
+I use Neomutt which is a terminal based email client. This is because I like the minimalism and I just think that email is something that is so fundamental that it should be in a terminal. I have tried other lightweight clients like Sylpheed and I still prefer it. (I do like Apple Mail though).</p>
+<ul>
+<li>picture</li>
+</ul>
+<p>However, in case you don&rsquo;t want to go down that rabbit hole, I will present my configuration in layers of difficulty. These being</p>
+<ul>
+<li>Using Neomutt (a terminal-based client) without downloading locally</li>
+<li>Storing local mail</li>
+<li>Automatic synchronisation and desktop notifications</li>
+</ul>
+<p>This works on Linux and Apple, not a clue whether it works on windows</p>
+<h2 id="neomutt">Neomutt</h2>
+<p>Here we will setup a minimum example</p>
+<h2 id="storing-local-mail">Storing local mail</h2>
+<p>I spent way too long trying to do this before and about a month after I finally started using it properly, I discovered Luke Smith&rsquo;s <a href="">mutt-wizard</a> which handles all of it for you as well as providing sane defaults and color schemes</p>
+<p>I will briefly go over what mutt-wizard sets up.</p>
+<p>Previously we used IMAP to carry out all of our mailbox operations. Now we will be performing all of them locally (which is much faster!), and then using <code>isync</code> (or <code>mbsync</code> as it was previously known) to synchronise the local changes with your remote mail server. This goes the other way as well, when changes happen to the remote server, like receiving new mail, that also gets downloaded.</p>
+<p>Once all the mail is nice and synchronised in our local computer, we need to index the mail in order to actually access it in a reasonable way. The indexer does things such as searching for mail, filtering by different tags and so on. Neomutt acts mainly as a front-end for it, though Neomutt also has its own built-in capability. Since so much work is done by notmuch you can just use a more <a href="">lightweight front-end</a>. For simplicity we will just be using Neomutt here because thats what mutt-wizard uses.</p>
+<p>So now lets see what happens</p>
+<ol>
+<li>Synchronise mail (<code>isync</code>)</li>
+<li>Index mail (<code>notmuch</code>)</li>
+<li>View mail (<code>neomutt</code>)</li>
+<li>Send mail (<code>msmpt</code>)</li>
+</ol>
+<p>So to synchronise our mailboxes (and hence get new mail) we can run <code>mbsync -a</code> to synchronise all mailboxes, or <code>mbsync &lt;your.email@address&gt;&quot;</code> to synchronise a specific mailbox.</p>
+<p>To index mail, we just need to run the <code>notmuch new</code> command to update the notmuch database</p>
+<p>To view mail we just type</p>
+<pre tabindex="0"><code>neomutt
+</code></pre><p>To start the Neomutt client. It has Vim navigation (thanks to the mutt-wizard script). You can type <code>h</code> to find all the other commands</p>
+<p>Though the exact key binding may be different with some mail providers offering different mailboxes, some common useful ones are:</p>
+<ul>
+<li><code>o</code> - Get new mail for this mailbox</li>
+<li><code>O</code> - Get new mail for all mailboxes</li>
+<li><code>ga</code> - Go to archive (if your mailbox has one by default. Gmail doesn&rsquo;t)</li>
+<li><code>gt</code> - Go to Trash</li>
+<li><code>gs</code> - Go to Sent</li>
+<li><code>Ma</code> - Move to archive</li>
+<li><code>Mt</code> - Move to trash</li>
+</ul>
+<h2 id="automatically-poll-for-mail-and-desktop-notifications">Automatically poll for mail and desktop notifications</h2>
+<p>I first note that you can make it so that it runs without polling whenever you get new mail using the IMAP IDLE API, a good program for this is <code>goimapnotify</code> <a href="">arch wiki</a>. However after trying this method, I decided to only poll every 30min otherwise I found myself dashing to answer every email that popped up and it was distracting my work flow.</p>
+<p>Let make a little script that: synchronises our mailboxes, indexes the mail, and makes a desktop notification if there is new mail</p>
+<p>get-mail.sh</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/env bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Sync with remote mailbox</span>
+</span></span><span class="line"><span class="cl">mbsync -a
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Index new mail locally and save the final line of standard output</span>
+</span></span><span class="line"><span class="cl"><span class="nv">NEWMAIL</span><span class="o">=</span><span class="k">$(</span>notmuch new <span class="p">|</span> tail -1<span class="k">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Make a notification with the final line of output with no expiry time</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$NEWMAIL</span><span class="s2">&#34;</span> <span class="o">=</span>~ No<span class="se">\ </span>new<span class="se">\ </span>mail.* <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	notify-send -t <span class="m">100000</span> <span class="s2">&#34;</span><span class="nv">$NEWMAIL</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>In the second line we take the last line of the <code>notmuch new</code> command which indicates the number of new files (as well if any other changes occurred) and if there was mail, then we make a desktop notification which expires in 100000 seconds with the contents of the last line.</p>
+<p>Then make this file executable with <code>chmod +x get-mail.sh</code></p>
+<h3 id="automatically-calling-it">Automatically calling it</h3>
+<p>Now we need to autmatically call the program every X mins. This is specific to your operating system, Mac has launchd, Linux has crontab or systemd. We are using linux so the simplest option is probably to make a cron job, however since I have been meaning to become better at linux server administration, I decided to use systemd&rsquo;s timers.</p>
+<p>First we make a service /etc/systemd/user/get-mail.service</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-systemd" data-lang="systemd"><span class="line"><span class="cl"><span class="k">[Unit]</span>
+</span></span><span class="line"><span class="cl"><span class="na">Description</span><span class="o">=</span><span class="s">Get mail</span>
+</span></span><span class="line"><span class="cl"><span class="na">Type</span><span class="o">=</span><span class="s">oneshot</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">[Service]</span>
+</span></span><span class="line"><span class="cl"><span class="na">ExecStart</span><span class="o">=</span><span class="s">/bin/sh /usr/bin/getmail</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Then a following timer to call the service every 30mins</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-systemd" data-lang="systemd"><span class="line"><span class="cl"><span class="k">[Unit]</span>
+</span></span><span class="line"><span class="cl"><span class="na">Description</span><span class="o">=</span><span class="s">Run my &#34;get-mail&#34; service every 30 mins</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">[Timer]</span>
+</span></span><span class="line"><span class="cl"><span class="na">OnBootSec</span><span class="o">=</span><span class="s">30min</span>
+</span></span><span class="line"><span class="cl"><span class="na">OnUnitActiveSec</span><span class="o">=</span><span class="s">30min</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">[Install]</span>
+</span></span><span class="line"><span class="cl"><span class="na">WantedBy</span><span class="o">=</span><span class="s">timers.target</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>we can then start this with</p>
+<pre tabindex="0"><code>systemctl --user daemon-reload
+systemctl --user enable get-mail.timer
+systemctl --user start get-mail
+</code></pre><p>we can see the active timers with</p>
+<pre tabindex="0"><code>systemctl --user list-timers
+</code></pre><p>to get an output like</p>
+<pre tabindex="0"><code>NEXT                        LEFT      LAST                        PASSED        UNIT                         ACTIVATES
+Sun 2020-12-20 02:17:06 EST 5min left Sat 2020-12-19 02:17:06 EST 23h ago       systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+Sun 2020-12-20 02:19:06 EST 7min left Sun 2020-12-20 02:09:06 EST 2min 42s ago  get-mail.timer               get-mail.service
+n/a                         n/a       Fri 2020-12-18 02:13:47 EST 1 day 23h ago grub-boot-success.timer      grub-boot-success.service
+
+3 timers listed.
+Pass --all to see loaded but inactive timers, too.
+</code></pre><p>We can see the next time the get-mail.timer to run. If you see <code>n/a</code> in the <code>NEXT</code> section then something has gone wrong. You can check the logs using</p>
+<pre tabindex="0"><code>journalctl --user -u get-mail
+</code></pre>
+
+        </div>
+	<hr><p class="footer">
+Copyright Will Cashman 2022.
+<br>
+Any and all opinions listed here are my own and not representative of my employers; future, past and present.
+</p>
+
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body><nav>
+    
+    	<a class="menu-item" href="/">About</a>
+
+    
+    	<a class="menu-item" href="/posts/">Posts</a>
+
+    
+    	<a class="menu-item" href="/tags/">Tags</a>
+
+    
+    	<a class="menu-item" href="/resume/">Resume</a>
+
+    
+
+    
+</nav>
+<div id="content">
+<h1>Vim for Git Merging</h1>
+
+
+<time datetime="2021-01-01">Jan 1, 2021</time>
+
+
+<br><br>
+<p>This is the config for my vim setup for resolving git merge conflicts.</p>
+<pre tabindex="0"><code>[alias]
+	mt = mergetool -t vimdiff
+
+[mergetool]
+	writeToTemp = true
+
+[mergetool &#34;vimdiff&#34;]
+ 	cmd = nvim -d $MERGED $LOCAL $BASE $REMOTE -c &#39;wincmd J&#39;
+</code></pre><ol>
+<li>The alias mt means I can type <code>git mt</code> rather than the more verbose <code>git mergetool -t vimdiff</code></li>
+<li><code>writeToTemp</code> makes git put the BASE, LOCAL, REMOTE files into your computer&rsquo;s temp directory.</li>
+</ol>
+<ul>
+<li>
+<p>BASE The file before the conflicting changes</p>
+</li>
+<li>
+<p>LOCAL the &rsquo;local&rsquo; changes</p>
+</li>
+<li>
+<p>REMOTE the incoming changes</p>
+<pre><code>   BASE
+  /    \
+</code></pre>
+<p>LOCAL   REMOTE</p>
+</li>
+</ul>
+<p>By default git will put these files in the same directory as the merged file. So your editor may throw lots of errors. If you are using Golang like me, it will complain that that the functions have been defined more than once. With this option set, git will put the files in your computer&rsquo;s temp directory (varies with the operating system).
+3. The <code>vimdiff</code> mergetool.</p>
+<ul>
+<li><code>nvim -d $MERGED $LOCAL $BASE $REMOTE</code> - Start vim in diff-mode with the $LOCAL $BASE $REMOTE $MERGED files</li>
+<li><code>-c </code>wincmd J` - execute the command <!-- raw HTML omitted -->. The cursor will be on the $MERGED window, and so <!-- raw HTML omitted --> will put this window on the very bottom.</li>
+</ul>
+<p>Transforming</p>
+<p>+&mdash;&mdash;&ndash;+&mdash;&mdash;-+&mdash;&mdash;+&mdash;&mdash;&ndash;+
+|        |       |      |        |
+| merged | local | base | remote |
+|        |       |      |        |
++&mdash;&mdash;&ndash;+&mdash;&mdash;-+&mdash;&mdash;+&mdash;&mdash;&ndash;+</p>
+<p>Into</p>
+<p>+&mdash;&mdash;-+&mdash;&mdash;+&mdash;&mdash;&ndash;+
+|       |      |        |
+| LOCAL | BASE | REMOTE |
+|       |      |        |
++&mdash;&mdash;-+&mdash;&mdash;+&mdash;&mdash;&ndash;+
+|                       |
+|        MERGED         |
+|                       |
++&mdash;&mdash;-+&mdash;&mdash;+&mdash;&mdash;&ndash;+</p>
+<h2 id="managing-diffs">Managing diffs</h2>
+<p>I should mention that my git workflow is quite simple and so I do not need a lot of support from Vim. If you wish to have proper git support checkout Tim Popes <a href="https://github.com/tpope/vim-fugitive">vim-fugitive</a>. I do all git commit, push, pull etc from the terminal, and so this means there are really only two things I need from Vim:</p>
+<h3 id="1-view-git-blame">1. View <code>git blame</code></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="line"><span class="cl"><span class="nx">command</span> <span class="p">-</span><span class="nx">range</span> <span class="nx">GBlame</span> <span class="nx">echo</span> <span class="nx">system</span><span class="p">(</span><span class="s2">&#34;git blame -L &lt;line1&gt;,&lt;line2&gt; &#34;</span> . <span class="nx">expand</span><span class="p">(</span><span class="s1">&#39;%&#39;</span><span class="p">))</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Visually select some lines and run <code>:GBlame</code> to print the git blame</p>
+<h3 id="2-view-and-navigate-diffs">2. View and navigate diffs</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="line"><span class="cl"><span class="nx">command</span> <span class="p">-</span><span class="nx">nargs</span><span class="p">=</span>* <span class="p">-</span><span class="nx">complete</span><span class="p">=</span><span class="nx">file</span> <span class="nx">GView</span> <span class="nx">enew</span> <span class="p">|</span> <span class="nx">exe</span> <span class="s2">&#34;r !git &lt;args&gt;&#34;</span> <span class="p">|</span> <span class="nx">setlocal</span> <span class="nx">ft</span><span class="p">=</span><span class="nx">diff</span> <span class="nx">nomodified</span> <span class="p">|</span> <span class="nx">norm</span> <span class="nx">mD</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Explaination:</p>
+<ul>
+<li><code>-nargs=\*</code> allow any number of arguments. Vim will replace the <!-- raw HTML omitted --> placeholder</li>
+<li><code>-complete=file</code> - pressing TAB will autocomplete file names</li>
+<li><code>enew | exe &quot;r !git &lt;args&gt;</code> - read the output of <code>git &lt;args&gt;</code> into a new buffer. e.g. <code>:GView diff HEAD</code> will run <code>git diff HEAD</code></li>
+<li><code>setlocal ft=diff nomodified</code> - set the filetype to <code>diff</code> and set nomodified. This is so that when we go to leave Vim, it won&rsquo;t complain that there are still unmodified buffers</li>
+<li><code>norm mD</code> - Set the &lsquo;D&rsquo; mark here. This is so that when I do into other files I can easily navigate back to the diff by pressing &lsquo;D</li>
+</ul>
+<p>A habit I have is when I get to work in the morning, I run <code>:GView diff HEAD^</code> to see the changes that I made in the last commit to refresh my memory.</p>
+<p>Then I run this function to jump to the actual position in the file that the cursor in on in the diff. Its not very readable, but basically it assumes the cursor is in a Universal diff format with</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-diff" data-lang="diff"><span class="line"><span class="cl"><span class="gd">--- a/filename
+</span></span></span><span class="line"><span class="cl"><span class="gd"></span><span class="gi">+++ b/filename
+</span></span></span><span class="line"><span class="cl"><span class="gi"></span><span class="gu">@@ -1,&lt;old line number&gt; +1,&lt;new line number&gt; @@
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="gd">-old data
+</span></span></span><span class="line"><span class="cl"><span class="gd"></span><span class="gi">+new data
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>And then jumps to the file &lsquo;filename&rsquo; at <!-- raw HTML omitted --></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="line"><span class="cl"><span class="c">&#34; JumpIntoDiff: Jump to the actual file location the cursor is on</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">function</span> <span class="nx">JumpIntoDiff</span><span class="p">()</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c">	&#34; Get the line number for the start of the hunk in the file</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>	<span class="k">let</span> <span class="nx">s</span>:<span class="nx">diff_line_num</span> <span class="p">=</span> <span class="nx">search</span><span class="p">(</span><span class="s1">&#39;^@@&#39;</span><span class="p">,</span> <span class="s1">&#39;bn&#39;</span><span class="p">)</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>	<span class="k">let</span> <span class="nx">s</span>:<span class="nx">base_line_num</span> <span class="p">=</span> <span class="nx">matchlist</span><span class="p">(</span><span class="nx">getline</span><span class="p">(</span><span class="nx">s</span>:<span class="nx">diff_line_num</span><span class="p">),</span> <span class="s1">&#39;@@ .* +\(.*\),[0-9]* @@ .*&#39;</span><span class="p">)</span>[<span class="m">1</span>]<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c">
+</span></span></span><span class="line"><span class="cl"><span class="c">	&#34; Count the number of lines deleted in this chunk</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>	<span class="k">let</span> <span class="nx">s</span>:<span class="nx">num_del</span> <span class="p">=</span> <span class="nx">matchstr</span><span class="p">(</span><span class="nx">execute</span><span class="p">(</span><span class="nx">s</span>:<span class="nx">diff_line_num</span> . <span class="s1">&#39;,.w ! grep &#34;^-&#34; | wc -l&#39;</span><span class="p">),</span> <span class="s1">&#39;\d\+&#39;</span> <span class="p">)</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c">
+</span></span></span><span class="line"><span class="cl"><span class="c">	&#34; Get the file name. e.g. +++ b/file.name, the [6:] ignores the +++ b/</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>	<span class="k">let</span> <span class="nx">s</span>:<span class="nx">filename</span> <span class="p">=</span> <span class="nx">getline</span><span class="p">(</span><span class="nx">search</span><span class="p">(</span><span class="s1">&#39;^+++&#39;</span><span class="p">,</span> <span class="s1">&#39;bn&#39;</span><span class="p">))</span>[<span class="m">6</span>:]<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c">
+</span></span></span><span class="line"><span class="cl"><span class="c">	&#34; Calculate the offset of the user&#39;s cursor from the beginning of the hunk</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>	<span class="k">let</span> <span class="nx">s</span>:<span class="nx">cursor_offset</span> <span class="p">=</span> <span class="nx">line</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="p">-</span> <span class="nx">s</span>:<span class="nx">diff_line_num</span> <span class="p">-</span> <span class="m">1</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c">
+</span></span></span><span class="line"><span class="cl"><span class="c">	&#34; The real line number in the file</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>	<span class="k">let</span> <span class="nx">s</span>:<span class="nx">line_num_in_file</span> <span class="p">=</span> <span class="nx">s</span>:<span class="nx">base_line_num</span> <span class="p">+</span> <span class="nx">s</span>:<span class="nx">cursor_offset</span> <span class="p">-</span> <span class="nx">s</span>:<span class="nx">num_del</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>	<span class="nx">execute</span> <span class="s2">&#34;edit +&#34;</span> . <span class="nx">s</span>:<span class="nx">line_num_in_file</span> . <span class="s2">&#34; &#34;</span> . <span class="nx">s</span>:<span class="nx">filename</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">endfunction</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Then make a simple keymapping to call the function e.g.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="line"><span class="cl"><span class="nx">nnoremap</span> <span class="p">&lt;</span><span class="nx">buffer</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">leader</span><span class="p">&gt;</span><span class="nx">d</span> <span class="p">&lt;</span><span class="nx">CMD</span><span class="p">&gt;</span><span class="nx">call</span> <span class="nx">JumpIntoDiff</span><span class="p">()&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="take-the-upper-or-lower-diff">Take the upper or lower diff</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="line"><span class="cl"><span class="nx">nnoremap</span> <span class="p">&lt;</span><span class="nx">space</span><span class="p">&gt;</span><span class="nx">k</span> :<span class="nx">call</span> <span class="nx">search</span><span class="p">(</span><span class="s1">&#39;^&lt;&lt;&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="nx">dd</span>:<span class="nx">call</span> <span class="nx">search</span><span class="p">(</span><span class="s1">&#39;^==&#39;</span><span class="p">)&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="nx">dV</span>:<span class="nx">call</span> <span class="nx">search</span><span class="p">(</span><span class="s1">&#39;^&gt;&gt;&#39;</span><span class="p">)&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="nx">nnoremap</span> <span class="p">&lt;</span><span class="nx">space</span><span class="p">&gt;</span><span class="nx">j</span> :<span class="nx">call</span> <span class="nx">search</span><span class="p">(</span><span class="s1">&#39;^&lt;&lt;&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="nx">dV</span>:<span class="nx">call</span> <span class="nx">search</span><span class="p">(</span><span class="s1">&#39;^==&#39;</span><span class="p">)&lt;</span><span class="nx">CR</span><span class="p">&gt;</span>:<span class="nx">call</span> <span class="nx">search</span><span class="p">(</span><span class="s1">&#39;^&gt;&gt;&#39;</span><span class="p">)&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="nx">dd</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>I also personally like to set the search as &lsquo;&laquo;&laquo;&rsquo; so I can immediately jump to the next diff, so I also put a</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="line"><span class="cl"><span class="nx">call</span> <span class="nx">setreg</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;&lt;&lt;&lt;&#39;</span><span class="p">)</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>in my diff.vim</p>
+
+
+        </div>
+	<hr><p class="footer">
+Copyright Will Cashman 2022.
+<br>
+Any and all opinions listed here are my own and not representative of my employers; future, past and present.
+</p>
+
+</body>
+</html>

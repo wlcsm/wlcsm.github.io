@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body><nav>
+    
+    	<a class="menu-item" href="/">About</a>
+
+    
+    	<a class="menu-item" href="/posts/">Posts</a>
+
+    
+    	<a class="menu-item" href="/tags/">Tags</a>
+
+    
+    	<a class="menu-item" href="/resume/">Resume</a>
+
+    
+
+    
+</nav>
+<div id="content">
+<h1>Vim Features: Tags list</h1>
+
+
+<time datetime="2021-01-01">Jan 1, 2021</time>
+
+
+<br><br>
+<p>This is how you get that IDE like feeling where you can navigate around codebases super fast.
+This is built-in, no plugins, no configurations</p>
+<h2 id="what-are-tags">What are tags</h2>
+<p>Tags are an outline of your codebase, they record the location of important definitions like functions, type definitions, class definitions.</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>Download ctags, also known as Exhuberant Tags, and run <code>ctags -R .</code> in your project root directory. Unless your codebase is quite large, this should be close to instaneous. You will notice that a file call <code>tags</code> has now been created in the root directory. You can open that file to see all the tags that have been generated, it should like something like this</p>
+<p>TODO make tags for something</p>
+<p>Now open Vim and position the cursor over the name of a function or type/class and press <code>Ctrl-]</code>. Vim should have jumped to the definition. Since Vim recognises this action as a &lsquo;jump&rsquo;, you can press <code>Ctrl-O</code> to return back you your original positions, and <code>Ctrl-I</code> to jump back forward.</p>
+<p>You can also let Vim autocomplete tags with the <code>Ctrl-X Ctrl-t</code> command in insert mode, and if you want to say find the <code>BufferReader</code> struct, you can type <code>:tag Buf</code> and hit tab to let Vim show you all the matches, once you have found it, execute <code>:tag BufferReader</code> to jump to the tag.</p>
+<p>Another interesting feature is the preview window, you can use <code>pts BufferReader</code> and Vim will open the definition in the &lsquo;preview window&rsquo;, this window behave pretty much exactly like any other, except you can do (TODO preview next) to cycle through multiple matches and <code>Ctrl-W z</code> to close it quickly. Its essentially Vim&rsquo;s solution to the hover preview that LSPs provide.</p>
+<p>There is also a tag stack and also a <code>ts</code> command that I forgot.</p>
+<p>You should probably make a keymapping for these and also for rebuilding the tags file</p>
+
+
+        </div>
+	<hr><p class="footer">
+Copyright Will Cashman 2022.
+<br>
+Any and all opinions listed here are my own and not representative of my employers; future, past and present.
+</p>
+
+</body>
+</html>

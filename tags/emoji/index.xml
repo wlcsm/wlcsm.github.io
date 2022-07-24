@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>emoji on </title>
+    <link>http://example.org/tags/emoji/</link>
+    <description>Recent content in emoji on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright Will Cashman 2022.</copyright>
+    <lastBuildDate>Fri, 01 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/tags/emoji/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A Vim Purist&#39;s Workflow</title>
+      <link>http://example.org/posts/vim-workflow/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/vim-workflow/</guid>
+      <description>I have been using Vim for about 1.5 years now and I am constantly surprised about how many features it has.
+Despite using it for many smaller projected, I wasn&amp;rsquo;t sold on using Vim as my main programming environment, and even then, it was only with CoC installed to essentially replicate VS Code in Vim. Until I stumbled across this video by Leeren at VimConf . This completely blew my mind (as did his other videos on Vim).</description>
+    </item>
+    
+  </channel>
+</rss>

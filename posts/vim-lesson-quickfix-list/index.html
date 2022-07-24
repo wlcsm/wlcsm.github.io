@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body><nav>
+    
+    	<a class="menu-item" href="/">About</a>
+
+    
+    	<a class="menu-item" href="/posts/">Posts</a>
+
+    
+    	<a class="menu-item" href="/tags/">Tags</a>
+
+    
+    	<a class="menu-item" href="/resume/">Resume</a>
+
+    
+
+    
+</nav>
+<div id="content">
+<h1>Vim&#39;s Quickfix/Location list</h1>
+
+
+<time datetime="2021-01-01">Jan 1, 2021</time>
+
+
+	
+	<a href="http://example.org/tags/vim">vim</a>
+
+
+
+<br><br>
+<p>People often complain that Vim doesn&rsquo;t have good support for project-wide searches or error navigation without the use of plugins or even LSPs. These people have clearly never learned about Vim&rsquo;s inbuilt quickfix and location list.</p>
+<h2 id="quickfix-list">Quickfix list</h2>
+<p>The quickfix list is a buffer in Vim which provides fast navigation to locations in files.</p>
+<h2 id="differences-between-the-quickfix-and-location-list">Differences between the Quickfix and Location list</h2>
+<p>The two are exactly the same, however there is only one quickfix list per Vim session, but there is one location list for every window. For this reason, the quickfix list is normally used for the errors of your program or build results, whereas the location list is normally used for things like <code>grep</code>. However you can use either for anything.</p>
+<p>Every command for the quickfix list has an equivalent for the location list.</p>
+<p>Command | Quickfix | Location
+Open | <code>copen</code> | <code>lopen</code>
+Next entry | <code>cnext</code> | <code>lnext</code>
+Make | <code>make</code> | <code>lmake</code>
+Grep | <code>grep</code> | <code>lgrep</code>
+Older list | <code>colder</code> | <code>lolder</code></p>
+<p>There are heaps more, but for the rest of this post I will just be presenting the quickfix variant with the understanding that everything has a location list equivalent</p>
+<h2 id="using">Using</h2>
+<p>So here&rsquo;s an example problem. I need to build my program and find the errors.</p>
+<p>I&rsquo;ve set <code>make</code> to run <code>go build</code> which presents me with a list of errors.</p>
+<p>Side note: to make that initial pop-up display of the errors disappear, just run <code>:silent make</code> (I&rsquo;d recommend mapping this to a key).</p>
+<p>Use the output of <code>make</code> to build a file. More on that <a href="">here</a>. Depending on the code you are running you may have to set a <code>compiler</code> so that Vim knows how it should parse the output.</p>
+<p>Notice that if there were errors, Vim will automatically jump to the location of the first error (you can stop that by running <code>:make!</code>). To go to the next error press <code>:cnext</code>. Now type <code>:clist</code> to get a pop-up of which error you are located at in the list. To get an interactive list, type <code>:copen</code> to open an interactive buffer for the quickfix list. Pressing <code>Enter</code> on any entry in this buffer will make you jump to the error.</p>
+<p>Tim Pope has a plug-in which makes some good default mappings for this, or you could just do <code>:cn</code> and then press <code>@:</code> which repeats the last ex command</p>
+<p>Press <code>:clist</code> to get a little pop-up of the quickfix lists and a</p>
+
+
+        </div>
+	<hr><p class="footer">
+Copyright Will Cashman 2022.
+<br>
+Any and all opinions listed here are my own and not representative of my employers; future, past and present.
+</p>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body><nav>
+    
+    	<a class="menu-item" href="/">About</a>
+
+    
+    	<a class="menu-item" href="/posts/">Posts</a>
+
+    
+    	<a class="menu-item" href="/tags/">Tags</a>
+
+    
+    	<a class="menu-item" href="/resume/">Resume</a>
+
+    
+
+    
+</nav>
+<div id="content">
+<h1>Monitoring Cryptocurrencies with Bash</h1>
+
+
+<time datetime="2021-01-01">Jan 1, 2021</time>
+
+
+	
+	<a href="http://example.org/tags/crypto">crypto</a>
+
+	
+	<a href="http://example.org/tags/bash">bash</a>
+
+
+
+<br><br>
+<p>I bought into the crypto scene but was concerned about the price of crypto dropping dramatically as it does, so I made an incredibly basic bash script to monitor the prices of crypto using the CoinGecko API. This could be used for instance to show the current price on Bitcoin in PolyBar or DWM</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/sh
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="nv">COINS</span><span class="o">=</span><span class="nv">$1</span>
+</span></span><span class="line"><span class="cl"><span class="nv">CURRENCIES</span><span class="o">=</span><span class="nv">$2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">curl -X GET <span class="s2">&#34;https://api.coingecko.com/api/v3/simple/price?ids=</span><span class="si">${</span><span class="nv">COINS</span><span class="si">}</span><span class="s2">&amp;vs_currencies=</span><span class="si">${</span><span class="nv">CURRENCIES</span><span class="si">}</span><span class="s2">&#34;</span> -H  <span class="s2">&#34;accept: application/json&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Save this to a file <code>fetch-crypto.sh</code> and make it executable with <code>chmod +x fetch-crypto.sh</code>. Then we can call it as</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ ./fetch-crypto.sh bitcoin aud
+</span></span><span class="line"><span class="cl"><span class="o">{</span><span class="s2">&#34;bitcoin&#34;</span>:<span class="o">{</span><span class="s2">&#34;aud&#34;</span>:72630<span class="o">}}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>If you want more currencies or coins, you can use a comma separated list</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ ./fetch-crypto.sh bitcoin,ethereum aud
+</span></span><span class="line"><span class="cl"><span class="o">{</span><span class="s2">&#34;bitcoin&#34;</span>:<span class="o">{</span><span class="s2">&#34;aud&#34;</span>:72773<span class="o">}</span>,<span class="s2">&#34;ethereum&#34;</span>:<span class="o">{</span><span class="s2">&#34;aud&#34;</span>:2246.25<span class="o">}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ ./fetch-crypto.sh bitcoin,ethereum aud,usd
+</span></span><span class="line"><span class="cl"><span class="o">{</span><span class="s2">&#34;ethereum&#34;</span>:<span class="o">{</span><span class="s2">&#34;aud&#34;</span>:2246.25,<span class="s2">&#34;usd&#34;</span>:1742.93<span class="o">}</span>,<span class="s2">&#34;bitcoin&#34;</span>:<span class="o">{</span><span class="s2">&#34;aud&#34;</span>:72773,<span class="s2">&#34;usd&#34;</span>:56467<span class="o">}}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Then if you want to actually extract data from the JSON, you could use the <a href="https://stedolan.github.io/jq/">jq</a> tool.
+For instance, if I wanted to make a script that printed out the price of Bitcoin in AUD, I would write</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ fetch_crypto bitcoin aud <span class="p">|</span> jq <span class="s1">&#39;.bitcoin.aud&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="m">72773</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>I&rsquo;ve also turned this into a rebinding and made it output the price in a notification</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ notify-send <span class="s2">&#34;</span><span class="k">$(</span>./fetch-crypto.sh bitcoin aud <span class="p">|</span> jq <span class="s1">&#39;.bitcoin.aud&#39;</span><span class="k">)</span><span class="s2">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+        </div>
+	<hr><p class="footer">
+Copyright Will Cashman 2022.
+<br>
+Any and all opinions listed here are my own and not representative of my employers; future, past and present.
+</p>
+
+</body>
+</html>

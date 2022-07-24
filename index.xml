@@ -1,1255 +1,168 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Will Vim Bog</title><link>https://wlcsm.github.io/</link><description>About LoveIt Theme</description><generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>w.cashman1351@gmail.com (Will Cashman)</managingEditor><webMaster>w.cashman1351@gmail.com (Will Cashman)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 24 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://wlcsm.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Advent of Code 2020 Day 1-2 in Rust</title><link>https://wlcsm.github.io/rust-advent-of-code-1-2/</link><pubDate>Fri, 01 Oct 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://wlcsm.github.io/rust-advent-of-code-1-2/</guid><description><![CDATA[<h2 id="using-advent-of-code-to-learn-rust">Using Advent of Code to learn Rust</h2>
-<p>Rust is a relatively new programming language that boast big benefits compared to its contemporaries. It combines the speed of C, expressiveness of Haskell, all while being memory and thread safe.</p>
-<p>I have used Rust a lot this year to implement a polynomial library for my Honours year project, and so I have only really used it for scientific computing. I have barely touched string manipulation, parsing, and so I thought it was about time that I should branch out. The <a href="" rel="">Advent of Code</a> is a set of programming challenges that are rel eased every day of December, leading up to Christmas functioning like an <a href="" rel="">advent calendar</a>. The problems are fairly basic and can normally be accomplished in under 50 lines (depending on your chosen programming language). Pr grammars often use this opportunity to learn new languages.</p>
-<p>Since I am a math major, I will be taking a very algorithmic approach to the problems and will often discuss their complexity classes. Though I hope this won&rsquo;t obscure the explanation for those who are not interested in it.</p>
-<h2 id="day-1">Day 1</h2>
-<p>The problem can be simplified to this:</p>
-<pre><code>Given a list of numbers, find the two entries that sum to 2020 and multiply them together.
-</code></pre>
-<p>So first lets think of a couple of ways this can be done. The naive way would be to iterate through the list and add it to to every other element to see if it sums to 2020. This is nice and simple, and since we our given list is fairly short (only 200 lines) it will execute fairly quickly.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">fn</span> <span class="nf">part1_naive</span><span class="p">(</span><span class="n">expense_list</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">usize</span> <span class="p">{</span><span class="w">
-</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">expense_list</span><span class="p">.</span><span class="n">len</span><span class="p">();</span><span class="w">
-</span><span class="w">
-</span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="o">..</span><span class="n">n</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">i</span><span class="o">..</span><span class="n">n</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2020</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w">
-</span><span class="w">            </span><span class="p">}</span><span class="w">
-</span><span class="w">        </span><span class="p">}</span><span class="w">
-</span><span class="w">    </span><span class="p">}</span><span class="w">
-</span><span class="w">    </span><span class="fm">panic!</span><span class="p">(</span><span class="s">&#34;No two entries sum to 2020&#34;</span><span class="p">);</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>However, this is not the most efficient approach. If we let $n$ denote the number of elements in the list, then this approach uses around $n^2$ operations in the worst case, since the outer loop must execute at most $n$ time, and the inner loop $n-i$ times on the $i^\text{th}$ iteration of the outer loop. Giving a total of approximately
-$$ n + (n - 1) + (n - 2) + \cdots + 1 = (n^2 - n)/2 $$
-(ignoring constants) operations. More formally, this is $\mathcal O(n^2)$, which is not the most desirable.</p>
-<p>Lets look at another technique. Notice that in the outer loop, the thing we really care about is finding a certain element. The problem is that we are performing a linear search in the inner loop to find it which makes it slow. In order to speed up the lookup time, we could use a Hash map to obtain (approximately) constant lookup time.</p>
-<p>Therefore the outer loop will iterate $n$ times, and inside the loop will be constant, which means the overall algorithm will be $O(n)$ overall.</p>
-<p>The last option seems to have worse complexity, however it actually performs the best for reasonable inputs since although the hash map has constant lookup time, that constant may be very large. To test, I made two tests, one using the default hash function in the standard library, and another using <a href="https://crates.io/crates/rustc-hash" target="_blank" rel="noopener noreffer">rustc_hash</a>; a fast hash function that is highly suitable for integer keys.</p>
-<p>Here we sort the list and initialise two variable <code>low</code> and <code>high</code> to be either ends of the array. If the sum of the elements at <code>low</code> and <code>high</code> is less than 2020, then we increase <code>low</code> (since the list is sorted, this will increase our sum) if it is less, then we decrease high.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">cmp</span>::<span class="n">Ordering</span><span class="p">;</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="k">fn</span> <span class="nf">part1_fast</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">expense_list</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">usize</span> <span class="p">{</span><span class="w">
-</span><span class="w">
-</span><span class="w">    </span><span class="n">expense_list</span><span class="p">.</span><span class="n">sort</span><span class="p">();</span><span class="w">
-</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">low</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">high</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">expense_list</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
-</span><span class="w">
-</span><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="n">low</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">high</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="p">(</span><span class="n">expense_list</span><span class="p">[</span><span class="n">low</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">high</span><span class="p">]).</span><span class="n">cmp</span><span class="p">(</span><span class="o">&amp;</span><span class="mi">2020</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">            </span><span class="n">Ordering</span>::<span class="n">Equal</span><span class="w">   </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">low</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">high</span><span class="p">],</span><span class="w">
-</span><span class="w">            </span><span class="n">Ordering</span>::<span class="n">Less</span><span class="w">    </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">low</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-</span><span class="w">            </span><span class="n">Ordering</span>::<span class="n">Greater</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">high</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-</span><span class="w">        </span><span class="p">}</span><span class="w">
-</span><span class="w">    </span><span class="p">}</span><span class="w">
-</span><span class="w">    </span><span class="fm">panic!</span><span class="p">(</span><span class="s">&#34;No two entries sum to 2020&#34;</span><span class="p">);</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>Here I have used the <code>Ordering</code> construct in the standard library to simplify the thing. Otherwise I could have written the (not as nice)</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">if</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">low</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">high</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2020</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">low</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">high</span><span class="p">],</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">low</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">expense_list</span><span class="p">[</span><span class="n">high</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2020</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="n">low</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="n">h</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mi">1</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>Now lets look at the benchmarks to see how they perform on the puzzle input (200 lines)</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">test test::bench_fast       ... bench:       3,275 ns/iter (+/- 74)
-test test::bench_hashmap    ... bench:      10,530 ns/iter (+/- 183)
-test test::bench_rustc_hash ... bench:       2,875 ns/iter (+/- 156)
-test test::bench_naive      ... bench:       5,760 ns/iter (+/- 587)
-</code></pre></td></tr></table>
-</div>
-</div><p>It seems that choosing the right hash function can make a great impact on the performance. Though the naive algorithm didn&rsquo;t perform too poorly for this test, since it is $\mathcal O(n^2)$ we would expect it to perform much poorer on large test cases.</p>
-<h2 id="part-2">Part 2</h2>
-<p>Here in part 2, we iterate through the list and then call our Part 1 solution on the remainder. If we use the sorting algorithm from Part 1 we don&rsquo;t need to sort the list every time, so this would naturally be the best choice of the three.</p>
-<h1 id="day-2">Day 2</h1>
-<p>Day 2&rsquo;s problem is somewhat simpler algorithmically. Here we are given a list of passwords as well as a small schema which specifies a rule the password must satisfy in order for it to be valid. So our problem is to iterate through the lines of the line and count the number of valid passwords.</p>
-<p>Now this is the kind of work I am unfamiliar with. Though I did know enough to know that <em>regular expressions</em> would be very useful for extracting the data.</p>
-<p>An example of a line in the input is</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">15-16 p: ppppppppppplppppp
-</code></pre></td></tr></table>
-</div>
-</div><p>Which says that there needs to be 15 to 16 of the characters &lsquo;p&rsquo; in the password <code>ppppppppppplppppp</code> in order for it to be valid. So we much extract <code>15</code>, <code>16</code>, <code>p</code>, <code>ppppppppppplppppp</code> from the text.</p>
-<p>After fiddling around a bit on <a href="https://regex101.com/" target="_blank" rel="noopener noreffer">Online Regex</a> I arrived at the regular expression</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">(\d+)-(\d+) (\w): (\w+)
-</code></pre></td></tr></table>
-</div>
-</div><p>Let break this down a bit: <code>\d</code> matches a single digit and <code>\w</code> matches a non-digit character. Appending <code>+</code> to the end of a pattern indicates that one of more of the pattern must be present, <code>\d+</code> matches one or more digits e.g. $4$, $16$, and <code>\w+</code> matches one or more word characters e.g. <code>foo</code>, <code>bar</code>.  Parentheses <code>( )</code>specify a <em>capture group</em> which allows us to refer to each of the matches in the capture group so that we may extract the data out of the pattern after it has been matched</p>
-<p>Lets see how to do this in Rust:</p>
-<p>Add the <code>regex</code> crate to write by adding the line</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="p">[</span><span class="nx">dependencies</span><span class="p">]</span>
-<span class="nx">regex</span> <span class="p">=</span> <span class="s2">&#34;1.0&#34;</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>To your project&rsquo;s <code>Cargo.toml</code> file.</p>
-<p>To create a regex we write</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="n">pass_regex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">regex</span>::<span class="n">Regex</span>::<span class="n">new</span><span class="p">(</span><span class="s">r&#34;(\d+)-(\d+) (\w): (\w+)&#34;</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>Then if we can iterate over the capture groups using</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="n">cap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pass_regex</span><span class="p">.</span><span class="n">captures_iter</span><span class="p">(</span><span class="o">&amp;</span><span class="n">line</span><span class="p">).</span><span class="n">next</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
-</span><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">pass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PassData</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="n">begin</span>: <span class="nc">cap</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
-</span><span class="w">    </span><span class="n">end</span>:   <span class="nc">cap</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
-</span><span class="w">    </span><span class="n">chr</span>:   <span class="nc">cap</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
-</span><span class="w">    </span><span class="n">pass</span>:  <span class="kp">&amp;</span><span class="nc">cap</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w">
-</span><span class="w"></span><span class="p">};</span><span class="w">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>Lets break this down:</p>
-<ul>
-<li><code>pass_regex.captures_iter(&amp;line)</code> applies our regex to <code>line</code> and return an iterator over all matches (not <em>captures</em>!)</li>
-<li><code>.next().unwrap()</code> Gets the first match of our regex. In our case we know that there is a guaranteed match and that there is only doing to be one.</li>
-<li><code>cap</code> is an array which contains the captures inside the match as well as the entire match itself as the first element. For instance, if we had applied the regex to <code>15-16 p: ppppppppppplppppp</code> then <code>cap</code> would be</li>
-</ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">cap = [&#34;15-16 p: ppppppppppplppppp:, &#34;15&#34;, &#34;16&#34;, &#34;p&#34;, &#34;ppppppppppplppppp&#34;]
-</code></pre></td></tr></table>
-</div>
-</div><p>Thus all we need to do is parse our data and store it in the <code>PassData</code> struct.</p>
-<p>Overall this gives</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">struct</span> <span class="nc">PassData</span><span class="o">&lt;&#39;</span><span class="na">a</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="n">begin</span>: <span class="kt">usize</span><span class="p">,</span><span class="w">
-</span><span class="w">    </span><span class="n">end</span>:   <span class="kt">usize</span><span class="p">,</span><span class="w">
-</span><span class="w">    </span><span class="n">chr</span>:   <span class="kt">char</span><span class="p">,</span><span class="w">
-</span><span class="w">    </span><span class="n">pass</span>:  <span class="kp">&amp;</span><span class="o">&#39;</span><span class="na">a</span> <span class="kt">str</span><span class="p">,</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">fs</span>::<span class="n">File</span><span class="p">;</span><span class="w">
-</span><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">io</span>::<span class="p">{</span><span class="n">BufRead</span><span class="p">,</span><span class="w"> </span><span class="n">BufReader</span><span class="p">};</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="c1">// Counts the number of passwords in &#34;filepath&#34; that are validated by the &#34;policy&#34; function
-</span><span class="c1"></span><span class="k">fn</span> <span class="nf">count_valid_pass</span><span class="p">(</span><span class="n">filepath</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">policy</span>: <span class="nc">fn</span><span class="p">(</span><span class="n">PassData</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">usize</span> <span class="p">{</span><span class="w">
-</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">pass_regex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">regex</span>::<span class="n">Regex</span>::<span class="n">new</span><span class="p">(</span><span class="s">r&#34;(\d+)-(\d+) (\w): (\w+)&#34;</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">File</span>::<span class="n">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
-</span><span class="w">
-</span><span class="w">    </span><span class="n">BufReader</span>::<span class="n">new</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="w">
-</span><span class="w">        </span><span class="p">.</span><span class="n">lines</span><span class="p">()</span><span class="w">
-</span><span class="w">        </span><span class="p">.</span><span class="n">filter</span><span class="p">(</span><span class="o">|</span><span class="n">line</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">line</span><span class="p">.</span><span class="n">as_ref</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
-</span><span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">cap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pass_regex</span><span class="p">.</span><span class="n">captures_iter</span><span class="p">(</span><span class="o">&amp;</span><span class="n">line</span><span class="p">).</span><span class="n">next</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
-</span><span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">pass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PassData</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">                </span><span class="n">begin</span>: <span class="nc">cap</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
-</span><span class="w">                </span><span class="n">end</span>:   <span class="nc">cap</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="kt">usize</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
-</span><span class="w">                </span><span class="n">chr</span>:   <span class="nc">cap</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="n">parse</span>::<span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">().</span><span class="n">unwrap</span><span class="p">(),</span><span class="w">
-</span><span class="w">                </span><span class="n">pass</span>:  <span class="kp">&amp;</span><span class="nc">cap</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w">
-</span><span class="w">            </span><span class="p">};</span><span class="w">
-</span><span class="w">            </span><span class="n">policy</span><span class="p">(</span><span class="n">pass</span><span class="p">)</span><span class="w">
-</span><span class="w">        </span><span class="p">})</span><span class="w">
-</span><span class="w">        </span><span class="p">.</span><span class="n">count</span><span class="p">()</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="k">fn</span> <span class="nf">valid_password_p1</span><span class="p">(</span><span class="n">data</span>: <span class="nc">PassData</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span> <span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">occurences</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">pass</span><span class="p">.</span><span class="n">chars</span><span class="p">().</span><span class="n">filter</span><span class="p">(</span><span class="o">|</span><span class="n">c</span><span class="o">|</span><span class="w"> </span><span class="o">*</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">chr</span><span class="p">).</span><span class="n">count</span><span class="p">();</span><span class="w">
-</span><span class="w">    </span><span class="n">data</span><span class="p">.</span><span class="n">begin</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">occurences</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">occurences</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">end</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>Note here that we do not need to load the whole file into memory, but rather we can process it one a time which we do here.</p>
-<p>This isn&rsquo;t the best solution however as what we care about is actually <em>parsing</em> the data rather than <em>validating</em> it, which is what regular expressions are more suited towards. For this we can actually use a parser library achieve this. Chris Biscardi has a <a href="https://www.christopherbiscardi.com/advent-of-code-2020-in-rust-day-2-regex-vs-parser-combinators-with-nom" target="_blank" rel="noopener noreffer">great article</a> of how one can use the <code>nom</code> crate to create a <em>parser</em> rather than a regular expression for better performance for this exact problem, and <a href="https://blog.logrocket.com/parsing-in-rust-with-nom/" target="_blank" rel="noopener noreffer">Log Rocket</a> gives a great introduction to using the <code>nom</code> parser library</p>
-<p>I haven&rsquo;t encountered parsers yet and so I am thinking of learning about it and writing my experience as it looks like a much more elegant way to solve these kinds of problems.</p>
-<h2 id="part-2-1">Part 2</h2>
-<p>Part 2 asks us to change the validation function. Fortunately, since we wrote our code in a very modular way, this is very simple fix to make. In this one, passwords are valid if either $15$ (exclusively) or $16$ is the character &lsquo;p&rsquo;. This gives us the fairly simple code below, which we may pass into the <code>count_valid_pass</code> function as before</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">fn</span> <span class="nf">valid_password_p2</span><span class="p">(</span><span class="n">data</span>: <span class="nc">PassData</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span> <span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">chars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">pass</span><span class="p">.</span><span class="n">chars</span><span class="p">();</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chars</span><span class="p">.</span><span class="n">nth</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">begin</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">second</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chars</span><span class="p">.</span><span class="n">nth</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">begin</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
-</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">xor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">|</span><span class="n">a</span>: <span class="kt">bool</span><span class="p">,</span><span class="w"> </span><span class="n">b</span>: <span class="kt">bool</span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">a</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">b</span><span class="p">);</span><span class="w">
-</span><span class="w">
-</span><span class="w">    </span><span class="n">xor</span><span class="p">(</span><span class="n">first</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">chr</span><span class="p">,</span><span class="w"> </span><span class="n">second</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">chr</span><span class="p">)</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w">
-</span></code></pre></td></tr></table>
-</div>
-</div>]]></description></item><item><title>Markdown to HTML Using sed</title><link>https://wlcsm.github.io/sed-markdown-compiler/</link><pubDate>Fri, 01 Oct 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://wlcsm.github.io/sed-markdown-compiler/</guid><description><![CDATA[<p>I recently discovered the <code>:TOhtml</code> command in Vim. It converts the current view of the file you are editing in Vim to HTML that can be viewed in the browser. TODO I think it has some other use cases too</p>
-<p>However, it would be nice if it could actually render the Markdown file I was editing too. I looked at the common solutions like <code>pandoc</code> but I found that they were incredibly huge programs. I decided to ignore the extra features and see if I could make a minimalistic program to convert plain Markdown to html.</p>
-<p>It isn&rsquo;t perfect, but most of what I need it to do can be done with the following sed script:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Markdown to HTML render</span>
-
-1r header.html
-
-<span class="c1"># Wraps paragraphs in the &lt;p&gt;&lt;/p&gt; tags</span>
-/^<span class="se">\w</span>/<span class="o">{</span>H<span class="p">;</span><span class="nv">$!</span>d<span class="o">}</span>
-/^$/<span class="o">{</span>x<span class="p">;</span>/./s/<span class="se">\(</span>.*<span class="se">\)</span>/&lt;p&gt;<span class="se">\1</span>&lt;<span class="se">\/</span>p&gt;/<span class="o">}</span>
-
-<span class="c1"># ###.* to &lt;hN&gt;</span>
-s/^# <span class="se">\(</span>.*<span class="se">\)</span>/&lt;h1&gt;<span class="se">\1</span>&lt;<span class="se">\/</span>h1&gt;/
-s/^## <span class="se">\(</span>.*<span class="se">\)</span>/&lt;h2&gt;<span class="se">\1</span>&lt;<span class="se">\/</span>h2&gt;/
-s/^### <span class="se">\(</span>.*<span class="se">\)</span>/&lt;h3&gt;<span class="se">\1</span>&lt;<span class="se">\/</span>h3&gt;/
-s/^#### <span class="se">\(</span>.*<span class="se">\)</span>/&lt;h4&gt;<span class="se">\1</span>&lt;<span class="se">\/</span>h4&gt;/
-s/^##### <span class="se">\(</span>.*<span class="se">\)</span>/&lt;h5&gt;<span class="se">\1</span>&lt;<span class="se">\/</span>h5&gt;/
-s/^###### <span class="se">\(</span>.*<span class="se">\)</span>/&lt;h6&gt;<span class="se">\1</span>&lt;<span class="se">\/</span>h6&gt;/
-
-<span class="c1"># &#39;*&#39; or &#39;-&#39; or &#39;+&#39; to &lt;li&gt;</span>
-s/^<span class="se">\s</span>*<span class="o">[</span><span class="se">\*</span>-+<span class="o">]</span><span class="se">\s</span>*<span class="se">\(</span>.*<span class="se">\)</span>/&lt;li&gt;<span class="se">\1</span>&lt;<span class="se">\/</span>li&gt;/
-
-<span class="c1"># [title](url) to &lt;a href=&#34;url&#34;&gt;title&lt;/a&gt;</span>
-s/<span class="se">\[\(</span>.*<span class="se">\)\]</span><span class="o">(</span><span class="se">\(</span>.*<span class="se">\)</span><span class="o">)</span>/&lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&#34;\2&#34;</span>&gt;<span class="se">\1</span>&lt;<span class="se">\/</span>a&gt;/g
-
-<span class="nv">$r</span> footer.html
-</code></pre></td></tr></table>
-</div>
-</div><p>You will also need the header and footer for the HTML file. This is up to you but I chose these simple templates</p>
-<p><code>header.sh</code></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
-<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">&#34;content-type&#34;</span> <span class="na">content</span><span class="o">=</span><span class="s">&#34;text/html; charset=UTF-8&#34;</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Testing<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
-</div>
-</div><p><code>footer.html</code></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>To run it. Save the file as <code>markdown-to-html.sed</code> and execute it on a markdown file <code>file.md</code> as</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sed -f markdown-to-html.sed file.md
-</code></pre></td></tr></table>
-</div>
-</div>]]></description></item><item><title>A Vim Purist's Workflow</title><link>https://wlcsm.github.io/vim-workflow/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://wlcsm.github.io/vim-workflow/</guid><description><![CDATA[<p>I have been using Vim for about 1.5 years now and I am constantly surprised about how many features it has.</p>
-<p>Despite using it for many smaller projected, I wasn&rsquo;t sold on using Vim as my main programming environment, and even then, it was only with CoC installed to essentially replicate VS Code in Vim. Until I stumbled across this video by Leeren at VimConf <a href="" rel=""></a>. This completely blew my mind (as did his other videos on Vim).</p>
-<p>Its amazing to me just how many features Vim has built in and that have been nearly forgotten. Nowhere before had I seen people talk about the <code>compiler</code> setting and <code>include search</code>. I knew Vim was good at managing tags, though I hadn&rsquo;t even thought to learn it as I assumed that it would be default to setup, rather than the two steps it takes in reality.</p>
-<p>Since then I have ridiculously pruned my Vim configuration, noting that I am actually using Neovim rather than Vim; its the same thing but the codebase is more actively maintained and has a more positive direction for Vim. Fortunately for me, it makes many sane defaults that Vim doesn&rsquo;t have which means my vimrc can be even shorter!</p>
-<p>Now note that I am claiming Vim is a great <em>text editor</em> akin to VS Code or Sublime Text, I am not claiming that it should be used in hardcode Java/C++/C# developement (of which I don&rsquo;t have experience in).</p>
-<p>Most of my work is medium sized Python, Rust, C or Go. Which don&rsquo;t need such environments (at least small C programs don&rsquo;t).</p>
-<p>I like having a pure Vim configuration because I spend a lot of time in SSH or Docker containers and so having many key mappings gets annoying very quickly.</p>
-<p>Probably one of the biggest things you should do is use the Vim manual, type <code>:h &lt;something&gt;</code> and press tab to show a list of all help pages that match the string provided. Once inside a help page, you can press <code>gO</code> to get an overview of the page, and <code>Ctrl-[</code> over a keywork (one that is highlighted) to jump to its definition in the help pages</p>
-<p>Here are the non-programming related</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="nx">set</span> <span class="nx">hidden</span><span class="err">
-</span><span class="err"></span><span class="nx">inoremap</span> <span class="nx">jk</span> <span class="p">&lt;</span><span class="nx">ESC</span><span class="p">&gt;</span><span class="err">
-</span><span class="err"></span><span class="nx">autocmd</span> <span class="nx">Filetype</span> <span class="nx">markdown</span><span class="p">,</span><span class="nx">tex</span><span class="p">,</span><span class="nx">mail</span> <span class="nx">setlocal</span> <span class="nx">spell</span> <span class="nx">spelllang</span><span class="p">=</span><span class="nx">en_au</span><span class="err">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>The first is the dumbest setting that I have not seen a single Vim purist not put in their config.
-The second is the only keymapping that I can&rsquo;t seem to shake off
-The last just turns on spelling when in markdown, latex, and mail</p>
-<p>Now I don&rsquo;t use any plugins at the moment but there are many plugins that I would use if I were in something like web development like <code>vim-surround</code></p>
-<h2 id="vim-commentary"><code>vim-commentary</code></h2>
-<p>Anyway, here are some replacements for common plugins that I use</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="nx">vnoremap</span> <span class="nx">gc</span> :<span class="nx">norm</span><span class="p">!</span> <span class="nx">i</span><span class="p">&lt;</span><span class="nx">C</span><span class="p">-</span><span class="nx">R</span><span class="p">&gt;=</span><span class="nx">substitute</span><span class="p">(</span>&amp;<span class="nx">commentstring</span><span class="p">,</span> <span class="s1">&#39;%s.*&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)&lt;</span><span class="nx">CR</span><span class="p">&gt;&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
-</span><span class="err"></span><span class="nx">vnoremap</span> <span class="nx">gC</span> :<span class="nx">norm</span><span class="p">!</span> <span class="p">&lt;</span><span class="nx">C</span><span class="p">-</span><span class="nx">R</span><span class="p">&gt;=</span><span class="nx">len</span><span class="p">(</span><span class="nx">substitute</span><span class="p">(</span>&amp;<span class="nx">commentstring</span><span class="p">,</span> <span class="s1">&#39;%s.*&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="nx">x</span><span class="p">&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>This is a crude implementation of commenting similar to Tim Pope&rsquo;s <code>vim-commentary</code>. Just select the text you wish to comment in visual mode, and press <code>gc</code> to add the comment, or <code>gC</code> to delete a comment in the first column.</p>
-<p>This works with most filetypes however some (like Rust) it doesn&rsquo;t choose the correct commenting character. For that I suggest you put this in a ftplugin</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="nx">vnoremap</span> <span class="nx">gc</span> :<span class="nx">norm</span><span class="p">!</span> <span class="nx">i</span>#<span class="p">&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
-</span><span class="err"></span><span class="nx">vnoremap</span> <span class="nx">gC</span> :<span class="nx">norm</span><span class="p">!</span> <span class="nx">x</span><span class="err">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>if you wanted to comment a <code>#</code> sign. Note that you need to write the same number of <code>x</code>&rsquo;s as the cha TODO</p>
-<h2 id="ultisnips"><code>Ultisnips</code></h2>
-<p>Ultisnips is great, and is especially useful for things like web developement when you have templates where you want to edit multiple fields in the template at once or give default values. However, I don&rsquo;t need to do that, I just need to get a snippet and be able jump arround to edit each of the columns</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="nx">inoremap</span> ;<span class="nx">s</span> <span class="p">&lt;</span><span class="nx">ESC</span><span class="p">&gt;</span>:<span class="m">-1</span>r <span class="p">~</span><span class="sr">/.config/</span><span class="nx">nvim</span><span class="sr">/snippets/</span><span class="p">&lt;</span><span class="nx">C</span><span class="p">-</span><span class="nx">R</span><span class="p">&gt;=</span>&amp;<span class="nx">ft</span><span class="p">&lt;</span><span class="nx">CR</span><span class="p">&gt;</span>/<span class="err">
-</span><span class="err"></span><span class="nx">inoremap</span> ;; <span class="p">&lt;</span><span class="nx">ESC</span><span class="p">&gt;</span>:<span class="nx">call</span> <span class="nx">search</span><span class="p">(</span><span class="s1">&#39;{%[^%]*%}&#39;</span><span class="p">,</span> <span class="s1">&#39;zW&#39;</span><span class="p">)&lt;</span><span class="nx">cr</span><span class="p">&gt;</span><span class="nx">c</span>%<span class="err">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>TODO mention reddit post</p>
-<p>Then put snippets in the <code>~/.config/nvim/snippets/</code> directory assorted by file type. Then when you press <code>;s</code> it will partially complete a filepath for you. Type the snippet that you want or press tab to make Vim show a menu of all possible options.</p>
-<p>Once it is inserted, navigate to the beginning of the snippet and press <code>;;</code> to jump to the next item. TODO should make it so that you don&rsquo;t need to navigate back yourself TODO the thoughtbot video I think does this partially?</p>
-<h2 id="background-make">Background Make</h2>
-<p>I think this was taken from Drew DeVault?</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="nx">command</span><span class="p">!</span> <span class="p">-</span><span class="nx">nargs</span><span class="p">=</span>* <span class="nx">BgMake</span><span class="err">
-</span><span class="err"></span>    \ <span class="nx">silent</span> <span class="nx">execute</span> <span class="s2">&#34;:!(make &#34;</span> . <span class="s2">&#34;&lt;args&gt;&#34;</span> . <span class="s2">&#34; &gt; /tmp/make.output 2&gt;&amp;1;&#34;</span><span class="err">
-</span><span class="err"></span>                   \ <span class="s2">&#34;notify-send &#39;make finished&#39; &#39;make &lt;args&gt; finished&#39;) &amp;&#34;</span> <span class="p">|</span><span class="err">
-</span><span class="err"></span>    \ <span class="nx">redraw</span><span class="p">!</span> <span class="p">|</span><span class="err">
-</span><span class="err"></span>    \ <span class="nx">cfile</span> <span class="sr">/tmp/</span><span class="nx">make</span>.<span class="nx">output</span> <span class="p">|</span> <span class="nx">copen</span><span class="err">
-</span></code></pre></td></tr></table>
-</div>
-</div><h2 id="basic-goto-definition">Basic Goto-Definition</h2>
-<p>In basic python projects, we might want to find some stuff so just use the <code>include search</code> functionality.</p>
-<h2 id="vs-code-like-definitions">VS Code like definitions</h2>
-<p>Just use a tags file. All you need to is install <code>ctags</code> then use tags.
-If you want intellisense, just use the preview window for tags</p>
-<h2 id="vimtex">Vimtex</h2>
-<p>Vimtex is seriously great, but I found that I was only using two of its (many) features:</p>
-<ol>
-<li>Compiling and error navigation</li>
-<li>Concealing</li>
-</ol>
-<p>The first I replaced by just using a make file and using the Vim <code>make</code> command and telling it what <code>compiler</code> to user</p>
-<p>Concealing was important to me at the time since I was doing a Honour in Mathematics, and as you can image, Vim simplifies it sooo much, but I just copied the concealing that vimtex does out of its source code and put the ones I needed into put this into my <code>ftplugin/tex.vim</code> file</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="nx">syn</span> <span class="nx">match</span> <span class="nx">texMathSymbol</span> <span class="s1">&#39;\\C&#39;</span> <span class="nx">contained</span> <span class="nx">conceal</span> <span class="nx">cchar</span><span class="p">=</span><span class="nx">ℂ</span><span class="err">
-</span><span class="err"></span><span class="nx">syn</span> <span class="nx">match</span> <span class="nx">texMathSymbol</span> <span class="s1">&#39;\\F&#39;</span> <span class="nx">contained</span> <span class="nx">conceal</span> <span class="nx">cchar</span><span class="p">=</span><span class="nx">𝔽</span><span class="err">
-</span><span class="err"></span><span class="nx">syn</span> <span class="nx">match</span> <span class="nx">texMathSymbol</span> <span class="s1">&#39;\\N&#39;</span> <span class="nx">contained</span> <span class="nx">conceal</span> <span class="nx">cchar</span><span class="p">=</span><span class="nx">ℕ</span><span class="err">
-</span><span class="err"></span><span class="nx">syn</span> <span class="nx">match</span> <span class="nx">texMathSymbol</span> <span class="s1">&#39;\\Q&#39;</span> <span class="nx">contained</span> <span class="nx">conceal</span> <span class="nx">cchar</span><span class="p">=</span><span class="nx">ℚ</span><span class="err">
-</span><span class="err"></span><span class="nx">syn</span> <span class="nx">match</span> <span class="nx">texMathSymbol</span> <span class="s1">&#39;\\R&#39;</span> <span class="nx">contained</span> <span class="nx">conceal</span> <span class="nx">cchar</span><span class="p">=</span><span class="nx">ℝ</span><span class="err">
-</span><span class="err"></span><span class="nx">syn</span> <span class="nx">match</span> <span class="nx">texMathSymbol</span> <span class="s1">&#39;\\Z&#39;</span> <span class="nx">contained</span> <span class="nx">conceal</span> <span class="nx">cchar</span><span class="p">=</span><span class="nx">ℤ</span><span class="err">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>In fact this was an improvement since I got so simplify vimtex&rsquo;s <code>mathbb{C}</code> to just <code>\C</code>.</p>
-<p>Also, Vim has its own latex syntax highlighting which doesn&rsquo;t do some environment by default, but you can add them yourself. For instance, to add the <code>align</code> environment you can add this to your <code>ftplugin/tex.vim</code></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="nx">call</span> <span class="nx">TexNewMathZone</span><span class="p">(</span><span class="s2">&#34;MyAlignGroup&#34;</span><span class="p">,</span><span class="s2">&#34;align&#34;</span><span class="p">,</span><span class="m">1</span><span class="p">)</span><span class="err">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>Again, I highly reccoment reading Vim&rsquo;s builtin <code>tex.vim</code> file in the <code>$VIMRUNTIME</code> which already does a lot for you!</p>
-<h2 id="markdown-and-latex">Markdown and Latex</h2>
-<p>I began to start using Markdown to write Beamer presentations, so I added this to include latex syntax highlighting in my markdown documents</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="nx">command</span><span class="p">!</span> <span class="p">-</span><span class="nx">bang</span> <span class="nx">TexMarkdown</span> :<span class="nx">call</span> <span class="nx">TexMath</span><span class="p">(&lt;</span><span class="nx">bang</span><span class="p">&gt;)</span><span class="err">
-</span><span class="err"></span><span class="k">function</span><span class="p">!</span> <span class="nx">TexMath</span><span class="p">(</span><span class="nx">full_tex_highlighting</span><span class="p">)</span> <span class="nx">abort</span><span class="err">
-</span><span class="err">
-</span><span class="err"></span>    <span class="nx">unlet</span> <span class="nx">b</span>:<span class="nx">current_syntax</span><span class="err">
-</span><span class="err">
-</span><span class="err"></span>    <span class="k">if</span> <span class="nx">a</span>:<span class="nx">full_tex_highlighting</span> <span class="p">==</span># <span class="s1">&#39;!&#39;</span><span class="err">
-</span><span class="err"></span><span class="c">
-</span><span class="c">        &#34; Source the entire Tex syntax file</span><span class="err">
-</span><span class="err"></span>        <span class="nx">source</span> $<span class="nx">VIMRUNTIME</span><span class="sr">/syntax/</span><span class="nx">tex</span>.<span class="nx">vim</span><span class="err">
-</span><span class="err"></span><span class="c">        &#34; Make highlighting work with the align environment</span><span class="err">
-</span><span class="err"></span>        <span class="nx">call</span> <span class="nx">TexNewMathZone</span><span class="p">(</span><span class="s2">&#34;MyAlignGroup&#34;</span><span class="p">,</span><span class="s2">&#34;align&#34;</span><span class="p">,</span><span class="m">1</span><span class="p">)</span><span class="err">
-</span><span class="err"></span><span class="c">        &#34; Make it so that % doesn&#39;t begin a latex comment</span><span class="err">
-</span><span class="err"></span>        <span class="nx">syn</span> <span class="nx">clear</span> <span class="nx">texComment</span><span class="err">
-</span><span class="err">
-</span><span class="err"></span>    <span class="k">else</span><span class="err">
-</span><span class="err">
-</span><span class="err"></span>        <span class="nx">syn</span> <span class="nx">include</span> @<span class="nx">tex</span> <span class="nx">syntax</span>/<span class="nx">tex</span>.<span class="nx">vim</span><span class="err">
-</span><span class="err"></span>        <span class="nx">syn</span> <span class="nx">region</span> <span class="nx">mkdMath</span> <span class="nx">start</span><span class="p">=</span><span class="s2">&#34;\\\@&lt;!\$&#34;</span> <span class="nx">end</span><span class="p">=</span><span class="s2">&#34;\$&#34;</span> <span class="nx">skip</span><span class="p">=</span><span class="s2">&#34;\\\$&#34;</span> <span class="nx">contains</span><span class="p">=</span>@<span class="nx">tex</span> <span class="nx">keepend</span><span class="err">
-</span><span class="err"></span>        <span class="nx">syn</span> <span class="nx">region</span> <span class="nx">mkdMath</span> <span class="nx">start</span><span class="p">=</span><span class="s2">&#34;\\\@&lt;!\$\$&#34;</span> <span class="nx">end</span><span class="p">=</span><span class="s2">&#34;\$\$&#34;</span> <span class="nx">skip</span><span class="p">=</span><span class="s2">&#34;\\\$&#34;</span> <span class="nx">contains</span><span class="p">=</span>@<span class="nx">tex</span> <span class="nx">keepend</span><span class="err">
-</span><span class="err">
-</span><span class="err"></span>    <span class="k">endif</span><span class="err">
-</span><span class="err">
-</span><span class="err"></span>    <span class="k">let</span> <span class="nx">b</span>:<span class="nx">current_syntax</span><span class="p">=</span><span class="s1">&#39;markdown&#39;</span><span class="err">
-</span><span class="err"></span><span class="c">
-</span><span class="c">    &#34; Get all of my Latex concealments</span><span class="err">
-</span><span class="err"></span>    <span class="nx">source</span> <span class="sr">/home/</span><span class="nx">wlcsm</span><span class="sr">/.config/</span><span class="nx">nvim</span><span class="sr">/ftplugin/</span><span class="nx">tex</span>.<span class="nx">vim</span><span class="err">
-</span><span class="err">
-</span><span class="err"></span><span class="k">endfunction</span><span class="err">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>Note that running <code>TexMarkdown</code> included all Tex syntax highlighting, whereas <code>TexMarkdown!</code> includes only the equation syntax highlighting</p>
-<h2 id="plasticboy-markdown">Plasticboy markdown</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">let g:markdown_folding=1
-let g:markdown_fenced_languages = [&#39;rust&#39;, &#39;bash=sh&#39;, &#39;vim&#39;]
-</code></pre></td></tr></table>
-</div>
-</div><p>This uses Vim&rsquo;s built-in features for folding and syntax highlighting for fenced languages. The only thing that would be nice is better support for the YAML header that can be provided. I don&rsquo;t write documents with that header often though (only these blog posts actually` in which case I didn&rsquo;t feel the need to include it</p>
-<h2 id="todo-vim">Todo Vim</h2>
-<p>Managing todo lists. I used to use a plugin for it. Now I just grep in the project directory</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="p">:</span><span class="nx">lgrep</span> <span class="p">-</span><span class="nx">R</span> <span class="s2">&#34;TODO&#34;</span> .<span class="err">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>assuming you are in your project directory. This populates your location list with all the TODOs I&rsquo;ve left in my project and allows me to just to each one. You can map it to a key if you plan on using it often</p>
-<h1 id="include-search">Include Search</h1>
-<p>I need to say, if you do a <code>[I</code>, then to go to the Nth item, just press <code>N[\t</code>. Side note: I literally cannot find this documented in the manual, I may have missed it though. I only know because it is used in a suggested key mapping in the manual.</p>
-<h1 id="oldfile">Oldfile</h1>
-<p>You can also use old files</p>
-<h1 id="marks">Marks</h1>
-<p>Workflow</p>
-<h1 id="nerdtree">NerdTree</h1>
-<p>TODO
-Input the default settings and the <code>20vs .</code> command</p>
-<h1 id="session-management">Session management</h1>
-<p>Just use <code>mksession</code>, the only problem it that it doesn&rsquo;t remember unlisted buffers. i.e. the quickfix list, location list, netrw, and help pages. If you want to keep netrw open just execute <code>setlocal bl</code> to list the buffer, then it will remain when you same the session.</p>
-<p>TODO see if that works with the quickfix list</p>
-]]></description></item><item><title>Bulk Rename Script</title><link>https://wlcsm.github.io/interactive-bulk-rename-script/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://wlcsm.github.io/interactive-bulk-rename-script/</guid><description><![CDATA[<p>I spend pretty much all my time in the terminal. After some time, I find I can navigate just as fast, if not faster there than in a GUI file browser.</p>
-<p>I used to use the ultra-lightweight <a href="https://github.com/jarun/nnn" target="_blank" rel="noopener noreffer">nnn</a> terminal file browser, but even that I found unnecessary other than being very nice to look at.</p>
-<p>The one feature that I missed however, was bulk renaming files in my editor. When you press <code>r</code> in <code>nnn</code>, it brings up the files in the directory in the program specified in your <code>$EDITOR</code> variable, with numbers next to them. Here you can delete files an rename them, which if like me, you are using Vim, can be very fast.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="m">1</span> a.txt
-<span class="m">2</span> b.txt
-<span class="m">3</span> c.txt
-</code></pre></td></tr></table>
-</div>
-</div><p>Rather than download the 10,000 lines of C code, I decided to write a small (POSIX compliant) shell script to automate this procedure.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/sh
-</span><span class="cp"></span>
-<span class="c1"># Output a list of files in the current directory</span>
-get_files <span class="o">()</span> <span class="o">{</span> ls -A<span class="p">;</span> <span class="o">}</span>
-
-get_files <span class="p">|</span> awk <span class="s1">&#39;{print NR &#34; &#34; $0}&#39;</span> &gt; /tmp/stuff.txt
-
-<span class="nv">$EDITOR</span> /tmp/stuff.txt
-
-<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;-d&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-	<span class="nb">echo</span> <span class="s2">&#34;Running in dry mode&#34;</span>
-<span class="k">fi</span>
-
-<span class="nv">i</span><span class="o">=</span><span class="m">0</span>
-<span class="o">(</span><span class="nb">read</span> -r num new_line
-<span class="k">for</span> line in <span class="k">$(</span>get_files<span class="k">)</span><span class="p">;</span> <span class="k">do</span>
-	 <span class="nv">i</span><span class="o">=</span><span class="k">$((</span>i <span class="o">+</span> <span class="m">1</span><span class="k">))</span>
-	<span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$new_line</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$num</span><span class="s2">&#34;</span> -gt <span class="s2">&#34;</span><span class="nv">$i</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-		<span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s1">&#39;-d&#39;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span>  <span class="nb">echo</span> <span class="s2">&#34;Removing </span><span class="nv">$line</span><span class="s2">&#34;</span> <span class="o">||</span> rm -rf <span class="s2">&#34;</span><span class="nv">$line</span><span class="s2">&#34;</span>
-	<span class="k">else</span> 
-		<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$new_line</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;</span><span class="nv">$line</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-			<span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s1">&#39;-d&#39;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span>  <span class="nb">echo</span> <span class="s2">&#34;Moving </span><span class="nv">$new_line</span><span class="s2"> to </span><span class="nv">$line</span><span class="s2">&#34;</span> <span class="o">||</span> mv <span class="s2">&#34;</span><span class="nv">$new_line</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$line</span><span class="s2">&#34;</span>
-		<span class="k">fi</span>
-		<span class="nb">read</span> -r num new_line
-	<span class="k">fi</span>
-<span class="k">done</span><span class="o">)</span> &lt; /tmp/stuff.txt
-</code></pre></td></tr></table>
-</div>
-</div><p>It can take one argument &ldquo;-d&rdquo; which runs it in &ldquo;dry mode&rdquo;, showing the changes it would make without actually doing it</p>
-<p>You might be wondering why I did simply use <code>ls</code> rather than create the <code>get_files</code> function. This is because apparently, the <code>ls</code> function is not guaranteed to output the correct files all the <a href="https://github.com/koalaman/shellcheck/wiki/SC2045" target="_blank" rel="noopener noreffer">time</a> (literally why tho?) and should instead iterate over globs, however unless the <code>nullglob</code> option is set, POSIX shell will not expand the glob if there are no files in the directory which would lead to an error.</p>
-<p>The first line gets the files and uses the <code>awk</code> utility to attach numbers to the lines, this is so that we can detect deletions of files.</p>
-<p>If you wish to debug the program, you could simply replace the <code>rm -rf &quot;$line&quot;</code> with <code>echo &quot;Removing $line&quot;</code> and similarly with <code>mv &quot;$new_line&quot; &quot;$line&quot;</code>. If you want you could even make this is into a debug command by passing in a command line flag and</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;-d&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-	<span class="nb">echo</span> <span class="s2">&#34;Removing </span><span class="nv">$line</span><span class="s2">&#34;</span> 
-<span class="k">else</span>
-	rm -rf <span class="s2">&#34;</span><span class="nv">$line</span><span class="s2">&#34;</span>
-<span class="k">fi</span>
-<span class="c1"># Or more succinctly as</span>
-<span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;-d&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&#34;Removing </span><span class="nv">$line</span><span class="s2">&#34;</span> <span class="o">||</span> rm -rf <span class="s2">&#34;</span><span class="nv">$line</span><span class="s2">&#34;</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>Then when you call the program as <code>rename.sh -d</code> it will only echo the changes rather than make them</p>
-]]></description></item><item><title>Mail Setup</title><link>https://wlcsm.github.io/mail-setup/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://wlcsm.github.io/mail-setup/</guid><description><![CDATA[<h1 id="email">Email</h1>
-<p>My email setup is a little complicated because I maintain a local copy of my mail on my computer for backup reasons. It is also nice because it is faster.
-I use Neomutt which is a terminal based email client. This is because I like the minimalism and I just think that email is something that is so fundamental that it should be in a terminal. I have tried other lightweight clients like Sylpheed and I still prefer it. (I do like Apple Mail though).</p>
-<ul>
-<li>picture</li>
-</ul>
-<p>However, in case you don&rsquo;t want to go down that rabbit hole, I will present my configuration in layers of difficulty. These being</p>
-<ul>
-<li>Using Neomutt (a terminal-based client) without downloading locally</li>
-<li>Storing local mail</li>
-<li>Automatic synchronisation and desktop notifications</li>
-</ul>
-<p>This works on Linux and Apple, not a clue whether it works on windows</p>
-<h2 id="neomutt">Neomutt</h2>
-<p>Here we will setup a minimum example</p>
-<h2 id="storing-local-mail">Storing local mail</h2>
-<p>I spent way too long trying to do this before and about a month after I finally started using it properly, I discovered Luke Smith&rsquo;s <a href="" rel="">mutt-wizard</a> which handles all of it for you as well as providing sane defaults and color schemes</p>
-<p>I will briefly go over what mutt-wizard sets up.</p>
-<p>Previously we used IMAP to carry out all of our mailbox operations. Now we will be performing all of them locally (which is much faster!), and then using <code>isync</code> (or <code>mbsync</code> as it was previously known) to synchronise the local changes with your remote mail server. This goes the other way as well, when changes happen to the remote server, like receiving new mail, that also gets downloaded.</p>
-<p>Once all the mail is nice and synchronised in our local computer, we need to index the mail in order to actually access it in a reasonable way. The indexer does things such as searching for mail, filtering by different tags and so on. Neomutt acts mainly as a front-end for it, though Neomutt also has its own built-in capability. Since so much work is done by notmuch you can just use a more <a href="" rel="">lightweight front-end</a>. For simplicity we will just be using Neomutt here because thats what mutt-wizard uses.</p>
-<p>So now lets see what happens</p>
-<ol>
-<li>Synchronise mail (<code>isync</code>)</li>
-<li>Index mail (<code>notmuch</code>)</li>
-<li>View mail (<code>neomutt</code>)</li>
-<li>Send mail (<code>msmpt</code>)</li>
-</ol>
-<p>So to synchronise our mailboxes (and hence get new mail) we can run <code>mbsync -a</code> to synchronise all mailboxes, or <code>mbsync &lt;your.email@address&gt;&quot;</code> to synchronise a specific mailbox.</p>
-<p>To index mail, we just need to run the <code>notmuch new</code> command to update the notmuch database</p>
-<p>To view mail we just type</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">neomutt
-</code></pre></td></tr></table>
-</div>
-</div><p>To start the Neomutt client. It has Vim navigation (thanks to the mutt-wizard script). You can type <code>h</code> to find all the other commands</p>
-<p>Though the exact key binding may be different with some mail providers offering different mailboxes, some common useful ones are:</p>
-<ul>
-<li><code>o</code> - Get new mail for this mailbox</li>
-<li><code>O</code> - Get new mail for all mailboxes</li>
-<li><code>ga</code> - Go to archive (if your mailbox has one by default. Gmail doesn&rsquo;t)</li>
-<li><code>gt</code> - Go to Trash</li>
-<li><code>gs</code> - Go to Sent</li>
-<li><code>Ma</code> - Move to archive</li>
-<li><code>Mt</code> - Move to trash</li>
-</ul>
-<h2 id="automatically-poll-for-mail-and-desktop-notifications">Automatically poll for mail and desktop notifications</h2>
-<p>I first note that you can make it so that it runs without polling whenever you get new mail using the IMAP IDLE API, a good program for this is <code>goimapnotify</code> <a href="" rel="">arch wiki</a>. However after trying this method, I decided to only poll every 30min otherwise I found myself dashing to answer every email that popped up and it was distracting my work flow.</p>
-<p>Let make a little script that: synchronises our mailboxes, indexes the mail, and makes a desktop notification if there is new mail</p>
-<p>get-mail.sh</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/usr/bin/env bash
-</span><span class="cp"></span>
-<span class="c1"># Sync with remote mailbox</span>
-mbsync -a
-
-<span class="c1"># Index new mail locally and save the final line of standard output</span>
-<span class="nv">NEWMAIL</span><span class="o">=</span><span class="k">$(</span>notmuch new <span class="p">|</span> tail -1<span class="k">)</span>
-
-<span class="c1"># Make a notification with the final line of output with no expiry time</span>
-<span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$NEWMAIL</span><span class="s2">&#34;</span> <span class="o">=</span>~ No<span class="se">\ </span>new<span class="se">\ </span>mail.* <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-	notify-send -t <span class="m">100000</span> <span class="s2">&#34;</span><span class="nv">$NEWMAIL</span><span class="s2">&#34;</span>
-<span class="k">fi</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>In the second line we take the last line of the <code>notmuch new</code> command which indicates the number of new files (as well if any other changes occurred) and if there was mail, then we make a desktop notification which expires in 100000 seconds with the contents of the last line.</p>
-<p>Then make this file executable with <code>chmod +x get-mail.sh</code></p>
-<h3 id="automatically-calling-it">Automatically calling it</h3>
-<p>Now we need to autmatically call the program every X mins. This is specific to your operating system, Mac has launchd, Linux has crontab or systemd. We are using linux so the simplest option is probably to make a cron job, however since I have been meaning to become better at linux server administration, I decided to use systemd&rsquo;s timers.</p>
-<p>First we make a service /etc/systemd/user/get-mail.service</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-systemd" data-lang="systemd"><span class="k">[Unit]</span>
-<span class="na">Description</span><span class="o">=</span><span class="s">Get mail</span>
-<span class="na">Type</span><span class="o">=</span><span class="s">oneshot</span>
-
-<span class="k">[Service]</span>
-<span class="na">ExecStart</span><span class="o">=</span><span class="s">/bin/sh /usr/bin/getmail</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>Then a following timer to call the service every 30mins</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-systemd" data-lang="systemd"><span class="k">[Unit]</span>
-<span class="na">Description</span><span class="o">=</span><span class="s">Run my &#34;get-mail&#34; service every 30 mins</span>
-
-<span class="k">[Timer]</span>
-<span class="na">OnBootSec</span><span class="o">=</span><span class="s">30min</span>
-<span class="na">OnUnitActiveSec</span><span class="o">=</span><span class="s">30min</span>
-
-<span class="k">[Install]</span>
-<span class="na">WantedBy</span><span class="o">=</span><span class="s">timers.target</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>we can then start this with</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">systemctl --user daemon-reload
-systemctl --user enable get-mail.timer
-systemctl --user start get-mail
-</code></pre></td></tr></table>
-</div>
-</div><p>we can see the active timers with</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">systemctl --user list-timers
-</code></pre></td></tr></table>
-</div>
-</div><p>to get an output like</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">NEXT                        LEFT      LAST                        PASSED        UNIT                         ACTIVATES
-Sun 2020-12-20 02:17:06 EST 5min left Sat 2020-12-19 02:17:06 EST 23h ago       systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
-Sun 2020-12-20 02:19:06 EST 7min left Sun 2020-12-20 02:09:06 EST 2min 42s ago  get-mail.timer               get-mail.service
-n/a                         n/a       Fri 2020-12-18 02:13:47 EST 1 day 23h ago grub-boot-success.timer      grub-boot-success.service
-
-3 timers listed.
-Pass --all to see loaded but inactive timers, too.
-</code></pre></td></tr></table>
-</div>
-</div><p>We can see the next time the get-mail.timer to run. If you see <code>n/a</code> in the <code>NEXT</code> section then something has gone wrong. You can check the logs using</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">journalctl --user -u get-mail
-</code></pre></td></tr></table>
-</div>
-</div>]]></description></item><item><title>Using nvim-lsp for Go</title><link>https://wlcsm.github.io/nvim-lsp_from_coc/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://wlcsm.github.io/nvim-lsp_from_coc/</guid><description><![CDATA[<p>Now that nvim 0.5 is now stable I decided to finally try moving from CoC to the builtin LSP client nvim-lsp. This is mainly because its more minimalist and faster.</p>
-<p>I previously trried the nvim-lsp back in unstable a year ago but I just couldn&rsquo;t get things to work properly. There was a lot of configuration, and after a day or so I still couldn&rsquo;t get it to reliably work. Now that 0.5 is stable I figured that they have solved the problems by now. I am now using a differnt language now (Go instead of Rust) though I doubt that was the problem.</p>
-<p>Overall I still find the experience not as smooth as I would have hoped but everything is working fairly nicely now so I&rsquo;m happy.</p>
-<p>The main thing to note it that the configuration is still not as simple as with CoC which is probably why it hasn&rsquo;t caught on as much as CoC did. Yes it fairly straight forward for the knowledgable Vim user, to whom spending an hour setting up LSP support is considdered a victory. I don&rsquo;t see this being used by people just coming to vim. With CoC it was a VSCode-like, plug&rsquo;n&rsquo;play experience where you could copy a tutorial config (of which there are many compared to nvim-lsp tutorials) do a quick &lsquo;:CocInstall&rsquo; and you&rsquo;re done, everything works right out of the box.</p>
-<p>Here, I still had many isses</p>
-<h1 id="requirements">Requirements</h1>
-<p>This is only supported in Nvim 0.5. This is currently. You will need to install &lsquo;nvim-lspconfig&rsquo; to enable</p>
-<p>Heres what we are going to setup. There is a link to the full config down below, but otherwise we are going to set it up in logically separate steps</p>
-<ul>
-<li>LSP - &lsquo;nvim-lspconfig&rsquo;. Gives linting errors, go to definition/declaration/type declaration/rename etc</li>
-<li>nvim-cmp - Autocompletion engine. Press Ctrl-N to get a list of all possible values</li>
-<li>Telescope - Show off some fuzzy finding</li>
-</ul>
-<h2 id="lsp">LSP</h2>
-]]></description></item><item><title>Vim Features: Tags list</title><link>https://wlcsm.github.io/vim-lesson-tags/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://wlcsm.github.io/vim-lesson-tags/</guid><description><![CDATA[<p>This is how you get that IDE like feeling where you can navigate around codebases super fast.
-This is built-in, no plugins, no configurations</p>
-<h2 id="what-are-tags">What are tags</h2>
-<p>Tags are an outline of your codebase, they record the location of important definitions like functions, type definitions, class definitions.</p>
-<h2 id="getting-started">Getting Started</h2>
-<p>Download ctags, also known as Exhuberant Tags, and run <code>ctags -R .</code> in your project root directory. Unless your codebase is quite large, this should be close to instaneous. You will notice that a file call <code>tags</code> has now been created in the root directory. You can open that file to see all the tags that have been generated, it should like something like this</p>
-<p>TODO make tags for something</p>
-<p>Now open Vim and position the cursor over the name of a function or type/class and press <code>Ctrl-]</code>. Vim should have jumped to the definition. Since Vim recognises this action as a &lsquo;jump&rsquo;, you can press <code>Ctrl-O</code> to return back you your original positions, and <code>Ctrl-I</code> to jump back forward.</p>
-<p>You can also let Vim autocomplete tags with the <code>Ctrl-X Ctrl-t</code> command in insert mode, and if you want to say find the <code>BufferReader</code> struct, you can type <code>:tag Buf</code> and hit tab to let Vim show you all the matches, once you have found it, execute <code>:tag BufferReader</code> to jump to the tag.</p>
-<p>Another interesting feature is the preview window, you can use <code>pts BufferReader</code> and Vim will open the definition in the &lsquo;preview window&rsquo;, this window behave pretty much exactly like any other, except you can do (TODO preview next) to cycle through multiple matches and <code>Ctrl-W z</code> to close it quickly. Its essentially Vim&rsquo;s solution to the hover preview that LSPs provide.</p>
-<p>There is also a tag stack and also a <code>ts</code> command that I forgot.</p>
-<p>You should probably make a keymapping for these and also for rebuilding the tags file</p>
-]]></description></item><item><title>Vim Tricks: Building and Running code</title><link>https://wlcsm.github.io/vim-lesson-make/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://wlcsm.github.io/vim-lesson-make/</guid><description><![CDATA[<p>Vim has a built in support for building files through the <code>:make</code> command.</p>
-<p>First you will want to set your compiler so that Vim knows what command it should run with <code>make</code> and what the error format should be when it parses it in the quickfix/location list.</p>
-<h2 id="buildruntest-code">Build/Run/Test Code</h2>
-<p>I would say this is one of the other big reasons people don&rsquo;t use Vim. However Vim actually has fairly good support for this as well. Of course you aren&rsquo;t going to get the same level as an IDE, but TODO</p>
-<p>We use the <code>make</code> command. This defaults to running <code>make</code> in the terminal and outputting the errors into the Quickfix list for you to easily navigate. If you want to change the make program, simply set a different <code>makeprg</code>. For rust I have it set to <code>set makeprg=cargo\ check\ %</code> Note that you need to escape spaces with a backslash, and that &lsquo;%&rsquo; denotes the current file&rsquo;s name in Vim.</p>
-<p>Also if you want the LSP-like experience where you want Vim to be constantly telling you about the errors, then you can just make an autocomand to tell Vim to run the <code>make</code> command every time you write to the buffer, however, I&rsquo;d recommend first reading the next paragraph</p>
-<p>The most annoying thing about this, that I&rsquo;m still surprise Vim has is that this runs the make command in the foreground&hellip; i.e. the rest of Vim is suspended until it finished. That is just crazy, the idea is mainly just to do syntax check which should be very quick but still, its quite annoying especially if you wanted it to run after every write. Now there are plugins for this, however, I stole this code from someone TODO who</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="nx">command</span><span class="p">!</span> <span class="p">-</span><span class="nx">nargs</span><span class="p">=</span>* <span class="nx">BgMake</span><span class="err">
-</span><span class="err"></span>    \ <span class="nx">silent</span> <span class="nx">execute</span> <span class="s2">&#34;:!(make &#34;</span> . <span class="s2">&#34;&lt;args&gt;&#34;</span> . <span class="s2">&#34; &gt; /tmp/make.output 2&gt;&amp;1&#34;</span><span class="err">
-</span><span class="err"></span>    \ <span class="nx">redraw</span><span class="p">!</span> <span class="p">|</span> <span class="nx">cfile</span> <span class="sr">/tmp/</span><span class="nx">make</span>.<span class="nx">output</span> <span class="p">|</span> <span class="nx">copen</span><span class="err">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>Which runs the come in the background. You can also make it send a notification when its done if you are doing a very long build</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="nx">command</span><span class="p">!</span> <span class="p">-</span><span class="nx">nargs</span><span class="p">=</span>* <span class="nx">BgMake</span><span class="err">
-</span><span class="err"></span>    \ <span class="nx">silent</span> <span class="nx">execute</span> <span class="s2">&#34;:!(make &#34;</span> . <span class="s2">&#34;&lt;args&gt;&#34;</span> . <span class="s2">&#34; &gt; /tmp/make.output 2&gt;&amp;1;&#34;</span><span class="err">
-</span><span class="err"></span>                   \ <span class="s2">&#34;notify-send &#39;make finished&#39; &#39;make &lt;args&gt; finished&#39;) &amp;&#34;</span> <span class="p">|</span><span class="err">
-</span><span class="err"></span>    \ <span class="nx">redraw</span><span class="p">!</span> <span class="p">|</span> <span class="nx">cfile</span> <span class="sr">/tmp/</span><span class="nx">make</span>.<span class="nx">output</span> <span class="p">|</span> <span class="nx">copen</span><span class="err">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>Just run <code>:BgMake &lt;args&gt;</code> instead of <code>make &lt;args&gt;</code> and you are good to go.</p>
-<h2 id="custom-error-formats">Custom error formats</h2>
-]]></description></item><item><title>Vim's Quickfix/Location list</title><link>https://wlcsm.github.io/vim-lesson-quickfix-list/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://wlcsm.github.io/vim-lesson-quickfix-list/</guid><description><![CDATA[<p>People often complain that Vim doesn&rsquo;t have good support for project-wide searches or error navigation without the use of plugins or even LSPs. These people have clearly never learned about Vim&rsquo;s inbuilt quickfix and location list.</p>
-<h2 id="quickfix-list">Quickfix list</h2>
-<p>The quickfix list is a buffer in Vim which provides fast navigation to locations in files.</p>
-<h2 id="differences-between-the-quickfix-and-location-list">Differences between the Quickfix and Location list</h2>
-<p>The two are exactly the same, however there is only one quickfix list per Vim session, but there is one location list for every window. For this reason, the quickfix list is normally used for the errors of your program or build results, whereas the location list is normally used for things like <code>grep</code>. However you can use either for anything.</p>
-<p>Every command for the quickfix list has an equivalent for the location list.</p>
-<p>Command | Quickfix | Location
-Open | <code>copen</code> | <code>lopen</code>
-Next entry | <code>cnext</code> | <code>lnext</code>
-Make | <code>make</code> | <code>lmake</code>
-Grep | <code>grep</code> | <code>lgrep</code>
-Older list | <code>colder</code> | <code>lolder</code></p>
-<p>There are heaps more, but for the rest of this post I will just be presenting the quickfix variant with the understanding that everything has a location list equivalent</p>
-<h2 id="using">Using</h2>
-<p>So here&rsquo;s an example problem. I need to build my program and find the errors.</p>
-<p>I&rsquo;ve set <code>make</code> to run <code>go build</code> which presents me with a list of errors.</p>
-<p>Side note: to make that initial pop-up display of the errors disappear, just run <code>:silent make</code> (I&rsquo;d recommend mapping this to a key).</p>
-<p>Use the output of <code>make</code> to build a file. More on that <a href="" rel="">here</a>. Depending on the code you are running you may have to set a <code>compiler</code> so that Vim knows how it should parse the output.</p>
-<p>Notice that if there were errors, Vim will automatically jump to the location of the first error (you can stop that by running <code>:make!</code>). To go to the next error press <code>:cnext</code>. Now type <code>:clist</code> to get a pop-up of which error you are located at in the list. To get an interactive list, type <code>:copen</code> to open an interactive buffer for the quickfix list. Pressing <code>Enter</code> on any entry in this buffer will make you jump to the error.</p>
-<p>Tim Pope has a plug-in which makes some good default mappings for this, or you could just do <code>:cn</code> and then press <code>@:</code> which repeats the last ex command</p>
-<p>Press <code>:clist</code> to get a little pop-up of the quickfix lists and a</p>
-]]></description></item><item><title>Vim's Quickfix/Location list</title><link>https://wlcsm.github.io/vim-lesson-quickfix-list.zh/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://wlcsm.github.io/vim-lesson-quickfix-list.zh/</guid><description><![CDATA[<p>People often complain that Vim doesn&rsquo;t have good support for project-wide searches or error navigation without the use of plugins or even LSPs. These people have clearly never learned about Vim&rsquo;s inbuilt quickfix and location list.</p>
-<h2 id="quickfix-list">Quickfix list</h2>
-<p>The quickfix list is a buffer in Vim which provides fast navigation to locations in files.</p>
-<h2 id="differences-between-the-quickfix-and-location-list">Differences between the Quickfix and Location list</h2>
-<p>The two are exactly the same, however there is only one quickfix list per Vim session, but there is one location list for every window. For this reason, the quickfix list is normally used for the errors of your program or build results, whereas the location list is normally used for things like <code>grep</code>. However you can use either for anything.</p>
-<p>Every command for the quickfix list has an equivalent for the location list.</p>
-<p>Command | Quickfix | Location
-Open | <code>copen</code> | <code>lopen</code>
-Next entry | <code>cnext</code> | <code>lnext</code>
-Make | <code>make</code> | <code>lmake</code>
-Grep | <code>grep</code> | <code>lgrep</code>
-Older list | <code>colder</code> | <code>lolder</code></p>
-<p>There are heaps more, but for the rest of this post I will just be presenting the quickfix variant with the understanding that everything has a location list equivalent</p>
-<h2 id="using">Using</h2>
-<p>So here&rsquo;s an example problem. I need to build my program and find the errors.</p>
-<p>I&rsquo;ve set <code>make</code> to run <code>go build</code> which presents me with a list of errors.</p>
-<p>Side note: to make that initial pop-up display of the errors disappear, just run <code>:silent make</code> (I&rsquo;d recommend mapping this to a key).</p>
-<p>Use the output of <code>make</code> to build a file. More on that <a href="" rel="">here</a>. Depending on the code you are running you may have to set a <code>compiler</code> so that Vim knows how it should parse the output.</p>
-<p>Notice that if there were errors, Vim will automatically jump to the location of the first error (you can stop that by running <code>:make!</code>). To go to the next error press <code>:cnext</code>. Now type <code>:clist</code> to get a pop-up of which error you are located at in the list. To get an interactive list, type <code>:copen</code> to open an interactive buffer for the quickfix list. Pressing <code>Enter</code> on any entry in this buffer will make you jump to the error.</p>
-<p>Tim Pope has a plug-in which makes some good default mappings for this, or you could just do <code>:cn</code> and then press <code>@:</code> which repeats the last ex command</p>
-<p>Press <code>:clist</code> to get a little pop-up of the quickfix lists and a</p>
-]]></description></item><item><title>Trick for Managing Neovim Terminals</title><link>https://wlcsm.github.io/managing-vim-terminals/</link><pubDate>Sun, 24 Oct 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://wlcsm.github.io/managing-vim-terminals/</guid><description><![CDATA[<p>I&rsquo;ve recently been use Neovim&rsquo;s terminals a lot more recently and I&rsquo;ve found that I spend a lot of time doing</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">:term &lt;TAB&gt;
-</code></pre></td></tr></table>
-</div>
-</div><p>to find the terminal with my tests. Then &lt;C-&gt;<C-N>&lt;C-^&gt; to get back to the file that I was editing, and if I have more than one terminal open it isn&rsquo;t easy to remember which terminal has my tests it in, which terminals had another thing, and so on.</p>
-<p>So I made a nice little Vim function to handle this:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="k">let</span> <span class="nx">s</span>:<span class="nx">terminals</span> <span class="p">=</span> {}<span class="err">
-</span><span class="err"></span><span class="k">function</span> <span class="nx">GoToTerminal</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span><span class="err">
-</span><span class="err"></span>	<span class="nx">execute</span> <span class="s1">&#39;drop &#39;</span> . <span class="nx">get</span><span class="p">(</span><span class="nx">s</span>:<span class="nx">terminals</span><span class="p">,</span> <span class="nx">a</span>:<span class="nx">num</span><span class="p">,</span> <span class="s1">&#39;term://bash&#39;</span><span class="p">)</span><span class="err">
-</span><span class="err"></span>	<span class="k">let</span> <span class="nx">s</span>:<span class="nx">terminals</span>[<span class="nx">a</span>:<span class="nx">num</span>] <span class="p">=</span> <span class="nx">expand</span><span class="p">(</span><span class="s1">&#39;%s&#39;</span><span class="p">)</span><span class="err">
-</span><span class="err"></span>	<span class="nx">normal</span> <span class="nx">i</span><span class="err">
-</span><span class="err"></span><span class="k">endfunction</span><span class="err">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>Which I like to pair with these mappings</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="nx">tnoremap</span> <span class="p">&lt;</span><span class="nx">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">c</span><span class="p">-</span><span class="nx">b</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">cmd</span><span class="p">&gt;</span><span class="nx">execute</span> <span class="s1">&#39;drop &#39;</span> . <span class="nx">expand</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
-</span><span class="err"></span><span class="nx">nnoremap</span> <span class="p">&lt;</span><span class="nx">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">c</span><span class="p">-</span><span class="nx">b</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">cmd</span><span class="p">&gt;</span><span class="nx">call</span> <span class="nx">GoToTerminal</span><span class="p">(</span><span class="nx">v</span>:<span class="nx">count</span><span class="p">)&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>If you really want, you can even avoid writing a function and do the entire thing in three lines</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="nx">g</span>:<span class="nx">terms</span> <span class="p">=</span> {}<span class="err">
-</span><span class="err"></span><span class="nx">tnoremap</span> <span class="p">&lt;</span><span class="nx">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">c</span><span class="p">-</span><span class="nx">b</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">cmd</span><span class="p">&gt;</span><span class="nx">execute</span> <span class="s1">&#39;drop &#39;</span> . <span class="nx">expand</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
-</span><span class="err"></span><span class="nx">nnoremap</span> <span class="p">&lt;</span><span class="nx">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">c</span><span class="p">-</span><span class="nx">b</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">cmd</span><span class="p">&gt;</span><span class="nx">exe</span> <span class="s1">&#39;drop &#39;</span> . <span class="nx">get</span><span class="p">(</span><span class="nx">g</span>:<span class="nx">terms</span><span class="p">,</span> <span class="nx">v</span>:<span class="nx">count</span><span class="p">,</span> <span class="s1">&#39;term://bash&#39;</span><span class="p">)</span> <span class="p">|</span> <span class="k">let</span> <span class="nx">g</span>:<span class="nx">terms</span>[<span class="nx">v</span>:<span class="nx">count</span>] <span class="p">=</span> <span class="nx">expand</span><span class="p">(</span><span class="s1">&#39;%s&#39;</span><span class="p">)</span> <span class="p">|</span> <span class="nx">norm</span> <span class="nx">i</span><span class="p">&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>So now if I want a terminal I just press [count]<C-B> where &ldquo;count&rdquo; is a number, or defaults to zero if not given. Then when I&rsquo;m done with that terminal and want to go back to the main file, I just press <C-B>.</p>
-<p>Since I use the &lsquo;drop&rsquo; command, if the terminal, or the original file are already present in another window, it will just move the cursor there.</p>
-<p>If there is no terminal open for that [count], it will create a new one.</p>
-]]></description></item><item><title>Monitoring Cryptocurrencies with Bash</title><link>https://wlcsm.github.io/crypto-bash-script/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://wlcsm.github.io/crypto-bash-script/</guid><description><![CDATA[<p>I bought into the crypto scene but was concerned about the price of crypto dropping dramatically as it does, so I made an incredibly basic bash script to monitor the prices of crypto using the CoinGecko API. This could be used for instance to show the current price on Bitcoin in PolyBar or DWM</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/sh
-</span><span class="cp"></span>
-<span class="nv">COINS</span><span class="o">=</span><span class="nv">$1</span>
-<span class="nv">CURRENCIES</span><span class="o">=</span><span class="nv">$2</span>
-
-curl -X GET <span class="s2">&#34;https://api.coingecko.com/api/v3/simple/price?ids=</span><span class="si">${</span><span class="nv">COINS</span><span class="si">}</span><span class="s2">&amp;vs_currencies=</span><span class="si">${</span><span class="nv">CURRENCIES</span><span class="si">}</span><span class="s2">&#34;</span> -H  <span class="s2">&#34;accept: application/json&#34;</span>
-<span class="nb">echo</span> <span class="s2">&#34;&#34;</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>Save this to a file <code>fetch-crypto.sh</code> and make it executable with <code>chmod +x fetch-crypto.sh</code>. Then we can call it as</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ ./fetch-crypto.sh bitcoin aud
-<span class="o">{</span><span class="s2">&#34;bitcoin&#34;</span>:<span class="o">{</span><span class="s2">&#34;aud&#34;</span>:72630<span class="o">}}</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>If you want more currencies or coins, you can use a comma separated list</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ ./fetch-crypto.sh bitcoin,ethereum aud
-<span class="o">{</span><span class="s2">&#34;bitcoin&#34;</span>:<span class="o">{</span><span class="s2">&#34;aud&#34;</span>:72773<span class="o">}</span>,<span class="s2">&#34;ethereum&#34;</span>:<span class="o">{</span><span class="s2">&#34;aud&#34;</span>:2246.25<span class="o">}}</span>
-
-$ ./fetch-crypto.sh bitcoin,ethereum aud,usd
-<span class="o">{</span><span class="s2">&#34;ethereum&#34;</span>:<span class="o">{</span><span class="s2">&#34;aud&#34;</span>:2246.25,<span class="s2">&#34;usd&#34;</span>:1742.93<span class="o">}</span>,<span class="s2">&#34;bitcoin&#34;</span>:<span class="o">{</span><span class="s2">&#34;aud&#34;</span>:72773,<span class="s2">&#34;usd&#34;</span>:56467<span class="o">}}</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>Then if you want to actually extract data from the JSON, you could use the <a href="https://stedolan.github.io/jq/" target="_blank" rel="noopener noreffer">jq</a> tool.
-For instance, if I wanted to make a script that printed out the price of Bitcoin in AUD, I would write</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ fetch_crypto bitcoin aud <span class="p">|</span> jq <span class="s1">&#39;.bitcoin.aud&#39;</span>
-<span class="m">72773</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>I&rsquo;ve also turned this into a rebinding and made it output the price in a notification</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ notify-send <span class="s2">&#34;</span><span class="k">$(</span>./fetch-crypto.sh bitcoin aud <span class="p">|</span> jq <span class="s1">&#39;.bitcoin.aud&#39;</span><span class="k">)</span><span class="s2">&#34;</span>
-</code></pre></td></tr></table>
-</div>
-</div>]]></description></item><item><title>Vim for Software Development</title><link>https://wlcsm.github.io/vim-as-developer/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><author>Author</author><guid>https://wlcsm.github.io/vim-as-developer/</guid><description><![CDATA[<p>It is no secret that Vim has fallen behind the times when it comes to software develpment. Not to say that it has strayed from its original design and purpose i.e. editing text. But that the times have changed such that this is no longer satisfies the needs of many developers</p>
-<p>When I see people talk about using Vim for software development, it is a general concensus that you <em>must</em> load it full of plugins to get that VSCode feeling back. Vim by it::I see two main schools of thought:</p>
-<ol>
-<li>Vim is great because you can customise it so much and overload it to the point that it is actually slower than VSCode</li>
-<li>Vim is fine the way it is and you - the user - just need to get better
-Here I am going to go through what I think are the key components to a normal software development. Of course, Vim doesn&rsquo;t give you the complex build environments of a proper IDE, but if you are working comfortably in another text editor like VS Code or Sublime Text, then there&rsquo;s a good chance that everything you are doing can be done in vanilla Vim. That&rsquo;s right, I&rsquo;m going to show all these things with a minimal vimrc with <em>no plugins</em>.</li>
-</ol>
-<p>Small note: I am actually talking about Neovim rather than Vim. Its the same thing but a better code base and friendlier community, and also sets many sane defaults (which means our vimrc can be even smaller!)</p>
-<p>First, what do we want out of a text editor for software development:</p>
-<ol>
-<li>Browse Files</li>
-<li>Goto definition</li>
-<li>Autocompletion</li>
-<li>Build/Run/Test code</li>
-</ol>
-<h2 id="browse-files">Browse files</h2>
-<p>If you are used to VS Code&rsquo;s project drawer set-up where you have a line on the side to view your files, you can install the NerdTree plugin which is used by many, or the preinstalled <code>netrw</code> file viewer. Just type <code>:30vs .</code> to spawn a side window 30 columns wide, in a vertical split, in the current working directory.</p>
-<p>My default it doesn&rsquo;t behave quite like VSCode&rsquo;s (but NerdTree does), but we can change that by using the tips in <a href="https://shapeshed.com/vim-netrw/" target="_blank" rel="noopener noreffer">this blog</a> putting the following lines in your vimrc</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="k">let</span> <span class="nx">g</span>:<span class="nx">netrw_banner</span> <span class="p">=</span> <span class="m">0</span><span class="err">
-</span><span class="err"></span><span class="k">let</span> <span class="nx">g</span>:<span class="nx">netrw_liststyle</span> <span class="p">=</span> <span class="m">3</span><span class="err">
-</span><span class="err"></span><span class="k">let</span> <span class="nx">g</span>:<span class="nx">netrw_browse_split</span> <span class="p">=</span> <span class="m">4</span><span class="err">
-</span><span class="err"></span><span class="k">let</span> <span class="nx">g</span>:<span class="nx">netrw_altv</span> <span class="p">=</span> <span class="m">1</span><span class="err">
-</span><span class="err"></span><span class="k">let</span> <span class="nx">g</span>:<span class="nx">netrw_winsize</span> <span class="p">=</span> <span class="m">25</span><span class="err">
-</span><span class="err"></span><span class="nx">augroup</span> <span class="nx">ProjectDrawer</span><span class="err">
-</span><span class="err"></span>  <span class="nx">autocmd</span><span class="p">!</span><span class="err">
-</span><span class="err"></span>  <span class="nx">autocmd</span> <span class="nx">VimEnter</span> * :<span class="nx">Vexplore</span><span class="err">
-</span><span class="err"></span><span class="nx">augroup</span> <span class="nx">END</span><span class="err">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>Now <code>netrw</code> will open in the split whenever you enter Vim and behave how the same as in VS Code.</p>
-<p>Searching for files:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">:find &lt;file name&gt;
-</code></pre></td></tr></table>
-</div>
-</div><p>Note that this will search in the current working directory <em>for Vim</em>, this is the current working directory in your terminal when you start Vim. If you want to see what it is currently set to, <code>:pwd</code>, if you want to change it <code>:cd &lt;new directory&gt;</code></p>
-<p>You can use wildcards to fuzzy match</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">:find *.txt
-</code></pre></td></tr></table>
-</div>
-</div><p>Will find all <code>txt</code> files etc.</p>
-<p>If you want recursive searching for files just use</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">:set path+=**
-</code></pre></td></tr></table>
-</div>
-</div><p>To search inside files we can all use <code>grep</code>, which is a wrapper around the <code>grep</code> shell utility.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">:grep &lt;args&gt;
-</code></pre></td></tr></table>
-</div>
-</div><p>This executes the shell command <code>grep -n &lt;args&gt;</code> and feeds the output into the quickfix list for you to easily navigate. You can use <code>lgrep</code> to put them into the location list. More here on how to use the Quickfix list</p>
-<p>If you would prefer to use a different searching program, set the <code>grepprg</code> which is the shell command Vim will use to find the matches. It is set to <code>grep -n</code> by defualt. Just make sure the output includes the filename and the line number so that Vim can help you easily navigate to them, this is why Vim uses the <code>-n</code> option in <code>grep</code> to add the line numbers</p>
-<p>For example, I prefer to use <a href="TODO" rel="">ripgrep</a> because it&rsquo;s faster. I also do a fair amount of Rust programming at the moment and so I don&rsquo;t want Vim to search in the <code>targets</code> directory (the build directory in rust), so I have this in my rust filetype plugin file</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="nx">set</span> <span class="nx">grepprg</span><span class="p">=</span><span class="nx">rg</span>\ <span class="p">-</span><span class="nx">rn</span>\ <span class="p">-</span><span class="nx">g</span>\ <span class="s1">&#39;!target/**&#39;</span><span class="err">
-</span></code></pre></td></tr></table>
-</div>
-</div><p>So that it uses ripgrep <code>rg</code> with line numbers, and ignores the <code>target</code> directory</p>
-<h2 id="goto-definitionhover">Goto Definition/Hover</h2>
-<p>There are actually many actions for this in Vim because Vim doesn&rsquo;t perform lexical analysis TODO is it lexical?</p>
-<p>There are several main mechanisms:</p>
-<ul>
-<li><code>gd</code>: Goes to the first occurrence on the object in the current method. Note that this only really works with some language that have the concept of a &lsquo;method&rsquo; defined, namely bracket delimited languages</li>
-<li>Include search: This actually searches through the current file and all files that this file imports (provided that the <code>includepath</code> variable has been correctly configure). Pressing <code>[I</code> will list all the occurrences of the word under the cursor in these files. If you want to go to the Nth line in the list it shows, press <code>N[\t</code>, that it, the number, then a <code>[</code>, then a tab. (at can&rsquo;t even find this is in the manual lol). There are actually many more navigation commands with include search, to see the all, use <code>:h include-search</code></li>
-<li>Tags: This is probably the greatest thing. There is also a preview window which you could use kind of like the hover functionality given by LSPs. TODO</li>
-<li><code>nvim-lsp</code>: Technically in Neovim 5.0, this is no longer a plug-in. It is definitely very useful, however I haven&rsquo;t really needed to use it as I&rsquo;ve found that using tags for definitions of: functions, type, etc. and include search for variables has been more than I need for all of my development. Note: If you use <code>cscope</code> then you can also use tags for local variable names too.</li>
-</ul>
-<p>Also note the use of marks when you want to return to older positions TODO expand</p>
-<h2 id="autocompletion">Autocompletion</h2>
-<p>Vim has some really great autocompletion. You can press <code>Ctrl-n</code> in insert mode to get the generic completion, which will actually match on things in the dictionary as well as words in any open buffer. You can also press, <code>Ctrl-I</code> to get completion from include search (even if the included files are not in a buffer), <code>Ctrl-f</code> to autocomplete file name, I use this so much&hellip;, there&rsquo;s a tag completions I thing as well.</p>
-<p>The only thing that is missing is method completion, (TODO is it though?)</p>
-]]></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title></title>
+    <link>http://example.org/</link>
+    <description>Recent content on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright Will Cashman 2022.</copyright>
+    <lastBuildDate>Sat, 06 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Will Cashman Resume</title>
+      <link>http://example.org/resume/</link>
+      <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/resume/</guid>
+      <description>Email: wcashman1351@gmail.com GitHub: wlcsm LinkdIn: linkedin.com/in/cashman-will
+Education Bachelor of Philosophy (Honours) - Science (Mathematics) The Australian National University 2017 &amp;ndash; 2020
+First Class Honours, GPA: 6.5/7 Algorithms design and analysis Algorithms for Machine learning and Data science Pure mathematics Skills Languages (Proficient) Rust, Python Ada, C/C++, Bash, ARM Assembly Frameworks Macaulay2 and Sage (Computer Algebra Systems) SciKit-Learn, Tensor Flow
+Research Projects Honours Thesis - Efficient Polynomial Multiplication &amp;ndash; The Australian National University A study of the most popular practical and theoretical polynomial multiplication algorithms Development of an open source Rust library for polynomials that implements several of the algorithms studied with a focus on performance https://github.</description>
+    </item>
+    
+    <item>
+      <title>Neovim Async Jobs (No Plugins)</title>
+      <link>http://example.org/posts/neovim-async-jobs/</link>
+      <pubDate>Sat, 06 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/neovim-async-jobs/</guid>
+      <description>Neovim introduced asynchronous job control which load to plugins enabling you to run shell commands without blocking Vim, most notably the fantastic (Neomake) plugin. For my development however, I only really need to run shell commands asynchronously and load the data into the quickfix list.
+Neomake is great, but it&amp;rsquo;s also 13000+ lines of code, this is one:
+1 2 command! -nargs=+ AsyncRun call jobstart([&amp;#39;sh&amp;#39;, &amp;#39;-c&amp;#39;, &amp;#39;&amp;lt;args&amp;gt; &amp;gt; /tmp/run.log 2&amp;gt;&amp;amp;1&amp;#39;], \ {&amp;#39;on_exit&amp;#39;: {-&amp;gt; execute(&amp;#39;cfile /tmp/run.</description>
+    </item>
+    
+    <item>
+      <title>Trick for Managing Neovim Terminals</title>
+      <link>http://example.org/posts/managing-vim-terminals/</link>
+      <pubDate>Sun, 24 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/managing-vim-terminals/</guid>
+      <description>I&amp;rsquo;ve recently been use Neovim&amp;rsquo;s terminals a lot more recently and I&amp;rsquo;ve found that I spend a lot of time doing
+:term &amp;lt;TAB&amp;gt; to find the terminal with my tests. Then &amp;lt;C-&amp;gt;&amp;lt;C-^&amp;gt; to get back to the file that I was editing, and if I have more than one terminal open it isn&amp;rsquo;t easy to remember which terminal has my tests it in, which terminals had another thing, and so on.</description>
+    </item>
+    
+    <item>
+      <title>Using Errgroup</title>
+      <link>http://example.org/posts/errgroup/</link>
+      <pubDate>Fri, 01 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/errgroup/</guid>
+      <description>Here I&amp;rsquo;m going to illustrate a couple of common use case for the errgroup, and in particular some in which you may think the errgroup is too fundamental but is in fact not.
+Run many things in parallel and return if there is an error or a certain response For instance, multiple validation functions, and immediately return if an error is returned or a function failed. Or to poll multiple data centers for a result and immediately return the first one.</description>
+    </item>
+    
+    <item>
+      <title>A Vim Purist&#39;s Workflow</title>
+      <link>http://example.org/posts/vim-workflow/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/vim-workflow/</guid>
+      <description>I have been using Vim for about 1.5 years now and I am constantly surprised about how many features it has.
+Despite using it for many smaller projected, I wasn&amp;rsquo;t sold on using Vim as my main programming environment, and even then, it was only with CoC installed to essentially replicate VS Code in Vim. Until I stumbled across this video by Leeren at VimConf . This completely blew my mind (as did his other videos on Vim).</description>
+    </item>
+    
+    <item>
+      <title>Bulk Rename Script</title>
+      <link>http://example.org/posts/interactive-bulk-rename-script/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/interactive-bulk-rename-script/</guid>
+      <description>I spend pretty much all my time in the terminal. After some time, I find I can navigate just as fast, if not faster there than in a GUI file browser.
+I used to use the ultra-lightweight nnn terminal file browser, but even that I found unnecessary other than being very nice to look at.
+The one feature that I missed however, was bulk renaming files in my editor. When you press r in nnn, it brings up the files in the directory in the program specified in your $EDITOR variable, with numbers next to them.</description>
+    </item>
+    
+    <item>
+      <title>Mail Setup</title>
+      <link>http://example.org/posts/mail-setup/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/mail-setup/</guid>
+      <description>Email My email setup is a little complicated because I maintain a local copy of my mail on my computer for backup reasons. It is also nice because it is faster. I use Neomutt which is a terminal based email client. This is because I like the minimalism and I just think that email is something that is so fundamental that it should be in a terminal. I have tried other lightweight clients like Sylpheed and I still prefer it.</description>
+    </item>
+    
+    <item>
+      <title>Monitoring Cryptocurrencies with Bash</title>
+      <link>http://example.org/posts/crypto-bash-script/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/crypto-bash-script/</guid>
+      <description>I bought into the crypto scene but was concerned about the price of crypto dropping dramatically as it does, so I made an incredibly basic bash script to monitor the prices of crypto using the CoinGecko API. This could be used for instance to show the current price on Bitcoin in PolyBar or DWM
+1 2 3 4 5 6 7 #!/bin/sh COINS=$1 CURRENCIES=$2 curl -X GET &amp;#34;https://api.coingecko.com/api/v3/simple/price?ids=${COINS}&amp;amp;vs_currencies=${CURRENCIES}&amp;#34; -H &amp;#34;accept: application/json&amp;#34; echo &amp;#34;&amp;#34; Save this to a file fetch-crypto.</description>
+    </item>
+    
+    <item>
+      <title>On Motivations (Unedited)</title>
+      <link>http://example.org/posts/on-motivations/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/on-motivations/</guid>
+      <description>I have found that doing a side project scratched the itch I had for programming
+This was quite unexpected as I always thought programming was the thing I enjoyed the most, the end. But now I feel free to use it as a means to an end.
+This had a surprise benfit of saving me from doing a potentially unhappy PhD. I always had a love for pure mathematics. The elegance and perfection in it has also strongly shaped my programming style, in perhaps an unhelpful way.</description>
+    </item>
+    
+    <item>
+      <title>Vim Features: Tags list</title>
+      <link>http://example.org/posts/vim-lesson-tags/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/vim-lesson-tags/</guid>
+      <description>This is how you get that IDE like feeling where you can navigate around codebases super fast. This is built-in, no plugins, no configurations
+What are tags Tags are an outline of your codebase, they record the location of important definitions like functions, type definitions, class definitions.
+Getting Started Download ctags, also known as Exhuberant Tags, and run ctags -R . in your project root directory. Unless your codebase is quite large, this should be close to instaneous.</description>
+    </item>
+    
+    <item>
+      <title>Vim for Git Merging</title>
+      <link>http://example.org/posts/vim-mergetool/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/vim-mergetool/</guid>
+      <description>This is the config for my vim setup for resolving git merge conflicts.
+[alias] mt = mergetool -t vimdiff [mergetool] writeToTemp = true [mergetool &amp;#34;vimdiff&amp;#34;] cmd = nvim -d $MERGED $LOCAL $BASE $REMOTE -c &amp;#39;wincmd J&amp;#39; The alias mt means I can type git mt rather than the more verbose git mergetool -t vimdiff writeToTemp makes git put the BASE, LOCAL, REMOTE files into your computer&amp;rsquo;s temp directory. BASE The file before the conflicting changes</description>
+    </item>
+    
+    <item>
+      <title>Vim for Software Development</title>
+      <link>http://example.org/posts/vim-as-developer/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/vim-as-developer/</guid>
+      <description>It is no secret that Vim has fallen behind the times when it comes to software develpment. Not to say that it has strayed from its original design and purpose i.e. editing text. But that the times have changed such that this is no longer satisfies the needs of many developers
+When I see people talk about using Vim for software development, it is a general concensus that you must load it full of plugins to get that VSCode feeling back.</description>
+    </item>
+    
+    <item>
+      <title>Vim&#39;s Quickfix/Location list</title>
+      <link>http://example.org/posts/vim-lesson-quickfix-list/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/vim-lesson-quickfix-list/</guid>
+      <description>People often complain that Vim doesn&amp;rsquo;t have good support for project-wide searches or error navigation without the use of plugins or even LSPs. These people have clearly never learned about Vim&amp;rsquo;s inbuilt quickfix and location list.
+Quickfix list The quickfix list is a buffer in Vim which provides fast navigation to locations in files.
+Differences between the Quickfix and Location list The two are exactly the same, however there is only one quickfix list per Vim session, but there is one location list for every window.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://example.org/posts/leaving-bytedance/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/leaving-bytedance/</guid>
+      <description>Note that I haven&amp;rsquo;t actually leaft ByteDance at the moment, but just are now clear that this is what I want to do.
+This was brought about after I was invited to go on a business trip to America for 2 and a half months, my girlfriend thought that this was perhaps way too long and remarked that if I work there for nearly three months, then I may as we just work there.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://example.org/posts/sed-markdown-compiler/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/sed-markdown-compiler/</guid>
+      <description>&amp;ldquo;Markdown to HTML Using sed&amp;rdquo; I recently discovered the :TOhtml command in Vim. It converts the current view of the file you are editing in Vim to HTML that can be viewed in the browser. TODO I think it has some other use cases too
+However, it would be nice if it could actually render the Markdown file I was editing too. I looked at the common solutions like pandoc but I found that they were incredibly huge programs.</description>
+    </item>
+    
+  </channel>
+</rss>

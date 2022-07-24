@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>vim on </title>
+    <link>http://example.org/tags/vim/</link>
+    <description>Recent content in vim on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright Will Cashman 2022.</copyright>
+    <lastBuildDate>Sat, 06 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/tags/vim/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Neovim Async Jobs (No Plugins)</title>
+      <link>http://example.org/posts/neovim-async-jobs/</link>
+      <pubDate>Sat, 06 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/neovim-async-jobs/</guid>
+      <description>Neovim introduced asynchronous job control which load to plugins enabling you to run shell commands without blocking Vim, most notably the fantastic (Neomake) plugin. For my development however, I only really need to run shell commands asynchronously and load the data into the quickfix list.
+Neomake is great, but it&amp;rsquo;s also 13000+ lines of code, this is one:
+1 2 command! -nargs=+ AsyncRun call jobstart([&amp;#39;sh&amp;#39;, &amp;#39;-c&amp;#39;, &amp;#39;&amp;lt;args&amp;gt; &amp;gt; /tmp/run.log 2&amp;gt;&amp;amp;1&amp;#39;], \ {&amp;#39;on_exit&amp;#39;: {-&amp;gt; execute(&amp;#39;cfile /tmp/run.</description>
+    </item>
+    
+    <item>
+      <title>Trick for Managing Neovim Terminals</title>
+      <link>http://example.org/posts/managing-vim-terminals/</link>
+      <pubDate>Sun, 24 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/managing-vim-terminals/</guid>
+      <description>I&amp;rsquo;ve recently been use Neovim&amp;rsquo;s terminals a lot more recently and I&amp;rsquo;ve found that I spend a lot of time doing
+:term &amp;lt;TAB&amp;gt; to find the terminal with my tests. Then &amp;lt;C-&amp;gt;&amp;lt;C-^&amp;gt; to get back to the file that I was editing, and if I have more than one terminal open it isn&amp;rsquo;t easy to remember which terminal has my tests it in, which terminals had another thing, and so on.</description>
+    </item>
+    
+    <item>
+      <title>Vim for Software Development</title>
+      <link>http://example.org/posts/vim-as-developer/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/vim-as-developer/</guid>
+      <description>It is no secret that Vim has fallen behind the times when it comes to software develpment. Not to say that it has strayed from its original design and purpose i.e. editing text. But that the times have changed such that this is no longer satisfies the needs of many developers
+When I see people talk about using Vim for software development, it is a general concensus that you must load it full of plugins to get that VSCode feeling back.</description>
+    </item>
+    
+    <item>
+      <title>Vim&#39;s Quickfix/Location list</title>
+      <link>http://example.org/posts/vim-lesson-quickfix-list/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/posts/vim-lesson-quickfix-list/</guid>
+      <description>People often complain that Vim doesn&amp;rsquo;t have good support for project-wide searches or error navigation without the use of plugins or even LSPs. These people have clearly never learned about Vim&amp;rsquo;s inbuilt quickfix and location list.
+Quickfix list The quickfix list is a buffer in Vim which provides fast navigation to locations in files.
+Differences between the Quickfix and Location list The two are exactly the same, however there is only one quickfix list per Vim session, but there is one location list for every window.</description>
+    </item>
+    
+  </channel>
+</rss>

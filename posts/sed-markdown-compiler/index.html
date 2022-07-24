@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body><nav>
+    
+    	<a class="menu-item" href="/">About</a>
+
+    
+    	<a class="menu-item" href="/posts/">Posts</a>
+
+    
+    	<a class="menu-item" href="/tags/">Tags</a>
+
+    
+    	<a class="menu-item" href="/resume/">Resume</a>
+
+    
+
+    
+</nav>
+<div id="content">
+<h1></h1>
+
+
+<time datetime="0001-01-01">Jan 1, 0001</time>
+
+
+<br><br>
+<h1 id="markdown-to-html-using-sed">&ldquo;Markdown to HTML Using sed&rdquo;</h1>
+<p>I recently discovered the <code>:TOhtml</code> command in Vim. It converts the current view of the file you are editing in Vim to HTML that can be viewed in the browser. TODO I think it has some other use cases too</p>
+<p>However, it would be nice if it could actually render the Markdown file I was editing too. I looked at the common solutions like <code>pandoc</code> but I found that they were incredibly huge programs. I decided to ignore the extra features and see if I could make a minimalistic program to convert plain Markdown to html.</p>
+<p>It isn&rsquo;t perfect, but most of what I need it to do can be done with the following sed script:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Markdown to HTML render</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">1r header.html
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Wraps paragraphs in the &lt;p&gt;&lt;/p&gt; tags</span>
+</span></span><span class="line"><span class="cl">/^<span class="se">\w</span>/<span class="o">{</span>H<span class="p">;</span><span class="nv">$!</span>d<span class="o">}</span>
+</span></span><span class="line"><span class="cl">/^$/<span class="o">{</span>x<span class="p">;</span>/./s/<span class="se">\(</span>.*<span class="se">\)</span>/&lt;p&gt;<span class="se">\1</span>&lt;<span class="se">\/</span>p&gt;/<span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># ###.* to &lt;hN&gt;</span>
+</span></span><span class="line"><span class="cl">s/^# <span class="se">\(</span>.*<span class="se">\)</span>/&lt;h1&gt;<span class="se">\1</span>&lt;<span class="se">\/</span>h1&gt;/
+</span></span><span class="line"><span class="cl">s/^## <span class="se">\(</span>.*<span class="se">\)</span>/&lt;h2&gt;<span class="se">\1</span>&lt;<span class="se">\/</span>h2&gt;/
+</span></span><span class="line"><span class="cl">s/^### <span class="se">\(</span>.*<span class="se">\)</span>/&lt;h3&gt;<span class="se">\1</span>&lt;<span class="se">\/</span>h3&gt;/
+</span></span><span class="line"><span class="cl">s/^#### <span class="se">\(</span>.*<span class="se">\)</span>/&lt;h4&gt;<span class="se">\1</span>&lt;<span class="se">\/</span>h4&gt;/
+</span></span><span class="line"><span class="cl">s/^##### <span class="se">\(</span>.*<span class="se">\)</span>/&lt;h5&gt;<span class="se">\1</span>&lt;<span class="se">\/</span>h5&gt;/
+</span></span><span class="line"><span class="cl">s/^###### <span class="se">\(</span>.*<span class="se">\)</span>/&lt;h6&gt;<span class="se">\1</span>&lt;<span class="se">\/</span>h6&gt;/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># &#39;*&#39; or &#39;-&#39; or &#39;+&#39; to &lt;li&gt;</span>
+</span></span><span class="line"><span class="cl">s/^<span class="se">\s</span>*<span class="o">[</span><span class="se">\*</span>-+<span class="o">]</span><span class="se">\s</span>*<span class="se">\(</span>.*<span class="se">\)</span>/&lt;li&gt;<span class="se">\1</span>&lt;<span class="se">\/</span>li&gt;/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># [title](url) to &lt;a href=&#34;url&#34;&gt;title&lt;/a&gt;</span>
+</span></span><span class="line"><span class="cl">s/<span class="se">\[\(</span>.*<span class="se">\)\]</span><span class="o">(</span><span class="se">\(</span>.*<span class="se">\)</span><span class="o">)</span>/&lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&#34;\2&#34;</span>&gt;<span class="se">\1</span>&lt;<span class="se">\/</span>a&gt;/g
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$r</span> footer.html
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>You will also need the header and footer for the HTML file. This is up to you but I chose these simple templates</p>
+<p><code>header.sh</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">&#34;content-type&#34;</span> <span class="na">content</span><span class="o">=</span><span class="s">&#34;text/html; charset=UTF-8&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Testing<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>footer.html</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>To run it. Save the file as <code>markdown-to-html.sed</code> and execute it on a markdown file <code>file.md</code> as</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sed -f markdown-to-html.sed file.md
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+        </div>
+	<hr><p class="footer">
+Copyright Will Cashman 2022.
+<br>
+Any and all opinions listed here are my own and not representative of my employers; future, past and present.
+</p>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body><nav>
+    
+    	<a class="menu-item" href="/">About</a>
+
+    
+    	<a class="menu-item" href="/posts/">Posts</a>
+
+    
+    	<a class="menu-item" href="/tags/">Tags</a>
+
+    
+    	<a class="menu-item" href="/resume/">Resume</a>
+
+    
+
+    
+</nav>
+<div id="content">
+<h1>Trick for Managing Neovim Terminals</h1>
+
+
+<time datetime="2021-10-24">Oct 24, 2021</time>
+
+
+	
+	<a href="http://example.org/tags/vim">vim</a>
+
+
+
+<br><br>
+<p>I&rsquo;ve recently been use Neovim&rsquo;s terminals a lot more recently and I&rsquo;ve found that I spend a lot of time doing</p>
+<pre tabindex="0"><code>:term &lt;TAB&gt;
+</code></pre><p>to find the terminal with my tests. Then &lt;C-&gt;<!-- raw HTML omitted -->&lt;C-^&gt; to get back to the file that I was editing, and if I have more than one terminal open it isn&rsquo;t easy to remember which terminal has my tests it in, which terminals had another thing, and so on.</p>
+<p>So I made a nice little Vim function to handle this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="line"><span class="cl"><span class="k">let</span> <span class="nx">s</span>:<span class="nx">terminals</span> <span class="p">=</span> {}<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">function</span> <span class="nx">GoToTerminal</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>	<span class="nx">execute</span> <span class="s1">&#39;drop &#39;</span> . <span class="nx">get</span><span class="p">(</span><span class="nx">s</span>:<span class="nx">terminals</span><span class="p">,</span> <span class="nx">a</span>:<span class="nx">num</span><span class="p">,</span> <span class="s1">&#39;term://bash&#39;</span><span class="p">)</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>	<span class="k">let</span> <span class="nx">s</span>:<span class="nx">terminals</span>[<span class="nx">a</span>:<span class="nx">num</span>] <span class="p">=</span> <span class="nx">expand</span><span class="p">(</span><span class="s1">&#39;%s&#39;</span><span class="p">)</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>	<span class="nx">normal</span> <span class="nx">i</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">endfunction</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Which I like to pair with these mappings</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="line"><span class="cl"><span class="nx">tnoremap</span> <span class="p">&lt;</span><span class="nx">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">c</span><span class="p">-</span><span class="nx">b</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">cmd</span><span class="p">&gt;</span><span class="nx">execute</span> <span class="s1">&#39;drop &#39;</span> . <span class="nx">expand</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="nx">nnoremap</span> <span class="p">&lt;</span><span class="nx">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">c</span><span class="p">-</span><span class="nx">b</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">cmd</span><span class="p">&gt;</span><span class="nx">call</span> <span class="nx">GoToTerminal</span><span class="p">(</span><span class="nx">v</span>:<span class="nx">count</span><span class="p">)&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>If you really want, you can even avoid writing a function and do the entire thing in three lines</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="line"><span class="cl"><span class="nx">g</span>:<span class="nx">terms</span> <span class="p">=</span> {}<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="nx">tnoremap</span> <span class="p">&lt;</span><span class="nx">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">c</span><span class="p">-</span><span class="nx">b</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">cmd</span><span class="p">&gt;</span><span class="nx">execute</span> <span class="s1">&#39;drop &#39;</span> . <span class="nx">expand</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="nx">nnoremap</span> <span class="p">&lt;</span><span class="nx">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">c</span><span class="p">-</span><span class="nx">b</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nx">cmd</span><span class="p">&gt;</span><span class="nx">exe</span> <span class="s1">&#39;drop &#39;</span> . <span class="nx">get</span><span class="p">(</span><span class="nx">g</span>:<span class="nx">terms</span><span class="p">,</span> <span class="nx">v</span>:<span class="nx">count</span><span class="p">,</span> <span class="s1">&#39;term://bash&#39;</span><span class="p">)</span> <span class="p">|</span> <span class="k">let</span> <span class="nx">g</span>:<span class="nx">terms</span>[<span class="nx">v</span>:<span class="nx">count</span>] <span class="p">=</span> <span class="nx">expand</span><span class="p">(</span><span class="s1">&#39;%s&#39;</span><span class="p">)</span> <span class="p">|</span> <span class="nx">norm</span> <span class="nx">i</span><span class="p">&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>So now if I want a terminal I just press [count]<!-- raw HTML omitted --> where &ldquo;count&rdquo; is a number, or defaults to zero if not given. Then when I&rsquo;m done with that terminal and want to go back to the main file, I just press <!-- raw HTML omitted -->.</p>
+<p>Since I use the &lsquo;drop&rsquo; command, if the terminal, or the original file are already present in another window, it will just move the cursor there.</p>
+<p>If there is no terminal open for that [count], it will create a new one.</p>
+
+
+        </div>
+	<hr><p class="footer">
+Copyright Will Cashman 2022.
+<br>
+Any and all opinions listed here are my own and not representative of my employers; future, past and present.
+</p>
+
+</body>
+</html>

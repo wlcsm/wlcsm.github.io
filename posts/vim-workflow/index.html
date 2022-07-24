@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body><nav>
+    
+    	<a class="menu-item" href="/">About</a>
+
+    
+    	<a class="menu-item" href="/posts/">Posts</a>
+
+    
+    	<a class="menu-item" href="/tags/">Tags</a>
+
+    
+    	<a class="menu-item" href="/resume/">Resume</a>
+
+    
+
+    
+</nav>
+<div id="content">
+<h1>A Vim Purist&#39;s Workflow</h1>
+
+
+<time datetime="2021-01-01">Jan 1, 2021</time>
+
+
+	
+	<a href="http://example.org/tags/emoji">emoji</a>
+
+
+
+<br><br>
+<p>I have been using Vim for about 1.5 years now and I am constantly surprised about how many features it has.</p>
+<p>Despite using it for many smaller projected, I wasn&rsquo;t sold on using Vim as my main programming environment, and even then, it was only with CoC installed to essentially replicate VS Code in Vim. Until I stumbled across this video by Leeren at VimConf <a href=""></a>. This completely blew my mind (as did his other videos on Vim).</p>
+<p>Its amazing to me just how many features Vim has built in and that have been nearly forgotten. Nowhere before had I seen people talk about the <code>compiler</code> setting and <code>include search</code>. I knew Vim was good at managing tags, though I hadn&rsquo;t even thought to learn it as I assumed that it would be default to setup, rather than the two steps it takes in reality.</p>
+<p>Since then I have ridiculously pruned my Vim configuration, noting that I am actually using Neovim rather than Vim; its the same thing but the codebase is more actively maintained and has a more positive direction for Vim. Fortunately for me, it makes many sane defaults that Vim doesn&rsquo;t have which means my vimrc can be even shorter!</p>
+<p>Now note that I am claiming Vim is a great <em>text editor</em> akin to VS Code or Sublime Text, I am not claiming that it should be used in hardcode Java/C++/C# developement (of which I don&rsquo;t have experience in).</p>
+<p>Most of my work is medium sized Python, Rust, C or Go. Which don&rsquo;t need such environments (at least small C programs don&rsquo;t).</p>
+<p>I like having a pure Vim configuration because I spend a lot of time in SSH or Docker containers and so having many key mappings gets annoying very quickly.</p>
+<p>Probably one of the biggest things you should do is use the Vim manual, type <code>:h &lt;something&gt;</code> and press tab to show a list of all help pages that match the string provided. Once inside a help page, you can press <code>gO</code> to get an overview of the page, and <code>Ctrl-[</code> over a keywork (one that is highlighted) to jump to its definition in the help pages</p>
+<p>Here are the non-programming related</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="line"><span class="cl"><span class="nx">set</span> <span class="nx">hidden</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="nx">inoremap</span> <span class="nx">jk</span> <span class="p">&lt;</span><span class="nx">ESC</span><span class="p">&gt;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="nx">autocmd</span> <span class="nx">Filetype</span> <span class="nx">markdown</span><span class="p">,</span><span class="nx">tex</span><span class="p">,</span><span class="nx">mail</span> <span class="nx">setlocal</span> <span class="nx">spell</span> <span class="nx">spelllang</span><span class="p">=</span><span class="nx">en_au</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>The first is the dumbest setting that I have not seen a single Vim purist not put in their config.
+The second is the only keymapping that I can&rsquo;t seem to shake off
+The last just turns on spelling when in markdown, latex, and mail</p>
+<p>Now I don&rsquo;t use any plugins at the moment but there are many plugins that I would use if I were in something like web development like <code>vim-surround</code></p>
+<h2 id="vim-commentary"><code>vim-commentary</code></h2>
+<p>Anyway, here are some replacements for common plugins that I use</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="line"><span class="cl"><span class="nx">vnoremap</span> <span class="nx">gc</span> :<span class="nx">norm</span><span class="p">!</span> <span class="nx">i</span><span class="p">&lt;</span><span class="nx">C</span><span class="p">-</span><span class="nx">R</span><span class="p">&gt;=</span><span class="nx">substitute</span><span class="p">(</span>&amp;<span class="nx">commentstring</span><span class="p">,</span> <span class="s1">&#39;%s.*&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)&lt;</span><span class="nx">CR</span><span class="p">&gt;&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="nx">vnoremap</span> <span class="nx">gC</span> :<span class="nx">norm</span><span class="p">!</span> <span class="p">&lt;</span><span class="nx">C</span><span class="p">-</span><span class="nx">R</span><span class="p">&gt;=</span><span class="nx">len</span><span class="p">(</span><span class="nx">substitute</span><span class="p">(</span>&amp;<span class="nx">commentstring</span><span class="p">,</span> <span class="s1">&#39;%s.*&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="nx">x</span><span class="p">&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>This is a crude implementation of commenting similar to Tim Pope&rsquo;s <code>vim-commentary</code>. Just select the text you wish to comment in visual mode, and press <code>gc</code> to add the comment, or <code>gC</code> to delete a comment in the first column.</p>
+<p>This works with most filetypes however some (like Rust) it doesn&rsquo;t choose the correct commenting character. For that I suggest you put this in a ftplugin</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="line"><span class="cl"><span class="nx">vnoremap</span> <span class="nx">gc</span> :<span class="nx">norm</span><span class="p">!</span> <span class="nx">i</span>#<span class="p">&lt;</span><span class="nx">CR</span><span class="p">&gt;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="nx">vnoremap</span> <span class="nx">gC</span> :<span class="nx">norm</span><span class="p">!</span> <span class="nx">x</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>if you wanted to comment a <code>#</code> sign. Note that you need to write the same number of <code>x</code>&rsquo;s as the cha TODO</p>
+<h2 id="ultisnips"><code>Ultisnips</code></h2>
+<p>Ultisnips is great, and is especially useful for things like web developement when you have templates where you want to edit multiple fields in the template at once or give default values. However, I don&rsquo;t need to do that, I just need to get a snippet and be able jump arround to edit each of the columns</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="line"><span class="cl"><span class="nx">inoremap</span> ;<span class="nx">s</span> <span class="p">&lt;</span><span class="nx">ESC</span><span class="p">&gt;</span>:<span class="m">-1</span>r <span class="p">~</span><span class="sr">/.config/</span><span class="nx">nvim</span><span class="sr">/snippets/</span><span class="p">&lt;</span><span class="nx">C</span><span class="p">-</span><span class="nx">R</span><span class="p">&gt;=</span>&amp;<span class="nx">ft</span><span class="p">&lt;</span><span class="nx">CR</span><span class="p">&gt;</span>/<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="nx">inoremap</span> ;; <span class="p">&lt;</span><span class="nx">ESC</span><span class="p">&gt;</span>:<span class="nx">call</span> <span class="nx">search</span><span class="p">(</span><span class="s1">&#39;{%[^%]*%}&#39;</span><span class="p">,</span> <span class="s1">&#39;zW&#39;</span><span class="p">)&lt;</span><span class="nx">cr</span><span class="p">&gt;</span><span class="nx">c</span>%<span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>TODO mention reddit post</p>
+<p>Then put snippets in the <code>~/.config/nvim/snippets/</code> directory assorted by file type. Then when you press <code>;s</code> it will partially complete a filepath for you. Type the snippet that you want or press tab to make Vim show a menu of all possible options.</p>
+<p>Once it is inserted, navigate to the beginning of the snippet and press <code>;;</code> to jump to the next item. TODO should make it so that you don&rsquo;t need to navigate back yourself TODO the thoughtbot video I think does this partially?</p>
+<h2 id="background-make">Background Make</h2>
+<p>I think this was taken from Drew DeVault?</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="line"><span class="cl"><span class="nx">command</span><span class="p">!</span> <span class="p">-</span><span class="nx">nargs</span><span class="p">=</span>* <span class="nx">BgMake</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    \ <span class="nx">silent</span> <span class="nx">execute</span> <span class="s2">&#34;:!(make &#34;</span> . <span class="s2">&#34;&lt;args&gt;&#34;</span> . <span class="s2">&#34; &gt; /tmp/make.output 2&gt;&amp;1;&#34;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>                   \ <span class="s2">&#34;notify-send &#39;make finished&#39; &#39;make &lt;args&gt; finished&#39;) &amp;&#34;</span> <span class="p">|</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    \ <span class="nx">redraw</span><span class="p">!</span> <span class="p">|</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    \ <span class="nx">cfile</span> <span class="sr">/tmp/</span><span class="nx">make</span>.<span class="nx">output</span> <span class="p">|</span> <span class="nx">copen</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="basic-goto-definition">Basic Goto-Definition</h2>
+<p>In basic python projects, we might want to find some stuff so just use the <code>include search</code> functionality.</p>
+<h2 id="vs-code-like-definitions">VS Code like definitions</h2>
+<p>Just use a tags file. All you need to is install <code>ctags</code> then use tags.
+If you want intellisense, just use the preview window for tags</p>
+<h2 id="vimtex">Vimtex</h2>
+<p>Vimtex is seriously great, but I found that I was only using two of its (many) features:</p>
+<ol>
+<li>Compiling and error navigation</li>
+<li>Concealing</li>
+</ol>
+<p>The first I replaced by just using a make file and using the Vim <code>make</code> command and telling it what <code>compiler</code> to user</p>
+<p>Concealing was important to me at the time since I was doing a Honour in Mathematics, and as you can image, Vim simplifies it sooo much, but I just copied the concealing that vimtex does out of its source code and put the ones I needed into put this into my <code>ftplugin/tex.vim</code> file</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="line"><span class="cl"><span class="nx">syn</span> <span class="nx">match</span> <span class="nx">texMathSymbol</span> <span class="s1">&#39;\\C&#39;</span> <span class="nx">contained</span> <span class="nx">conceal</span> <span class="nx">cchar</span><span class="p">=</span><span class="nx">ℂ</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="nx">syn</span> <span class="nx">match</span> <span class="nx">texMathSymbol</span> <span class="s1">&#39;\\F&#39;</span> <span class="nx">contained</span> <span class="nx">conceal</span> <span class="nx">cchar</span><span class="p">=</span><span class="nx">𝔽</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="nx">syn</span> <span class="nx">match</span> <span class="nx">texMathSymbol</span> <span class="s1">&#39;\\N&#39;</span> <span class="nx">contained</span> <span class="nx">conceal</span> <span class="nx">cchar</span><span class="p">=</span><span class="nx">ℕ</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="nx">syn</span> <span class="nx">match</span> <span class="nx">texMathSymbol</span> <span class="s1">&#39;\\Q&#39;</span> <span class="nx">contained</span> <span class="nx">conceal</span> <span class="nx">cchar</span><span class="p">=</span><span class="nx">ℚ</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="nx">syn</span> <span class="nx">match</span> <span class="nx">texMathSymbol</span> <span class="s1">&#39;\\R&#39;</span> <span class="nx">contained</span> <span class="nx">conceal</span> <span class="nx">cchar</span><span class="p">=</span><span class="nx">ℝ</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="nx">syn</span> <span class="nx">match</span> <span class="nx">texMathSymbol</span> <span class="s1">&#39;\\Z&#39;</span> <span class="nx">contained</span> <span class="nx">conceal</span> <span class="nx">cchar</span><span class="p">=</span><span class="nx">ℤ</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>In fact this was an improvement since I got so simplify vimtex&rsquo;s <code>mathbb{C}</code> to just <code>\C</code>.</p>
+<p>Also, Vim has its own latex syntax highlighting which doesn&rsquo;t do some environment by default, but you can add them yourself. For instance, to add the <code>align</code> environment you can add this to your <code>ftplugin/tex.vim</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="line"><span class="cl"><span class="nx">call</span> <span class="nx">TexNewMathZone</span><span class="p">(</span><span class="s2">&#34;MyAlignGroup&#34;</span><span class="p">,</span><span class="s2">&#34;align&#34;</span><span class="p">,</span><span class="m">1</span><span class="p">)</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Again, I highly reccoment reading Vim&rsquo;s builtin <code>tex.vim</code> file in the <code>$VIMRUNTIME</code> which already does a lot for you!</p>
+<h2 id="markdown-and-latex">Markdown and Latex</h2>
+<p>I began to start using Markdown to write Beamer presentations, so I added this to include latex syntax highlighting in my markdown documents</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="line"><span class="cl"><span class="nx">command</span><span class="p">!</span> <span class="p">-</span><span class="nx">bang</span> <span class="nx">TexMarkdown</span> :<span class="nx">call</span> <span class="nx">TexMath</span><span class="p">(&lt;</span><span class="nx">bang</span><span class="p">&gt;)</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">function</span><span class="p">!</span> <span class="nx">TexMath</span><span class="p">(</span><span class="nx">full_tex_highlighting</span><span class="p">)</span> <span class="nx">abort</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    <span class="nx">unlet</span> <span class="nx">b</span>:<span class="nx">current_syntax</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    <span class="k">if</span> <span class="nx">a</span>:<span class="nx">full_tex_highlighting</span> <span class="p">==</span># <span class="s1">&#39;!&#39;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c">
+</span></span></span><span class="line"><span class="cl"><span class="c">        &#34; Source the entire Tex syntax file</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>        <span class="nx">source</span> $<span class="nx">VIMRUNTIME</span><span class="sr">/syntax/</span><span class="nx">tex</span>.<span class="nx">vim</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c">        &#34; Make highlighting work with the align environment</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>        <span class="nx">call</span> <span class="nx">TexNewMathZone</span><span class="p">(</span><span class="s2">&#34;MyAlignGroup&#34;</span><span class="p">,</span><span class="s2">&#34;align&#34;</span><span class="p">,</span><span class="m">1</span><span class="p">)</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c">        &#34; Make it so that % doesn&#39;t begin a latex comment</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>        <span class="nx">syn</span> <span class="nx">clear</span> <span class="nx">texComment</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    <span class="k">else</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>        <span class="nx">syn</span> <span class="nx">include</span> @<span class="nx">tex</span> <span class="nx">syntax</span>/<span class="nx">tex</span>.<span class="nx">vim</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>        <span class="nx">syn</span> <span class="nx">region</span> <span class="nx">mkdMath</span> <span class="nx">start</span><span class="p">=</span><span class="s2">&#34;\\\@&lt;!\$&#34;</span> <span class="nx">end</span><span class="p">=</span><span class="s2">&#34;\$&#34;</span> <span class="nx">skip</span><span class="p">=</span><span class="s2">&#34;\\\$&#34;</span> <span class="nx">contains</span><span class="p">=</span>@<span class="nx">tex</span> <span class="nx">keepend</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>        <span class="nx">syn</span> <span class="nx">region</span> <span class="nx">mkdMath</span> <span class="nx">start</span><span class="p">=</span><span class="s2">&#34;\\\@&lt;!\$\$&#34;</span> <span class="nx">end</span><span class="p">=</span><span class="s2">&#34;\$\$&#34;</span> <span class="nx">skip</span><span class="p">=</span><span class="s2">&#34;\\\$&#34;</span> <span class="nx">contains</span><span class="p">=</span>@<span class="nx">tex</span> <span class="nx">keepend</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    <span class="k">endif</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    <span class="k">let</span> <span class="nx">b</span>:<span class="nx">current_syntax</span><span class="p">=</span><span class="s1">&#39;markdown&#39;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c">
+</span></span></span><span class="line"><span class="cl"><span class="c">    &#34; Get all of my Latex concealments</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    <span class="nx">source</span> <span class="sr">/home/</span><span class="nx">wlcsm</span><span class="sr">/.config/</span><span class="nx">nvim</span><span class="sr">/ftplugin/</span><span class="nx">tex</span>.<span class="nx">vim</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">endfunction</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Note that running <code>TexMarkdown</code> included all Tex syntax highlighting, whereas <code>TexMarkdown!</code> includes only the equation syntax highlighting</p>
+<h2 id="plasticboy-markdown">Plasticboy markdown</h2>
+<pre tabindex="0"><code>let g:markdown_folding=1
+let g:markdown_fenced_languages = [&#39;rust&#39;, &#39;bash=sh&#39;, &#39;vim&#39;]
+</code></pre><p>This uses Vim&rsquo;s built-in features for folding and syntax highlighting for fenced languages. The only thing that would be nice is better support for the YAML header that can be provided. I don&rsquo;t write documents with that header often though (only these blog posts actually` in which case I didn&rsquo;t feel the need to include it</p>
+<h2 id="todo-vim">Todo Vim</h2>
+<p>Managing todo lists. I used to use a plugin for it. Now I just grep in the project directory</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="line"><span class="cl"><span class="p">:</span><span class="nx">lgrep</span> <span class="p">-</span><span class="nx">R</span> <span class="s2">&#34;TODO&#34;</span> .<span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>assuming you are in your project directory. This populates your location list with all the TODOs I&rsquo;ve left in my project and allows me to just to each one. You can map it to a key if you plan on using it often</p>
+<h1 id="include-search">Include Search</h1>
+<p>I need to say, if you do a <code>[I</code>, then to go to the Nth item, just press <code>N[\t</code>. Side note: I literally cannot find this documented in the manual, I may have missed it though. I only know because it is used in a suggested key mapping in the manual.</p>
+<h1 id="oldfile">Oldfile</h1>
+<p>You can also use old files</p>
+<h1 id="marks">Marks</h1>
+<p>Workflow</p>
+<h1 id="nerdtree">NerdTree</h1>
+<p>TODO
+Input the default settings and the <code>20vs .</code> command</p>
+<h1 id="session-management">Session management</h1>
+<p>Just use <code>mksession</code>, the only problem it that it doesn&rsquo;t remember unlisted buffers. i.e. the quickfix list, location list, netrw, and help pages. If you want to keep netrw open just execute <code>setlocal bl</code> to list the buffer, then it will remain when you same the session.</p>
+<p>TODO see if that works with the quickfix list</p>
+
+
+        </div>
+	<hr><p class="footer">
+Copyright Will Cashman 2022.
+<br>
+Any and all opinions listed here are my own and not representative of my employers; future, past and present.
+</p>
+
+</body>
+</html>
